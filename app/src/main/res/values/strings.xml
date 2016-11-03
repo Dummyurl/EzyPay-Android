@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name" translatable="false">EzyPay</string>
+
+    <!--BUTTONS-->
+    <string name="log_in">Log In</string>
+    <string name="log_in_as_restaurant">Log In as Restaurant</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EzyPay</string>
+    <string name="log_in">Registrate</string>
+    <string name="log_in_as_restaurant">Registrate como Restaurante</string>
+</resources>
