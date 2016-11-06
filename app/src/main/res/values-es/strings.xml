@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EzyPay</string>
-    <string name="log_in">Registrate</string>
-    <string name="log_in_as_restaurant">Registrate como Restaurante</string>
+    <!--BUTTONS-->
+    <string name="log_in">Iniciar Sesión</string>
+    <string name="log_in_as_restaurant">Iniciar Sesión como Restaurante</string>
+
+    <!--Prompt-->
+    <string name="prompt_name">Nombre</string>
+    <string name="prompt_lastname">Apellido</string>
+    <string name="prompt_phone_number">Número Telefónico</string>
+    <string name="prompt_card_number">Número de Tarjeta</string>
+    <string name="prompt_password">Contraseña</string>
+
+
+    <!--Spinners items-->
+    <string-array name="months">
+        <item>Enero</item>
+        <item>Febrero</item>
+        <item>Marzo</item>
+        <item>Abril</item>
+        <item>Mayo</item>
+        <item>Junio</item>
+        <item>Julio</item>
+        <item>Agosto</item>
+        <item>Setiembre</item>
+        <item>Octubre</item>
+        <item>Noviembre</item>
+        <item>Diciembre</item>
+    </string-array>
 </resources>
