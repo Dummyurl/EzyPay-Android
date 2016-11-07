@@ -43,9 +43,6 @@ public class UserServiceClient {
         parameters.put("phoneNumber", user.mPhoneNumber);
         parameters.put("email", user.mEmail);
         parameters.put("password", user.mPassword);
-        parameters.put("cardNumber", user.mCardNumber);
-        parameters.put("cvv", user.mCvv);
-        parameters.put("expirationDate", user.mExpirationDate);
 
         String url = "user/create";
         int httpMethod = Request.Method.POST;

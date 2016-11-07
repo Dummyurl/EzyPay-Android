@@ -60,19 +60,20 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
 
     @Override
     public void onClick(View view) {
+        Log.e("LLego aca","LLego aca");
         final User user = new User();
         user.mName = edtName.getText().toString();
         user.mLastname = edtLastname.getText().toString();
         user.mPhoneNumber = edtPhonenumber.getText().toString();
         user.mEmail = edtEmail.getText().toString();
         user.mPassword = edtPassword.getText().toString();
-        user.mExpirationDate = "2017-08-01";
 
         UserServiceClient service = new UserServiceClient(getContext().getApplicationContext());
         try {
             service.registerUser(user, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    Log.e("LLego aca","respuesta");
                     int userId = 0;
                     try {
                         userId = response.getInt("response");

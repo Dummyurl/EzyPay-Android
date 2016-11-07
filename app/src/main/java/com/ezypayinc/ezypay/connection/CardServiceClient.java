@@ -1,6 +1,5 @@
 package com.ezypayinc.ezypay.connection;
 
-import android.app.DownloadManager;
 import android.content.Context;
 
 import com.android.volley.Request;
