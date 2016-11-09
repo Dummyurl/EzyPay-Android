@@ -38,11 +38,11 @@ public class UserServiceClient {
     /*register user*/
     public void registerUser(User user, Response.Listener successHandler, Response.ErrorListener failureHandler) throws JSONException {
         JSONObject parameters = new JSONObject();
-        parameters.put("name", user.mName);
-        parameters.put("lastname", user.mLastname);
-        parameters.put("phoneNumber", user.mPhoneNumber);
-        parameters.put("email", user.mEmail);
-        parameters.put("password", user.mPassword);
+        parameters.put("name", user.getName());
+        parameters.put("lastname", user.getLastname());
+        parameters.put("phoneNumber", user.getPhoneNumber());
+        parameters.put("email", user.getEmail());
+        parameters.put("password", user.getPassword());
 
         String url = "user/create";
         int httpMethod = Request.Method.POST;

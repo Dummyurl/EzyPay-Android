@@ -58,15 +58,16 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
         return rootView;
     }
 
+
     @Override
     public void onClick(View view) {
         Log.e("LLego aca","LLego aca");
         final User user = new User();
-        user.mName = edtName.getText().toString();
-        user.mLastname = edtLastname.getText().toString();
-        user.mPhoneNumber = edtPhonenumber.getText().toString();
-        user.mEmail = edtEmail.getText().toString();
-        user.mPassword = edtPassword.getText().toString();
+        user.setName(edtName.getText().toString());
+        user.setLastname(edtLastname.getText().toString());
+        user.setPhoneNumber(edtPhonenumber.getText().toString());
+        user.setEmail(edtEmail.getText().toString());
+        user.setPassword(edtPassword.getText().toString());
 
         UserServiceClient service = new UserServiceClient(getContext().getApplicationContext());
         try {
@@ -93,6 +94,18 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
             e.printStackTrace();
         }
     }
+
+    public void onStart() {
+        super.onStart();
+        listener = (OnChangeViewListener) getActivity();
+
+    }
+
+    public void onStop() {
+        super.onStop();
+        listener = null;
+    }
+
 
     public interface  OnChangeViewListener {
 

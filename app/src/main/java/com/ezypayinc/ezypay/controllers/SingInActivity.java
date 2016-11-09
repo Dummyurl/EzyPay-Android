@@ -15,13 +15,13 @@ public class SingInActivity extends AppCompatActivity implements SignInUserInfor
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sing_in);
-        SignInUserInformationFragment userInformationFragment = SignInUserInformationFragment.newInstance();
-        userInformationFragment.listener = this;
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.add(R.id.sign_in_container_view, userInformationFragment);
-        fragmentTransaction.commit();
+        if(savedInstanceState == null) {
+            SignInUserInformationFragment userInformationFragment = SignInUserInformationFragment.newInstance();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+            fragmentTransaction.add(R.id.sign_in_container_view, userInformationFragment);
+            fragmentTransaction.commit();
+        }
 
     }
 

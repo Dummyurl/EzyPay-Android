@@ -96,11 +96,11 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
     @Override
     public void onClick(View view) {
         Card card = new Card();
-        card.mCardNumber = edtCardnumber.getText().toString();
-        card.mCvv = Integer.valueOf(edtCvv.getText().toString());
-        card.mUser.mId = mUserId;
-        card.month = spnMonth.getSelectedItemPosition() + 1;
-        card.year = Integer.valueOf(spnYear.getSelectedItem().toString());
+        card.setCardNumber(edtCardnumber.getText().toString());
+        card.setCvv(Integer.valueOf(edtCvv.getText().toString()));
+        card.getUser().setId(mUserId);
+        card.setMonth(spnMonth.getSelectedItemPosition() + 1);
+        card.setYear(Integer.valueOf(spnYear.getSelectedItem().toString()));
 
         CardServiceClient service = new CardServiceClient(getContext().getApplicationContext());
         try {

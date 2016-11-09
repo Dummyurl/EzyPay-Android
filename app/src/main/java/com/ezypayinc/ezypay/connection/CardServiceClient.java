@@ -24,11 +24,11 @@ public class CardServiceClient {
 
     public void createCard(Card card, Response.Listener successHandler, Response.ErrorListener errorListener) throws JSONException {
         JSONObject parameters = new JSONObject();
-        parameters.put("idUser", card.mUser.mId);
-        parameters.put("cardnumber", card.mCardNumber);
-        parameters.put("cvv", card.mCvv);
-        parameters.put("month", card.month);
-        parameters.put("year", card.year);
+        parameters.put("idUser", card.getUser().getId());
+        parameters.put("cardnumber", card.getCardNumber());
+        parameters.put("cvv", card.getCvv());
+        parameters.put("month", card.getMonth());
+        parameters.put("year", card.getYear());
         int httpMethod = Request.Method.POST;
         connectionManager.sendRequest(httpMethod,BASE_URL,parameters,successHandler, errorListener);
     }
