@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/user_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:id="@+id/notification_list_restaurant_image"
+                android:src="@drawable/rest01"
+                android:scaleType="centerCrop" />
+
+           <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+                   <TextView
+                       android:id="@+id/notification_list_restaurant_name"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="0.5"
+                       android:text="El novillo Alegre"/>
+                   <TextView
+                       android:id="@+id/notification_list_user_name"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="0.5"
+                       android:text="Sent by: Gustavo Quesada"/>
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+                   <TextView
+                       android:id="@+id/notification_list_notification_date"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="0.5"
+                       android:text="11/18/2016"/>
+                   <TextView
+                       android:id="@+id/notification_list_notification_cost"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="0.5"
+                       android:text="$5000"/>
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+                   <Button
+                       android:layout_height="wrap_content"
+                       android:layout_weight="0.5"
+                       android:layout_width="match_parent"
+                       android:text="Cancel"/>
+                   <Button
+                       android:layout_height="wrap_content"
+                       android:layout_weight="0.5"
+                       android:layout_width="match_parent"
+                       android:text="Accept"/>
+               </LinearLayout>
+
+           </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

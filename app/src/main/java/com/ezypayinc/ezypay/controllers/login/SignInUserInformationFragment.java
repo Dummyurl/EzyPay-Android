@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.controllers;
+package com.ezypayinc.ezypay.controllers.login;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,14 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.connection.UserServiceClient;
 import com.ezypayinc.ezypay.model.User;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class SignInUserInformationFragment extends Fragment implements View.OnClickListener {
 
@@ -69,8 +63,10 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
         user.setEmail(edtEmail.getText().toString());
         user.setPassword(edtPassword.getText().toString());
 
-        UserServiceClient service = new UserServiceClient(getContext().getApplicationContext());
-        try {
+        //UserServiceClient service = new UserServiceClient(getContext().getApplicationContext());
+        SignInPaymentInformationFragment fragment = SignInPaymentInformationFragment.newInstance(1);
+        listener.changeView(fragment);
+        /*try {
             service.registerUser(user, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -81,8 +77,7 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    SignInPaymentInformationFragment fragment = SignInPaymentInformationFragment.newInstance(userId);
-                    listener.changeView(fragment);
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -92,7 +87,7 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
             });
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void onStart() {

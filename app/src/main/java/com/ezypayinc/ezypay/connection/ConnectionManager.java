@@ -2,12 +2,14 @@ package com.ezypayinc.ezypay.connection;
 
 import android.content.Context;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -24,7 +26,7 @@ public class ConnectionManager {
     }
 
 
-        public void sendRequest(int httpMethod, String url, JSONObject parameters, Response.Listener successHandler,
+        public void sendRequest(int httpMethod, String url, JSONObject parameters, final HashMap<String, String> headers, Response.Listener successHandler,
                                 Response.ErrorListener errorHandler) {
             url = BASIC_URL + url;
             JsonObjectRequest request = new JsonObjectRequest(httpMethod, url, parameters, successHandler, errorHandler);
@@ -36,4 +38,6 @@ public class ConnectionManager {
             );
             RequestQueueSingleton.getInstance(mContext).addToRequestQueue(request);
         }
+
+
 }

@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">EzyPay</string>
 
+    <!--Navigation Bar Items-->
+    <string name="navigation_bar_scanner_item" translatable="false">Scanner</string>
+    <string name="navigation_bar_notifications_item">Notifications</string>
+    <string name="navigation_bar_settings_item">Settings</string>
+
     <!--BUTTONS-->
     <string name="log_in">Log In</string>
     <string name="log_in_as_restaurant">Log In as Restaurant</string>
@@ -14,6 +19,10 @@
     <string name="prompt_cvv" translatable="false">cvv</string>
     <string name="prompt_email" translatable="false">Email</string>
     <string name="prompt_password">Password</string>
+
+    <!--Labels-->
+    <string name="label_user_information_from_title">Personal Information</string>
+    <string name="label_payment_information_from_title">Payment Information</string>
 
     <!--Spinners items-->
     <string-array name="months">
@@ -30,6 +39,14 @@
         <item>November</item>
         <item>December</item>
     </string-array>
+
+    <!-- TABS-->
+    <string name="tab_notification_fragment_notification">Notifications</string>
+    <string name="tab_notification_fragment_history">History</string>
+
+    <!--MENU ITEMS-->
+    <string name="menu_item_settings_fragment_edit_item">Edit User</string>
+    <string name="menu_item_settings_fragment_sign_out_item">Sign Out</string>
 
     <!-- Strings related to login -->
     <string name="action_sign_in">Sign in</string>

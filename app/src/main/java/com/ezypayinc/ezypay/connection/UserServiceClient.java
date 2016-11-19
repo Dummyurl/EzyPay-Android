@@ -32,7 +32,7 @@ public class UserServiceClient {
 
         int httpMethod = Request.Method.POST;
         String url = "login";
-        connectionManager.sendRequest(httpMethod, url, parameters,successHandler,failureHandler);
+        connectionManager.sendRequest(httpMethod, url, parameters, null, successHandler,failureHandler);
     }
 
     /*register user*/
@@ -46,6 +46,6 @@ public class UserServiceClient {
 
         String url = "user/create";
         int httpMethod = Request.Method.POST;
-        connectionManager.sendRequest(httpMethod, url, parameters, successHandler, failureHandler);
+        connectionManager.sendRequest(httpMethod, url, parameters, null, successHandler, failureHandler);
     }
 }

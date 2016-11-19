@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.controllers;
+package com.ezypayinc.ezypay.controllers.login;
 
 
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.CardServiceClient;
+import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.model.Card;
 
 import org.json.JSONException;
@@ -34,6 +35,7 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
     private EditText edtCardnumber, edtCvv;
     private Spinner spnMonth, spnYear;
     private Button btnSaveCard;
+    private OnFinishWizard listener;
 
     private static final String USER_ID = "user_id";
     private int mUserId;
@@ -112,12 +114,22 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("Error card", error.getMessage());
+                    ErrorHelper.handleError(error, getContext());
                 }
             });
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void onStart() {
+        super.onStart();
+        listener = (SignInPaymentInformationFragment.OnFinishWizard) getActivity();
+
+    }
+
+    public interface OnFinishWizard {
+        void onFinishWizard();
     }
 }
 

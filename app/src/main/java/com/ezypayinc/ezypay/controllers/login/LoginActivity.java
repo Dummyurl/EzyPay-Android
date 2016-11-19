@@ -1,22 +1,17 @@
-package com.ezypayinc.ezypay.controllers;
+package com.ezypayinc.ezypay.controllers.login;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.connection.UserServiceClient;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
 
 /**
  * A login screen that offers login via email/password.
@@ -97,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginMethod(String email, String password){
-        UserServiceClient service = new UserServiceClient(getApplicationContext());
+        /*UserServiceClient service = new UserServiceClient(getApplicationContext());
         try {
             service.login(email, password, new Response.Listener<JSONObject>() {
                 @Override
@@ -107,12 +102,15 @@ public class LoginActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("Error response", error.getMessage());
+                    ErrorHelper.handleError(error, LoginActivity.this);
                 }
             });
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
+
+        Intent intent = new Intent(LoginActivity.this, MainUserActivity.class);
+        startActivity(intent);
     }
 
     private boolean isEmailValid(String email) {

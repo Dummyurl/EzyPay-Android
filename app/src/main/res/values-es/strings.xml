@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Navigation Bar Items-->
+    <string name="navigation_bar_notifications_item">Notificaciones</string>
+    <string name="navigation_bar_settings_item">Configuración</string>
+
     <!--BUTTONS-->
     <string name="log_in">Iniciar Sesión</string>
     <string name="log_in_as_restaurant">Iniciar Sesión como Restaurante</string>
@@ -10,6 +14,10 @@
     <string name="prompt_phone_number">Número Telefónico</string>
     <string name="prompt_card_number">Número de Tarjeta</string>
     <string name="prompt_password">Contraseña</string>
+
+    <!--Labels-->
+    <string name="label_user_information_from_title">Información Personal</string>
+    <string name="label_payment_information_from_title">Información de Pago</string>
 
 
     <!--Spinners items-->
@@ -27,4 +35,12 @@
         <item>Noviembre</item>
         <item>Diciembre</item>
     </string-array>
+
+    <!-- TABS-->
+    <string name="tab_notification_fragment_notification">Notificaciones</string>
+    <string name="tab_notification_fragment_history">Historial</string>
+
+    <!--MENU ITEMS-->
+    <string name="menu_item_settings_fragment_edit_item">Editar Usuarion</string>
+    <string name="menu_item_settings_fragment_sign_out_item">Cerrar Sesión</string>
 </resources>
