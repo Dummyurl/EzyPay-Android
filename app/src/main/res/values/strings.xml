@@ -8,7 +8,11 @@
 
     <!--BUTTONS-->
     <string name="log_in">Log In</string>
-    <string name="log_in_as_restaurant">Log In as Restaurant</string>
+    <string name="sign_in_as_restaurant">Sign In as Restaurant</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_in_user_information_next">Next</string>
+
     <string name="title_activity_login" translatable="false">Log in</string>
 
     <!--Prompt-->
@@ -23,6 +27,8 @@
     <!--Labels-->
     <string name="label_user_information_from_title">Personal Information</string>
     <string name="label_payment_information_from_title">Payment Information</string>
+    <string name="label_login_or">OR</string>
+    <string name="label_loading_text">Loading</string>
 
     <!--Spinners items-->
     <string-array name="months">
@@ -49,8 +55,6 @@
     <string name="menu_item_settings_fragment_sign_out_item">Sign Out</string>
 
     <!-- Strings related to login -->
-    <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>

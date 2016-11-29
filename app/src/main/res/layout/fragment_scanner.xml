@@ -3,71 +3,134 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#fff"
     tools:context="com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scanner_init_scanner"
-        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scanner_layout"
         android:visibility="gone"
-        android:layout_marginTop="300px">
-        <ImageView
-            android:layout_width="300px"
-            android:layout_height="300px"
-            android:layout_gravity="center"
-            android:src="@drawable/picture"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:id="@+id/scanner_btnInitScanner"
-            android:text="Scanner QR Code"/>
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.ezypayinc.ezypay.controllers.camera.CameraSourcePreview
+            android:id="@+id/preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.ezypayinc.ezypay.controllers.camera.GraphicOverlay
+                android:id="@+id/overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </com.ezypayinc.ezypay.controllers.camera.CameraSourcePreview>
+
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scanner_result_scanner"
-        android:layout_marginTop="300px"
-        android:orientation="vertical">
-
-        <ImageView
-            android:layout_width="300px"
-            android:layout_height="300px"
-            android:layout_gravity="center"
-            android:src="@drawable/picture"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="RESTAURANT NAME"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="$150000"/>
+        android:visibility="gone">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/scanner_result_scanner"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:text="Restaurante El Novillo Alegre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:id="@+id/textView" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="500px"
+                android:src="@drawable/rest02"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="3dp"
             android:orientation="horizontal">
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:layout_weight="0.5"
-                android:id="@+id/scanner_btnPay"
-                android:text="Pay"/>
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded_button"
+                android:text="Cuenta"/>
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:id="@+id/scanner_btnSplitPayment"
-                android:text="Split"/>
-
+                android:background="@drawable/rounded_button"
+                android:text="Mesero"/>
         </LinearLayout>
+    </RelativeLayout>
 
-    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rest02"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:background="#80000000"
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical"
+                    android:text="El Novillo Alegre"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:padding="8dp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0.5"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/rounded_button"
+                android:text="Cuenta"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@drawable/rounded_button"
+                android:text="Mesero"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
 
 </LinearLayout>

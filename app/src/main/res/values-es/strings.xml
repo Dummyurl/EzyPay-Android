@@ -6,7 +6,9 @@
 
     <!--BUTTONS-->
     <string name="log_in">Iniciar Sesión</string>
-    <string name="log_in_as_restaurant">Iniciar Sesión como Restaurante</string>
+    <string name="sign_in_as_restaurant">Registrarse como Restaurante</string>
+    <string name="action_sign_in">Registrarse</string>
+    <string name="action_sign_in_short">Registrarse</string>
 
     <!--Prompt-->
     <string name="prompt_name">Nombre</string>
@@ -18,6 +20,8 @@
     <!--Labels-->
     <string name="label_user_information_from_title">Información Personal</string>
     <string name="label_payment_information_from_title">Información de Pago</string>
+    <string name="label_login_or">Ó</string>
+    <string name="label_loading_text">Cargando</string>
 
 
     <!--Spinners items-->

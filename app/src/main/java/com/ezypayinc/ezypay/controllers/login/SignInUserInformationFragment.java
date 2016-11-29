@@ -2,7 +2,6 @@ package com.ezypayinc.ezypay.controllers.login;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,14 +9,20 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.connection.ErrorHelper;
+import com.ezypayinc.ezypay.controllers.login.interfaceViews.SignInUserInformationView;
 import com.ezypayinc.ezypay.model.User;
+import com.ezypayinc.ezypay.presenter.ISignInUserInformationPresenter;
+import com.ezypayinc.ezypay.presenter.SignInUserInformationPresenter;
 
-public class SignInUserInformationFragment extends Fragment implements View.OnClickListener {
+public class SignInUserInformationFragment extends Fragment implements View.OnClickListener, SignInUserInformationView {
 
     private Button btnSaveUser;
     public OnChangeViewListener listener;
     private EditText edtName, edtLastname,edtPhonenumber, edtEmail,
             edtPassword;
+    private View mRootView;
+    private ISignInUserInformationPresenter mPresenter;
 
     public SignInUserInformationFragment() {
         // Required empty public constructor
@@ -35,6 +40,7 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
+        mPresenter = new SignInUserInformationPresenter(this);
     }
 
     @Override
@@ -42,52 +48,9 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_sign_in_user_information, container, false);
-        edtName = (EditText)rootView.findViewById(R.id.sig_in_name);
-        edtLastname = (EditText)rootView.findViewById(R.id.sig_in_lastname);
-        edtPhonenumber = (EditText)rootView.findViewById(R.id.sig_in_phone_number);
-        edtEmail = (EditText)rootView.findViewById(R.id.sig_in_email);
-        edtPassword = (EditText)rootView.findViewById(R.id.sign_in_password);
-        btnSaveUser = (Button)rootView.findViewById(R.id.sign_in_save_user_information);
-        btnSaveUser.setOnClickListener(this);
+        initUIComponents(rootView);
+        validateUser();
         return rootView;
-    }
-
-
-    @Override
-    public void onClick(View view) {
-        Log.e("LLego aca","LLego aca");
-        final User user = new User();
-        user.setName(edtName.getText().toString());
-        user.setLastname(edtLastname.getText().toString());
-        user.setPhoneNumber(edtPhonenumber.getText().toString());
-        user.setEmail(edtEmail.getText().toString());
-        user.setPassword(edtPassword.getText().toString());
-
-        //UserServiceClient service = new UserServiceClient(getContext().getApplicationContext());
-        SignInPaymentInformationFragment fragment = SignInPaymentInformationFragment.newInstance(1);
-        listener.changeView(fragment);
-        /*try {
-            service.registerUser(user, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.e("LLego aca","respuesta");
-                    int userId = 0;
-                    try {
-                        userId = response.getInt("response");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("Error message", error.getMessage());
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public void onStart() {
@@ -98,12 +61,66 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
 
     public void onStop() {
         super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         listener = null;
+        mPresenter.onDestroy();
+        mPresenter = null;
+    }
+
+    public void initUIComponents(View rootView) {
+        mRootView = rootView;
+        edtName = (EditText)rootView.findViewById(R.id.sign_in_name);
+        edtLastname = (EditText)rootView.findViewById(R.id.sign_in_lastname);
+        edtPhonenumber = (EditText)rootView.findViewById(R.id.sign_in_phone_number);
+        edtEmail = (EditText)rootView.findViewById(R.id.sign_in_email);
+        edtPassword = (EditText)rootView.findViewById(R.id.sign_in_password);
+        btnSaveUser = (Button)rootView.findViewById(R.id.sign_in_save_user_information);
+        btnSaveUser.setOnClickListener(this);
+    }
+
+    private void validateUser(){
+        User user = mPresenter.validateUser();
+        if(user != null) {
+            edtName.setText(user.getName());
+            edtLastname.setText(user.getLastName());
+            edtPhonenumber.setText(user.getPhoneNumber());
+            edtEmail.setText(user.getEmail());
+        }
+    }
+
+    @Override
+    public void setErrorMessage(int component, int error) {
+        EditText editText = (EditText) mRootView.findViewById(component);
+        editText.setError(getString(error));
+        editText.requestFocus();
+    }
+
+    @Override
+    public void onNetworkError(Object error) {
+        ErrorHelper.handleError(error, getContext());
+    }
+
+    @Override
+    public void navigateToPaymentView() {
+        listener.changeView(SignInPaymentInformationFragment.newInstance());
+    }
+
+    @Override
+    public void onClick(View view) {
+        String name = edtName.getText().toString();
+        String lastname = edtLastname.getText().toString();
+        String phoneNumber = edtPhonenumber.getText().toString();
+        String email = edtEmail.getText().toString();
+        String password = edtPassword.getText().toString();
+        mPresenter.registerUser(name, lastname, phoneNumber, email, password);
     }
 
 
     public interface  OnChangeViewListener {
-
-        public void changeView(Fragment newFragment);
+        void changeView(Fragment newFragment);
     }
 }

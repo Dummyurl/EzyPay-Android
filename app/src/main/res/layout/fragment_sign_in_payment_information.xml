@@ -3,26 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ezypayinc.ezypay.controllers.login.SignInPaymentInformationFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:text="@string/label_payment_information_from_title"
         android:gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:baselineAligned="false">
 
         <android.support.design.widget.TextInputLayout
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_weight="1.10"
+            android:layout_height="72dp"
             android:layout_width="match_parent">
 
             <EditText
@@ -38,8 +36,8 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
+            android:layout_weight="1.90"
+            android:layout_height="72dp"
             android:layout_width="match_parent">
 
             <EditText
@@ -56,6 +54,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -69,13 +68,13 @@
             <Spinner
                 android:id="@+id/sign_in_spn_month"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="72dp"
                 android:layout_width="match_parent"/>
 
             <Spinner
                 android:id="@+id/sign_in_spn_year"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="72dp"
                 android:layout_width="match_parent"/>
 
         </LinearLayout>

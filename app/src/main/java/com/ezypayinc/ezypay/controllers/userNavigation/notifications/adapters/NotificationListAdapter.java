@@ -46,7 +46,6 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             super(itemView);
             imageView = (ImageView)  itemView.findViewById(R.id.notification_list_restaurant_image);
             restaurantName = (TextView) itemView.findViewById(R.id.notification_list_restaurant_name);
-            userName = (TextView) itemView.findViewById(R.id.notification_list_user_name);
             notificationDate = (TextView) itemView.findViewById(R.id.notification_list_notification_date);
             notificationCost = (TextView) itemView.findViewById(R.id.notification_list_notification_cost);
         }

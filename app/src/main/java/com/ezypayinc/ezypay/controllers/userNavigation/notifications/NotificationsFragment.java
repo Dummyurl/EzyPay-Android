@@ -16,7 +16,7 @@ import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.controllers.userNavigation.notifications.adapters.HistoryListAdapter;
 import com.ezypayinc.ezypay.controllers.userNavigation.notifications.adapters.NotificationListAdapter;
 
-public class NotificationsFragment extends Fragment implements TabLayout.OnTabSelectedListener{
+public class NotificationsFragment extends Fragment{
     private TabLayout tabLayout;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -44,48 +44,14 @@ public class NotificationsFragment extends Fragment implements TabLayout.OnTabSe
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_notifications, container, false);
-        tabLayout = (TabLayout) rootView.findViewById(R.id.sliding_tabs);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.notification_fragment_recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new NotificationListAdapter());
-        setupTap();
+        recyclerView.setAdapter(new HistoryListAdapter());
         return rootView;
     }
 
-    private void setupTap() {
-        TabLayout.Tab tabNotification = tabLayout.newTab();
-        tabNotification.setText(getString(R.string.tab_notification_fragment_notification));
-        TabLayout.Tab tabHistory = tabLayout.newTab();
-        tabHistory.setText(getString(R.string.tab_notification_fragment_history));
-
-        tabLayout.addTab(tabNotification);
-        tabLayout.addTab(tabHistory);
-
-        tabLayout.addOnTabSelectedListener(this);
-    }
 
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        recyclerView.setAdapter(null);
-        RecyclerView.Adapter adapter = null;
-        if(tab.getPosition() == 0){
-            adapter = new NotificationListAdapter();
-        } else {
-            adapter = new HistoryListAdapter();
-        }
-        recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
 }

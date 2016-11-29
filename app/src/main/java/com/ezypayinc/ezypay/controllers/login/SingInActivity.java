@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
@@ -26,6 +27,8 @@ public class SingInActivity extends AppCompatActivity implements SignInUserInfor
             fragmentTransaction.commit();
         }
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override
@@ -33,6 +36,7 @@ public class SingInActivity extends AppCompatActivity implements SignInUserInfor
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.sign_in_container_view, newFragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 
@@ -40,5 +44,24 @@ public class SingInActivity extends AppCompatActivity implements SignInUserInfor
     public void onFinishWizard() {
         Intent intent = new Intent(SingInActivity.this, MainUserActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

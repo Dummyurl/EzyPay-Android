@@ -1,5 +1,6 @@
 package com.ezypayinc.ezypay.model;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 
 /**
@@ -10,13 +11,13 @@ public class User extends RealmObject {
 
     private int id;
     private String name;
-    private String lastname;
+    private String lastName;
     private String phoneNumber;
     private String email;
     private String password;
+    private String token;
+    private RealmList<Card> cards;
 
-    public User(){
-    }
 
     public int getId() {
         return id;
@@ -34,12 +35,12 @@ public class User extends RealmObject {
         this.name = name;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhoneNumber() {
@@ -64,5 +65,21 @@ public class User extends RealmObject {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return this.token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public RealmList<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(RealmList<Card> cards) {
+        this.cards = cards;
     }
 }

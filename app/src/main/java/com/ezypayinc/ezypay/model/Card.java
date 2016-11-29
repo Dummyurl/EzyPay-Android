@@ -12,17 +12,7 @@ public class Card extends RealmObject{
     private int cvv;
     private int month;
     private int year;
-    private User user;
-    private String cardNumber;
-
-    public Card(){
-        this.id = 0;
-        this.cvv = 0;
-        this.month = 0;
-        this.year = 0;
-        this.user = new User();
-        this.cardNumber = "";
-    }
+    private String number;
 
     public int getId() {
         return id;
@@ -56,19 +46,11 @@ public class Card extends RealmObject{
         this.year = year;
     }
 
-    public User getUser() {
-        return user;
+    public String getNumber() {
+        return number;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
+    public void setNumber(String number) {
+        this.number = number;
     }
 }
