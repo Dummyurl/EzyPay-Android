@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class ConnectionManager {
 
-    private static final String BASIC_URL = "http://192.168.1.102:3000/";
+    private static final String BASIC_URL = "http://192.168.1.110:3000/";
     private Context mContext;
 
     public ConnectionManager() {

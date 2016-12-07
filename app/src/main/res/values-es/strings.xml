@@ -2,6 +2,7 @@
 <resources>
     <!--Navigation Bar Items-->
     <string name="navigation_bar_notifications_item">Notificaciones</string>
+    <string name="navigation_bar_credit_card_item">Tarjetas</string>
     <string name="navigation_bar_settings_item">Configuración</string>
 
     <!--BUTTONS-->

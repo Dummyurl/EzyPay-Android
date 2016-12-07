@@ -4,6 +4,7 @@
     <!--Navigation Bar Items-->
     <string name="navigation_bar_scanner_item" translatable="false">Scanner</string>
     <string name="navigation_bar_notifications_item">Notifications</string>
+    <string name="navigation_bar_credit_card_item">Cards</string>
     <string name="navigation_bar_settings_item">Settings</string>
 
     <!--BUTTONS-->

@@ -9,6 +9,10 @@
         android:icon="@mipmap/ic_notification"
         android:title="@string/navigation_bar_notifications_item" />
     <item
+        android:id="@+id/credit_card_item"
+        android:icon="@mipmap/ic_notification"
+        android:title="@string/navigation_bar_credit_card_item" />
+    <item
         android:id="@+id/settings_item"
         android:icon="@mipmap/ic_settings"
         android:title="@string/navigation_bar_settings_item" />
