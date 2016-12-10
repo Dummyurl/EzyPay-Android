@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ezypayinc.ezypay.controllers.userNavigation.cards.CardDetailFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:baselineAligned="false">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_weight="1.10"
+            android:layout_height="72dp"
+            android:layout_width="match_parent"
+            tools:ignore="InefficientWeight">
+
+            <EditText
+                android:id="@+id/card_detail_card_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_card_number"
+                android:inputType="number"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_weight="0.3"
+            android:layout_height="72dp"
+            android:layout_width="match_parent">
+
+            <EditText
+                android:id="@+id/card_detail_month"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_month"
+                android:inputType="number"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_weight="0.3"
+            android:layout_height="72dp"
+            android:layout_width="match_parent">
+
+            <EditText
+                android:id="@+id/card_detail_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_year"
+                android:inputType="number"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_weight="0.3"
+            android:layout_height="72dp"
+            android:layout_width="match_parent">
+
+            <EditText
+                android:id="@+id/card_detail_cvv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_cvv"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
+                android:inputType="number"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
+
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/card_detail_action" />
+</LinearLayout>

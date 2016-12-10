@@ -1,5 +1,6 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.cards.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +9,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.model.Card;
 
 /**
  * Created by Gustavo Quesada S on 07/12/2016.
  */
 
 public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.CardsViewHolder>{
+
+    public interface OnItemClickListener {
+        void onClickListener(Card card);
+    }
+
+    private Context mContext;
+    private OnItemClickListener mListener;
+
+    public CardsListAdapter(Context context, OnItemClickListener listener) {
+        mContext = context;
+        mListener = listener;
+    }
 
     @Override
     public CardsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -25,7 +39,12 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.Card
 
     @Override
     public void onBindViewHolder(CardsViewHolder holder, int position) {
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClickListener(null);
+            }
+        });
     }
 
     @Override

@@ -13,6 +13,8 @@
     <string name="action_sign_in">Sign in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_sign_in_user_information_next">Next</string>
+    <string name="action_card_detail_add_card">Add Card</string>
+    <string name="action_card_detail_edit_card">Edit Card</string>
 
     <string name="title_activity_login" translatable="false">Log in</string>
 
@@ -24,6 +26,8 @@
     <string name="prompt_cvv" translatable="false">cvv</string>
     <string name="prompt_email" translatable="false">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_month" translatable="false">MM</string>
+    <string name="prompt_year" translatable="false">YY</string>
 
     <!--Labels-->
     <string name="label_user_information_from_title">Personal Information</string>
@@ -52,6 +56,8 @@
     <string name="tab_notification_fragment_history">History</string>
 
     <!--MENU ITEMS-->
+    <string name="menu_item_cards_fragment_add_card_item">Add Card</string>
+    <string name="menu_item_card_detail_fragment_edit_card_item">Edit Card</string>
     <string name="menu_item_settings_fragment_edit_item">Edit User</string>
     <string name="menu_item_settings_fragment_sign_out_item">Sign Out</string>
 

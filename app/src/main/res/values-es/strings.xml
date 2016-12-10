@@ -10,6 +10,8 @@
     <string name="sign_in_as_restaurant">Registrarse como Restaurante</string>
     <string name="action_sign_in">Registrarse</string>
     <string name="action_sign_in_short">Registrarse</string>
+    <string name="action_card_detail_add_card">Agregar Tarjeta</string>
+    <string name="action_card_detail_edit_card">Editar Tarjeta</string>
 
     <!--Prompt-->
     <string name="prompt_name">Nombre</string>
@@ -46,6 +48,8 @@
     <string name="tab_notification_fragment_history">Historial</string>
 
     <!--MENU ITEMS-->
+    <string name="menu_item_cards_fragment_add_card_item">Agregar Tarjeta</string>
+    <string name="menu_item_card_detail_fragment_edit_card_item">Editar Tarjeta</string>
     <string name="menu_item_settings_fragment_edit_item">Editar Usuarion</string>
     <string name="menu_item_settings_fragment_sign_out_item">Cerrar Sesión</string>
 </resources>

@@ -1,6 +1,10 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.navigation;
 
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.ezypayinc.ezypay.R;
@@ -43,7 +47,7 @@ public class MainUserActivity extends AppCompatActivity {
                     case R.id.notifications_item:
                         newFragment = NotificationsFragment.newInstance();
                         break;
-                    case R.id.credit_card_item:
+                   case R.id.credit_card_item:
                         newFragment = CardsFragment.newInstance();
                         break;
                     case R.id.settings_item:
@@ -57,6 +61,7 @@ public class MainUserActivity extends AppCompatActivity {
                         .commit();
             }
         });
+        bottomBar.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.bottom_bar_background));
         bottomBar.setActiveTabColor("#C2185B");
     }
 

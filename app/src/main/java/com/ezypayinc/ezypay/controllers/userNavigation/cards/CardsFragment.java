@@ -1,18 +1,27 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.cards;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.controllers.userNavigation.cards.adapters.CardsListAdapter;
+import com.ezypayinc.ezypay.model.Card;
 
-public class CardsFragment extends Fragment {
+import static com.ezypayinc.ezypay.controllers.userNavigation.cards.CardDetailViewType.ADDCARD;
+import static com.ezypayinc.ezypay.controllers.userNavigation.cards.CardDetailViewType.VIEWCARD;
+
+public class CardsFragment extends Fragment implements CardsListAdapter.OnItemClickListener {
     private RecyclerView cardListRecyclerView;
     private CardsListAdapter adapter;
 
@@ -40,11 +49,43 @@ public class CardsFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_cards, container, false);
         cardListRecyclerView = (RecyclerView) rootView.findViewById(R.id.cards_list_recycler_view);
-        adapter = new CardsListAdapter();
+        adapter = new CardsListAdapter(getContext(), this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         cardListRecyclerView.setLayoutManager(mLayoutManager);
         cardListRecyclerView.setItemAnimator(new DefaultItemAnimator());
         cardListRecyclerView.setAdapter(adapter);
+        setHasOptionsMenu(true);
         return rootView;
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.cards_view_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.add_card_item) {
+            Intent intent = new Intent(getActivity(), CardsMainActivity.class);
+            Bundle args = new Bundle();
+            args.putInt(CardDetailFragment.CARD_ID, 0);
+            args.putInt(CardDetailFragment.VIEW_TYPE, ADDCARD.getType());
+            intent.putExtras(args);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClickListener(Card card) {
+        Intent intent = new Intent(getActivity(), CardsMainActivity.class);
+        Bundle args = new Bundle();
+        args.putInt(CardDetailFragment.CARD_ID, 0);
+        args.putInt(CardDetailFragment.VIEW_TYPE, VIEWCARD.getType());
+        intent.putExtras(args);
+        startActivity(intent);
     }
 }

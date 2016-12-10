@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft = "5dp"
             android:layout_toRightOf="@+id/cards_list_card_icon"
-            android:text="CREDIT CARD 1234"/>
+            android:text="CREDIT CARD ******1234"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
