@@ -2,9 +2,7 @@ package com.ezypayinc.ezypay.controllers.login;
 
 
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,21 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.connection.CardServiceClient;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.SignInPaymentInformationView;
-import com.ezypayinc.ezypay.model.Card;
-import com.ezypayinc.ezypay.presenter.ISignInPaymentInformationPresenter;
-import com.ezypayinc.ezypay.presenter.SignInPaymentInformationPresenter;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ezypayinc.ezypay.presenter.LoginPresenters.ISignInPaymentInformationPresenter;
+import com.ezypayinc.ezypay.presenter.LoginPresenters.SignInPaymentInformationPresenter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.

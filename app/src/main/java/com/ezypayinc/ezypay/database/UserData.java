@@ -3,6 +3,8 @@ package com.ezypayinc.ezypay.database;
 import com.ezypayinc.ezypay.model.Card;
 import com.ezypayinc.ezypay.model.User;
 
+import java.util.List;
+
 import io.realm.Realm;
 
 /**
@@ -41,5 +43,23 @@ public class UserData {
             result.deleteFromRealm();
         }
         realm.commitTransaction();
+    }
+
+    public Card getCardById(int cardId) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        Card card = realm.where(Card.class).equalTo("id", cardId).findFirst();
+        realm.commitTransaction();
+        return card;
+    }
+
+    public void addCards(List<Card> cards) {
+        User user = getUser();
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        user.getCards().deleteAllFromRealm();
+        user.getCards().addAll(cards);
+        realm.commitTransaction();
+
     }
 }

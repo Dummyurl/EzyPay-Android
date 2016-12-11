@@ -1,7 +1,6 @@
-package com.ezypayinc.ezypay.presenter;
+package com.ezypayinc.ezypay.presenter.LoginPresenters;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;

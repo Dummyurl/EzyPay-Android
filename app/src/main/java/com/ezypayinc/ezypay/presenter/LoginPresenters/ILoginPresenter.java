@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.presenter;
+package com.ezypayinc.ezypay.presenter.LoginPresenters;
 
 /**
  * Created by gustavoquesada on 11/23/16.

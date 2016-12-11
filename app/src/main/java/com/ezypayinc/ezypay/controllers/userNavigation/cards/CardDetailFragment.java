@@ -14,16 +14,18 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.Card;
 
 import static com.ezypayinc.ezypay.controllers.userNavigation.cards.CardDetailViewType.ADDCARD;
 import static com.ezypayinc.ezypay.controllers.userNavigation.cards.CardDetailViewType.EDITCARD;
 import static com.ezypayinc.ezypay.controllers.userNavigation.cards.CardDetailViewType.VIEWCARD;
 
-public class CardDetailFragment extends Fragment implements CardsMainActivity.OnBackPressedListener {
+public class CardDetailFragment extends Fragment implements CardsMainActivity.OnBackPressedListener, View.OnClickListener {
     private EditText edtCardNumber, edtMonth, edtYear, edtCvv;
     private Button btnSubmit;
     private int mCardDetailViewType, mCardId;
+    private Card card;
 
     public static final String CARD_ID = "CARDID";
     public static final String VIEW_TYPE = "VIEWTYPE";
@@ -56,6 +58,10 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_card_detail, container, false);
         initComponents(rootView);
+        UserManager userManager = new UserManager();
+        if(mCardId != 0){
+            card = userManager.getCardById(mCardId);
+        }
         setupView();
         return rootView;
     }
@@ -72,17 +78,18 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
         edtYear = (EditText) rootView.findViewById(R.id.card_detail_year);
         edtCvv = (EditText) rootView.findViewById(R.id.card_detail_cvv);
         btnSubmit = (Button) rootView.findViewById(R.id.card_detail_action);
+        btnSubmit.setOnClickListener(this);
     }
 
     public void setupView() {
         if(mCardDetailViewType == VIEWCARD.getType()) {
             setupViewCardView();
-            setComponentsWithCard(null);
+            setComponentsWithCard();
         } else if(mCardDetailViewType == ADDCARD.getType()) {
             setupAddCardView();
         } else {
             setupEditCardView();
-            setComponentsWithCard(null);
+            setComponentsWithCard();
         }
     }
 
@@ -112,11 +119,13 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
 
     }
 
-    public void setComponentsWithCard(Card card) {
-        edtCardNumber.setText(".... .... .... 1234");
-        edtMonth.setText("05");
-        edtYear.setText("19");
-        edtCvv.setText("123");
+    public void setComponentsWithCard() {
+        if(card != null) {
+            edtCardNumber.setText(card.getNumber());
+            edtMonth.setText(String.valueOf(card.getMonth()));
+            edtYear.setText(String.valueOf(card.getYear()));
+            edtCvv.setText(String.valueOf(card.getCvv()));
+        }
     }
 
     @Override
@@ -146,5 +155,10 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
             setupViewCardView();
             return false;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        getActivity().finish();
     }
 }

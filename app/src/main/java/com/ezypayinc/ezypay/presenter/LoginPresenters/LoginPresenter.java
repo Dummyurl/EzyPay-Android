@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.presenter;
+package com.ezypayinc.ezypay.presenter.LoginPresenters;
 
 import android.text.TextUtils;
 import com.android.volley.Response;

@@ -10,6 +10,8 @@ import com.ezypayinc.ezypay.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 /**
  * Created by gustavoquesada on 11/22/16.
  */
@@ -29,6 +31,16 @@ public class UserManager {
     public void deleteUser() {
         UserData userData = new UserData();
         userData.deleteUser();
+    }
+
+    public void addCards(List<Card> cards) {
+        UserData userData = new UserData();
+        userData.addCards(cards);
+    }
+
+    public Card getCardById(int cardId) {
+        UserData userData = new UserData();
+        return userData.getCardById(cardId);
     }
 
     /*web services methods*/

@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.model.Card;
 
+import java.util.List;
+
 /**
  * Created by Gustavo Quesada S on 07/12/2016.
  */
@@ -22,11 +24,14 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.Card
     }
 
     private Context mContext;
+    private List<Card> mCardList;
     private OnItemClickListener mListener;
 
-    public CardsListAdapter(Context context, OnItemClickListener listener) {
+    public CardsListAdapter(Context context, OnItemClickListener listener, List<Card> cardList) {
         mContext = context;
         mListener = listener;
+        mCardList = cardList;
+
     }
 
     @Override
@@ -39,17 +44,19 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.Card
 
     @Override
     public void onBindViewHolder(CardsViewHolder holder, int position) {
+        final Card card = mCardList.get(position);
+        holder.tvCard.setText(card.getNumber());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickListener(null);
+                mListener.onClickListener(card);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mCardList.size();
     }
 
     public class CardsViewHolder extends RecyclerView.ViewHolder {

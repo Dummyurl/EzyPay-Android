@@ -4,25 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.LoginView;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
-import com.ezypayinc.ezypay.manager.UserManager;
-import com.ezypayinc.ezypay.model.User;
-import com.ezypayinc.ezypay.presenter.ILoginPresenter;
-import com.ezypayinc.ezypay.presenter.LoginPresenter;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.ezypayinc.ezypay.presenter.LoginPresenters.ILoginPresenter;
+import com.ezypayinc.ezypay.presenter.LoginPresenters.LoginPresenter;
 
 /**
  * A login screen that offers login via email/password.

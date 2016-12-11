@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.presenter;
+package com.ezypayinc.ezypay.presenter.LoginPresenters;
 
 import com.ezypayinc.ezypay.model.User;
 

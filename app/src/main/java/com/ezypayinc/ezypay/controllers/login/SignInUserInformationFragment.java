@@ -12,8 +12,8 @@ import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.SignInUserInformationView;
 import com.ezypayinc.ezypay.model.User;
-import com.ezypayinc.ezypay.presenter.ISignInUserInformationPresenter;
-import com.ezypayinc.ezypay.presenter.SignInUserInformationPresenter;
+import com.ezypayinc.ezypay.presenter.LoginPresenters.ISignInUserInformationPresenter;
+import com.ezypayinc.ezypay.presenter.LoginPresenters.SignInUserInformationPresenter;
 
 public class SignInUserInformationFragment extends Fragment implements View.OnClickListener, SignInUserInformationView {
 
