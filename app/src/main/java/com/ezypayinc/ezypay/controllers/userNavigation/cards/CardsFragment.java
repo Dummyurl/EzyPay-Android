@@ -60,9 +60,14 @@ public class CardsFragment extends Fragment implements CardsListAdapter.OnItemCl
         cardListRecyclerView = (RecyclerView) rootView.findViewById(R.id.cards_list_recycler_view);
         setupProgressDialog();
         presenter = new CardListPresenter(this);
-        presenter.getCardsByUser();
         setHasOptionsMenu(true);
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getCardsByUser();
     }
 
     @Override

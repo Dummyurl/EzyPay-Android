@@ -22,7 +22,7 @@ import java.util.List;
 public class CardServiceClient {
 
     private ConnectionManager connectionManager;
-    private static final String BASE_URL  = "card";
+    private static final String BASE_URL  = "card/";
     private static final String CONTENT_TYPE = "application/json";
 
     public CardServiceClient() {
@@ -69,7 +69,7 @@ public class CardServiceClient {
         JSONArray array = new JSONArray();
         array.put(parameters);
         int httpMethod = Request.Method.POST;
-        String url = BASE_URL + "/getAll";
+        String url = BASE_URL + "getAll";
         connectionManager.sendArrayRequest(httpMethod,url,array,headers, successHandler, errorListener);
     }
 
@@ -86,5 +86,26 @@ public class CardServiceClient {
             cardList.add(card);
         }
         return cardList;
+    }
+
+    public void updateCard(Card card, Response.Listener successHandler, Response.ErrorListener errorListener) throws JSONException {
+        User user = UserSingleton.getInstance().getUser();
+        //set headers
+        String oauthToken = "Bearer "+ user.getToken();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+        //set parameters
+        JSONObject parameters = new JSONObject();
+        parameters.put("number", card.getNumber());
+        parameters.put("cvv", card.getCvv());
+        parameters.put("month", card.getMonth());
+        parameters.put("year", card.getYear());
+        parameters.put("userId", user.getId());
+        JSONArray array = new JSONArray();
+        array.put(parameters);
+        int httpMethod = Request.Method.PUT;
+        String url = BASE_URL + card.getId();
+        connectionManager.sendArrayRequest(httpMethod,url,array,headers,successHandler, errorListener);
     }
 }

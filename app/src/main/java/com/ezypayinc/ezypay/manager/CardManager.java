@@ -37,4 +37,9 @@ public class CardManager {
         return service.parseGetCardsResponse(response);
     }
 
+    public void updateCardInServer(Card card, Response.Listener successListener, Response.ErrorListener errorListener) throws JSONException {
+        CardServiceClient service = new CardServiceClient();
+        service.updateCard(card, successListener, errorListener);
+    }
+
 }

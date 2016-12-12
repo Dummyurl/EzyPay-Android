@@ -61,14 +61,14 @@
     <string name="menu_item_settings_fragment_edit_item">Edit User</string>
     <string name="menu_item_settings_fragment_sign_out_item">Sign Out</string>
 
-    <!-- Strings related to login -->
+    <!-- Error Messages -->
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
+    <string name="error_invalid_card_number">Invalid card number</string>
+    <string name="error_invalid_year">Invalid year</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

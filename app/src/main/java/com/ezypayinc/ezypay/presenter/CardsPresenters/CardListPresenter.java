@@ -34,7 +34,6 @@ public class CardListPresenter implements ICardListPresenter {
     public void getCardsByUser() {
         final CardManager cardManager = new CardManager();
         final UserManager userManager = new UserManager();
-        cardListView.showProgressDialog();
         try {
             cardManager.getCardsByUser(new Response.Listener<JSONArray>() {
                 @Override
@@ -47,12 +46,10 @@ public class CardListPresenter implements ICardListPresenter {
                     }
                     cardListView.populateCardList(cardList);
                     userManager.addCards(cardList);
-                    cardListView.hideProgressDialog();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    cardListView.hideProgressDialog();
                     cardListView.onNetworkError(error);
                 }
             });
