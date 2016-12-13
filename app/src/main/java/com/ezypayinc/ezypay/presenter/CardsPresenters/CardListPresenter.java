@@ -1,21 +1,14 @@
 package com.ezypayinc.ezypay.presenter.CardsPresenters;
 
-import android.util.Log;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.ezypayinc.ezypay.connection.ErrorHelper;
-import com.ezypayinc.ezypay.controllers.userNavigation.cards.interfaceViews.ICardListView;
+import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews.ICardListView;
 import com.ezypayinc.ezypay.manager.CardManager;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.Card;
-import com.ezypayinc.ezypay.model.User;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 

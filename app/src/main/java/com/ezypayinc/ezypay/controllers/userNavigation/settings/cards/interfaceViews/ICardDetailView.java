@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.controllers.userNavigation.cards.interfaceViews;
+package com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews;
 
 /**
  * Created by Gustavo Quesada S on 11/12/2016.

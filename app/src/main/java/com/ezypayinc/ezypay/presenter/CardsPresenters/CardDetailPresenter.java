@@ -6,10 +6,8 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.base.UserSingleton;
-import com.ezypayinc.ezypay.controllers.userNavigation.cards.interfaceViews.ICardDetailView;
+import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews.ICardDetailView;
 import com.ezypayinc.ezypay.manager.CardManager;
-import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.Card;
 
 import org.json.JSONArray;

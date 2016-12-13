@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.controllers.userNavigation.cards.interfaceViews;
+package com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews;
 
 import com.ezypayinc.ezypay.model.Card;
 

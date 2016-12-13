@@ -1,14 +1,10 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.navigation;
 
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.controllers.userNavigation.cards.CardsFragment;
 import com.ezypayinc.ezypay.controllers.userNavigation.notifications.NotificationsFragment;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.SettingsFragment;
@@ -46,9 +42,6 @@ public class MainUserActivity extends AppCompatActivity {
                         break;
                     case R.id.notifications_item:
                         newFragment = NotificationsFragment.newInstance();
-                        break;
-                   case R.id.credit_card_item:
-                        newFragment = CardsFragment.newInstance();
                         break;
                     case R.id.settings_item:
                         newFragment = SettingsFragment.newInstance();

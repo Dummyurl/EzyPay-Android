@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.controllers.userNavigation.cards.adapters;
+package com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

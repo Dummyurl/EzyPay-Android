@@ -23,7 +23,7 @@ import java.io.IOException;
 
 public class ScannerFragment extends Fragment implements View.OnClickListener, IBarcodeReaderListener{
 
-    private LinearLayout scannerLayout, scannerResult;
+    private LinearLayout scannerLayout;
     private CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
     private CameraSource mCameraSource;
@@ -53,7 +53,6 @@ public class ScannerFragment extends Fragment implements View.OnClickListener, I
         View rootView  = inflater.inflate(R.layout.fragment_scanner, container, false);
         mPreview = (CameraSourcePreview) rootView.findViewById(R.id.preview);
         scannerLayout = (LinearLayout) rootView.findViewById(R.id.scanner_layout);
-        scannerResult = (LinearLayout) rootView.findViewById(R.id.scanner_result_scanner);
         mGraphicOverlay = (GraphicOverlay) rootView.findViewById(R.id.overlay);
 
         /*BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(getContext()).build();
@@ -105,7 +104,6 @@ public class ScannerFragment extends Fragment implements View.OnClickListener, I
         mPreview.stop();
         mCameraSource.release();
         scannerLayout.setVisibility(View.GONE);
-        scannerResult.setVisibility(View.VISIBLE);
 
     }
 }

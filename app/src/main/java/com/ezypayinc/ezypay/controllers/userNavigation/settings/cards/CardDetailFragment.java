@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.controllers.userNavigation.cards;
+package com.ezypayinc.ezypay.controllers.userNavigation.settings.cards;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -14,15 +14,15 @@ import android.widget.EditText;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
-import com.ezypayinc.ezypay.controllers.userNavigation.cards.interfaceViews.ICardDetailView;
+import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews.ICardDetailView;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.Card;
 import com.ezypayinc.ezypay.presenter.CardsPresenters.CardDetailPresenter;
 import com.ezypayinc.ezypay.presenter.CardsPresenters.ICardDetailPresenter;
 
-import static com.ezypayinc.ezypay.controllers.userNavigation.cards.CardDetailViewType.ADDCARD;
-import static com.ezypayinc.ezypay.controllers.userNavigation.cards.CardDetailViewType.EDITCARD;
-import static com.ezypayinc.ezypay.controllers.userNavigation.cards.CardDetailViewType.VIEWCARD;
+import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardDetailViewType.ADDCARD;
+import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardDetailViewType.EDITCARD;
+import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardDetailViewType.VIEWCARD;
 
 public class CardDetailFragment extends Fragment implements CardsMainActivity.OnBackPressedListener, View.OnClickListener, ICardDetailView {
     private EditText edtCardNumber, edtMonth, edtYear, edtCvv;
@@ -205,7 +205,7 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
 
     @Override
     public void navigateToCardList() {
-        getActivity().finish();
+        super.getActivity().onBackPressed();
     }
 
     @Override

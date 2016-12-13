@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#ffffff"
-    tools:context="com.ezypayinc.ezypay.controllers.userNavigation.cards.CardsMainActivity">
+    tools:context=".controllers.userNavigation.settings.cards.CardsMainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"

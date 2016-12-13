@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/credit_cards_item"
+        android:icon="@drawable/ic_credit_card"
+        android:title="@string/menu_item_settings_fragment_credit_cars_item"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom" />
     <item  android:id="@+id/edit_user_item"
         android:title="@string/menu_item_settings_fragment_edit_item"/>
     <item  android:id="@+id/sign_out_item"

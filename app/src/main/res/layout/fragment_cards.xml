@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context="com.ezypayinc.ezypay.controllers.userNavigation.cards.CardsFragment">
+    tools:context=".controllers.userNavigation.settings.cards.CardsFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/cards_list_recycler_view"

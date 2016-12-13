@@ -1,10 +1,10 @@
-package com.ezypayinc.ezypay.controllers.userNavigation.cards;
+package com.ezypayinc.ezypay.controllers.userNavigation.settings.cards;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment;
 
 public class CardsMainActivity extends AppCompatActivity {
 
@@ -14,14 +14,12 @@ public class CardsMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cards_main);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if(savedInstanceState == null){
-            int cardId = this.getIntent().getIntExtra(CardDetailFragment.CARD_ID, 0);
-            int viewType = this.getIntent().getIntExtra(CardDetailFragment.VIEW_TYPE, 0);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.cards_main_container, CardDetailFragment.newInstance(cardId, viewType))
+                    .add(R.id.cards_main_container, CardsFragment.newInstance())
                     .commit();
         }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void setListener(OnBackPressedListener listener) {
@@ -32,12 +30,25 @@ public class CardsMainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if(mListener != null) {
             if(mListener.onBackPressed()) {
-                super.onBackPressed();
+                mListener = null;
+                getSupportFragmentManager().popBackStack();
             }
+        } else {
+            super.onBackPressed();
         }
     }
 
     public interface OnBackPressedListener {
         boolean onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

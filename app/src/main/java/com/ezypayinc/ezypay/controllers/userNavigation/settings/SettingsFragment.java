@@ -1,15 +1,18 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.settings;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardsMainActivity;
 
 public class SettingsFragment extends Fragment {
 
@@ -46,5 +49,15 @@ public class SettingsFragment extends Fragment {
         menu.clear();
         inflater.inflate(R.menu.settings_view_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.credit_cards_item:
+                Intent intent = new Intent(getActivity(), CardsMainActivity.class);
+                getActivity().startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
