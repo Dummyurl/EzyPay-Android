@@ -39,9 +39,9 @@ public class LoginPresenter  implements ILoginPresenter{
     public void validateUser() {
         UserManager manager = new UserManager();
         User user = manager.getUser();
-        if(user != null && user.getToken() != null) {
-            UserSingleton userSingleton = UserSingleton.getInstance();
-            userSingleton.setUser(user);
+        if(user == null) {
+            /*UserSingleton userSingleton = UserSingleton.getInstance();
+            userSingleton.setUser(user);*/
             loginView.navigateToHome();
         }
     }
