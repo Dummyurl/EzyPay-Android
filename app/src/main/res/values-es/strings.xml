@@ -52,6 +52,7 @@
     <string name="menu_item_cards_fragment_add_card_item">Agregar Tarjeta</string>
     <string name="menu_item_card_detail_fragment_edit_card_item">Editar Tarjeta</string>
     <string name="menu_item_settings_fragment_credit_cars_item">Tarjetas de Crédito</string>
-    <string name="menu_item_settings_fragment_edit_item">Editar Usuarion</string>
+    <string name="menu_item_settings_fragment_edit_item">Editar Usuario</string>
+    <string name="menu_item_scanner_fragment_delete_ticket_item">Eliminar Ticket</string>
     <string name="menu_item_settings_fragment_sign_out_item">Cerrar Sesión</string>
 </resources>

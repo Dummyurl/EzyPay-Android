@@ -1,12 +1,20 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.payment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -65,6 +73,37 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
         return rootView;
     }
 
+    public void fadeInAnimation(final View viewFadeIn, final View viewToHide) {
+        ObjectAnimator fadeIn = ObjectAnimator.ofFloat(viewFadeIn, "alpha", .3f, 1f);
+        fadeIn.setDuration(500);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(fadeIn);
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                viewToHide.setVisibility(View.GONE);
+                viewFadeIn.setVisibility(View.VISIBLE);
+            }
+        });
+        animatorSet.start();
+    }
+
+    public void fadeOutAnimation(final View viewFadeOut, final View viewToShow) {
+        ObjectAnimator fadeOut = ObjectAnimator.ofFloat(viewFadeOut, "alpha",  1f, .3f);
+        fadeOut.setDuration(500);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(fadeOut);
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                viewFadeOut.setVisibility(View.GONE);
+                viewToShow.setVisibility(View.VISIBLE);
+            }
+        });
+        animatorSet.start();
+    }
 
     @Override
     public void onResume() {
@@ -88,18 +127,37 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
 
     @Override
     public void showRestaurantDetail(Ticket ticket) {
-        preScannerView.setVisibility(View.GONE);
-        requestServiceView.setVisibility(View.VISIBLE);
+        /*preScannerView.setVisibility(View.GONE);
+        requestServiceView.setVisibility(View.VISIBLE);*/
+        fadeInAnimation(requestServiceView, preScannerView);
+        setHasOptionsMenu(true);
     }
 
     @Override
     public void showScannerView() {
-        preScannerView.setVisibility(View.VISIBLE);
-        requestServiceView.setVisibility(View.GONE);
+        /*preScannerView.setVisibility(View.VISIBLE);
+        requestServiceView.setVisibility(View.GONE);*/
+        fadeOutAnimation(requestServiceView, preScannerView);
+        setHasOptionsMenu(false);
     }
 
     @Override
     public void onNetworkError(Object error) {
         ErrorHelper.handleError(error, getContext());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.scanner_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.scanner_delete_ticket_item) {
+            presenter.deleteTicket();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

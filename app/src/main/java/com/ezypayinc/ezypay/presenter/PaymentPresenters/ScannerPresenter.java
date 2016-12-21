@@ -1,5 +1,7 @@
 package com.ezypayinc.ezypay.presenter.PaymentPresenters;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ScannerView;
 import com.ezypayinc.ezypay.manager.TicketManager;
 import com.ezypayinc.ezypay.model.Ticket;
@@ -33,19 +35,35 @@ public class ScannerPresenter implements IScannerPresenter {
     public void addTicket(String qrString) {
         try {
             JSONObject jsonObject = new JSONObject(qrString);
-            Ticket ticket = new Ticket();
+            final Ticket ticket = new Ticket();
             ticket.setTicketId(jsonObject.getInt("ticketId"));
             ticket.setRestaurantId(jsonObject.getInt("restaurantId"));
             ticket.setTableId(jsonObject.getInt("tableId"));
             TicketManager manager = new TicketManager();
             manager.deleteTicket();
             manager.saveTicket(ticket);
-            view.showRestaurantDetail(ticket);
+            manager.createTicket(ticket, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    view.showRestaurantDetail(ticket);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    view.onNetworkError(error);
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    @Override
+    public void deleteTicket() {
+        TicketManager manager = new TicketManager();
+        manager.deleteTicket();
+        view.showScannerView();
+    }
 
     @Override
     public void onDestroy() {

@@ -61,6 +61,7 @@
     <string name="menu_item_card_detail_fragment_edit_card_item">Edit Card</string>
     <string name="menu_item_settings_fragment_credit_cars_item">Credit Cards</string>
     <string name="menu_item_settings_fragment_edit_item">Edit User</string>
+    <string name="menu_item_scanner_fragment_delete_ticket_item">Delete Ticket</string>
     <string name="menu_item_settings_fragment_sign_out_item">Sign Out</string>
 
     <!-- Error Messages -->
