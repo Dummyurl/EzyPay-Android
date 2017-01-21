@@ -55,4 +55,11 @@
     <string name="menu_item_settings_fragment_edit_item">Editar Usuario</string>
     <string name="menu_item_scanner_fragment_delete_ticket_item">Eliminar Ticket</string>
     <string name="menu_item_settings_fragment_sign_out_item">Cerrar Sesión</string>
+
+    <!--HEADERS TITLES-->
+    <string-array name="split_fragment_header_titles">
+        <item>Yo</item>
+        <item>Amigos</item>
+        <item>Pago</item>
+    </string-array>
 </resources>

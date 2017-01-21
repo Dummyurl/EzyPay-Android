@@ -6,11 +6,17 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.model.User;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by gustavoquesada on 11/4/16.
@@ -82,6 +88,42 @@ public class UserServiceClient {
             return null;
         }
         return user;
+    }
+
+    public void validatePhoneNumbers(JSONArray phoneNumbers,Response.Listener successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        User user = UserSingleton.getInstance().getUser();
+        phoneNumbers = new JSONArray();
+        phoneNumbers.put("89638295");
+        phoneNumbers.put("88645200");
+        phoneNumbers.put("87921284");
+        JSONObject parameters = new JSONObject();
+        parameters.put("phoneNumbers", phoneNumbers);
+        String oauthToken = "Bearer "+ user.getToken();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        String url = BASIC_URL + "validatePhoneNumbers";
+
+        connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
+    }
+
+    public List<User> parseValidatePhoneNumbers(JsonElement jsonElement) {
+        List<User> userList = new ArrayList<>();
+        if(jsonElement.isJsonArray()) {
+            JsonArray jsonArray = jsonElement.getAsJsonArray();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JsonObject object = jsonArray.get(i).getAsJsonObject();
+                User user = new User();
+                user.setId(object.get("id").getAsInt());
+                user.setEmail(object.get("email").getAsString());
+                user.setName(object.get("name").getAsString());
+                user.setLastName(object.get("lastName").getAsString());
+                user.setPhoneNumber(object.get("phoneNumber").getAsString());
+                userList.add(user);
+            }
+        }
+        return userList;
     }
 
 }

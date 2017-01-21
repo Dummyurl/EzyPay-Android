@@ -1,5 +1,8 @@
 package com.ezypayinc.ezypay.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
@@ -81,5 +84,14 @@ public class User extends RealmObject {
 
     public void setCards(RealmList<Card> cards) {
         this.cards = cards;
+    }
+
+    public boolean equals(Object x) {
+        User user = (User) x;
+        String fullName = user.getName() + " " + user.getLastName();
+        if(fullName.equalsIgnoreCase(name + " " + lastName)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -5,9 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,9 +29,10 @@ import com.ezypayinc.ezypay.presenter.PaymentPresenters.IScannerPresenter;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.ScannerPresenter;
 import com.google.zxing.integration.android.IntentIntegrator;
 
-public class ScannerFragment extends Fragment implements MainUserActivity.OnBarcodeScanned, ScannerView {
+public class ScannerFragment extends Fragment implements MainUserActivity.OnBarcodeScanned, ScannerView, View.OnClickListener {
     private RelativeLayout preScannerView, requestServiceView;
     private IScannerPresenter presenter;
+    private Button btnScanner, btnCallWaiter, btnPayBill;
 
     public ScannerFragment() {
         // Required empty public constructor
@@ -56,19 +59,13 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
         View rootView  = inflater.inflate(R.layout.fragment_scanner, container, false);
         preScannerView = (RelativeLayout) rootView.findViewById(R.id.pre_scanner_view);
         requestServiceView = (RelativeLayout) rootView.findViewById(R.id.request_service_view);
-        Button btnScanner = (Button) rootView.findViewById(R.id.scanner_fragment_btn_scanner);
-        final Activity activity = getActivity();
+        btnScanner = (Button) rootView.findViewById(R.id.scanner_fragment_btn_scanner);
+        btnCallWaiter = (Button) rootView.findViewById(R.id.scanner_fragment_btnCallWaiter);
+        btnPayBill = (Button) rootView.findViewById(R.id.scanner_fragment_btnPayBill);
+        btnScanner.setOnClickListener(this);
+        btnCallWaiter.setOnClickListener(this);
+        btnPayBill.setOnClickListener(this);
         presenter = new ScannerPresenter(this);
-        btnScanner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                IntentIntegrator integrator = new IntentIntegrator(activity);
-                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-                integrator.setCameraId(0);
-                integrator.setBeepEnabled(false);
-                integrator.initiateScan();
-            }
-        });
         presenter.validateTicket();
         return rootView;
     }
@@ -127,16 +124,12 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
 
     @Override
     public void showRestaurantDetail(Ticket ticket) {
-        /*preScannerView.setVisibility(View.GONE);
-        requestServiceView.setVisibility(View.VISIBLE);*/
         fadeInAnimation(requestServiceView, preScannerView);
         setHasOptionsMenu(true);
     }
 
     @Override
     public void showScannerView() {
-        /*preScannerView.setVisibility(View.VISIBLE);
-        requestServiceView.setVisibility(View.GONE);*/
         fadeOutAnimation(requestServiceView, preScannerView);
         setHasOptionsMenu(false);
     }
@@ -159,5 +152,20 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
             presenter.deleteTicket();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == btnScanner.getId()) {
+            final Activity activity = getActivity();
+            IntentIntegrator integrator = new IntentIntegrator(activity);
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+            integrator.setCameraId(0);
+            integrator.setBeepEnabled(false);
+            integrator.initiateScan();
+        } else if (view.getId() == btnPayBill.getId()) {
+            Intent intent = new Intent(getActivity(), PaymentMainActivity.class);
+            getActivity().startActivity(intent);
+        }
     }
 }

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.model.Contact;
+import com.ezypayinc.ezypay.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +19,12 @@ import java.util.List;
  */
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder> {
-    private List<Contact> mContactsList;
+    private List<User> mUsersList;
+    private OnItemClickListener mListener;
 
-    public ContactListAdapter(List<Contact> contactsList){
-        mContactsList = contactsList;
+    public ContactListAdapter(List<User> usersList, OnItemClickListener listener){
+        mUsersList = usersList;
+        mListener = listener;
 
     }
 
@@ -35,15 +37,24 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ContactsViewHolder holder, int position) {
-        Contact contact = mContactsList.get(position);
-        holder.tvName.setText(contact.getName());
+    public void onBindViewHolder(final ContactsViewHolder holder, int position) {
+        final User user = mUsersList.get(position);
+        holder.tvName.setText(user.getName() + " " + user.getLastName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int visibility = holder.contactCheckedImageView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
+                boolean isChecked = visibility == View.VISIBLE ? true: false;
+                holder.contactCheckedImageView.setVisibility(visibility);
+                mListener.OnItemClickListener(user, isChecked);
+            }
+        });
         //setFadeAnimation(holder.itemView);
     }
 
     @Override
     public int getItemCount() {
-         return mContactsList.size();
+         return mUsersList.size();
     }
 
     private void setFadeAnimation(View view) {
@@ -52,21 +63,27 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         view.startAnimation(anim);
     }
 
-    public void setFilter(List<Contact> filteredList) {
-        mContactsList = new ArrayList<>();
-        mContactsList.addAll(filteredList);
+    public void setFilter(List<User> filteredList) {
+        mUsersList = new ArrayList<>();
+        mUsersList.addAll(filteredList);
         notifyDataSetChanged();
     }
 
 
     public class ContactsViewHolder extends RecyclerView.ViewHolder {
         public TextView tvName;
-        public ImageView profileImage;
+        public ImageView profileImage, contactCheckedImageView;
 
         public ContactsViewHolder(View view){
             super(view);
             tvName = (TextView) view.findViewById(R.id.payment_contact_list_name);
             profileImage = (ImageView) view.findViewById(R.id.payment_contact_list_profile_image);
+            contactCheckedImageView = (ImageView) view.findViewById(R.id.contact_checked_contact_list_imageView);
         }
+    }
+
+
+    public interface OnItemClickListener {
+        void OnItemClickListener(User user, boolean isChecked);
     }
 }

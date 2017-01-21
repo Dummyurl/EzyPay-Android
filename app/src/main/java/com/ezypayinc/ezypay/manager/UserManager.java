@@ -6,7 +6,9 @@ import com.ezypayinc.ezypay.connection.UserServiceClient;
 import com.ezypayinc.ezypay.database.UserData;
 import com.ezypayinc.ezypay.model.Card;
 import com.ezypayinc.ezypay.model.User;
+import com.google.gson.JsonElement;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,5 +74,15 @@ public class UserManager {
     public int parseRegisterUser(JSONObject response) throws JSONException {
         UserServiceClient service = new UserServiceClient();
         return service.parseRegisterUser(response);
+    }
+
+    public void validatePhoneNumbers(JSONArray phoneNumbers, Response.Listener successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        UserServiceClient service = new UserServiceClient();
+        service.validatePhoneNumbers(phoneNumbers, successHandler,failureHandler);
+    }
+
+    public List<User> parseValidatePhoneNumbers(JsonElement jsonElement) {
+        UserServiceClient service = new UserServiceClient();
+        return service.parseValidatePhoneNumbers(jsonElement);
     }
 }
