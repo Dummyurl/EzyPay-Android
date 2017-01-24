@@ -13,10 +13,6 @@ import com.ezypayinc.ezypay.model.Card;
 
 import java.util.List;
 
-/**
- * Created by Gustavo Quesada S on 07/12/2016.
- */
-
 public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.CardsViewHolder>{
 
     public interface OnItemClickListener {
@@ -59,11 +55,11 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.Card
         return mCardList.size();
     }
 
-    public class CardsViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvCard;
-        public ImageView imgCardIcon;
+    class CardsViewHolder extends RecyclerView.ViewHolder {
+        TextView tvCard;
+        ImageView imgCardIcon;
 
-        public CardsViewHolder(View view){
+        CardsViewHolder(View view){
             super(view);
             tvCard = (TextView) view.findViewById(R.id.cards_list_card_number);
             imgCardIcon = (ImageView) view.findViewById(R.id.cards_list_card_icon);

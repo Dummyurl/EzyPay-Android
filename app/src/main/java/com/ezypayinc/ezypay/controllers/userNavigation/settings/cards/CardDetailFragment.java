@@ -17,8 +17,8 @@ import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews.ICardDetailView;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.Card;
-import com.ezypayinc.ezypay.presenter.CardsPresenters.CardDetailPresenter;
-import com.ezypayinc.ezypay.presenter.CardsPresenters.ICardDetailPresenter;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.CardsPresenters.CardDetailPresenter;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.CardsPresenters.ICardDetailPresenter;
 
 import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardDetailViewType.ADDCARD;
 import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardDetailViewType.EDITCARD;
@@ -30,7 +30,7 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
     private int mCardDetailViewType, mCardId;
     private View mRootView;
     private Card mCard;
-    private ProgressDialog mProgressDiaolog;
+    private ProgressDialog mProgressDialog;
     private ICardDetailPresenter presenter;
 
     public static final String CARD_ID = "CARDID";
@@ -81,8 +81,8 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
     }
 
     private void setupProgressDialog(){
-        mProgressDiaolog = new ProgressDialog(this.getActivity());
-        mProgressDiaolog.setCancelable(false);
+        mProgressDialog = new ProgressDialog(this.getActivity());
+        mProgressDialog.setCancelable(false);
     }
 
     public void initComponents() {
@@ -210,12 +210,12 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
 
     @Override
     public void showProgressDialog() {
-        mProgressDiaolog.show();
-        mProgressDiaolog.setContentView(R.layout.custom_progress_dialog);
+        mProgressDialog.show();
+        mProgressDialog.setContentView(R.layout.custom_progress_dialog);
     }
 
     @Override
     public void hideProgressDialog() {
-        mProgressDiaolog.hide();
+        mProgressDialog.dismiss();
     }
 }

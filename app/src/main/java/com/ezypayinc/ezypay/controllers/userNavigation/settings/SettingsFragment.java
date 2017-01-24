@@ -10,13 +10,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardsMainActivity;
+import com.ezypayinc.ezypay.model.User;
 
 public class SettingsFragment extends Fragment {
 
-
+    private EditText mName, mLastName, mEmail, mPhoneNumber;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -32,8 +35,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -41,7 +42,30 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        initUIComponents(rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUser();
+    }
+
+    private void initUIComponents(View rootView) {
+        mName = (EditText) rootView.findViewById(R.id.settings_view_name);
+        mLastName = (EditText) rootView.findViewById(R.id.settings_view_lastName);
+        mEmail = (EditText) rootView.findViewById(R.id.settings_view_email);
+        mPhoneNumber = (EditText) rootView.findViewById(R.id.settings_view_phone_number);
+    }
+
+    private void getUser() {
+        User user = UserSingleton.getInstance().getUser();
+        mName.setText(user.getName());
+        mLastName.setText(user.getLastName());
+        mEmail.setText(user.getEmail());
+        mPhoneNumber.setText(user.getPhoneNumber());
     }
 
     @Override
@@ -53,10 +77,16 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.credit_cards_item:
-                Intent intent = new Intent(getActivity(), CardsMainActivity.class);
+                intent = new Intent(getActivity(), CardsMainActivity.class);
                 getActivity().startActivity(intent);
+                break;
+            case R.id.edit_user_item:
+                intent = new Intent(getActivity(), SettingsMainActivity.class);
+                getActivity().startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

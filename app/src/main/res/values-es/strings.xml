@@ -12,10 +12,11 @@
     <string name="action_sign_in_short">Registrarse</string>
     <string name="action_card_detail_add_card">Agregar Tarjeta</string>
     <string name="action_card_detail_edit_card">Editar Tarjeta</string>
+    <string name="action_edit_user_save">Guardar</string>
 
     <!--Prompt-->
     <string name="prompt_name">Nombre</string>
-    <string name="prompt_lastname">Apellido</string>
+    <string name="prompt_lastName">Apellido</string>
     <string name="prompt_phone_number">Número Telefónico</string>
     <string name="prompt_card_number">Número de Tarjeta</string>
     <string name="prompt_password">Contraseña</string>

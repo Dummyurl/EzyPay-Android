@@ -2,9 +2,6 @@ package com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews;
 
 import com.ezypayinc.ezypay.model.Ticket;
 
-/**
- * Created by gustavoquesada on 12/16/16.
- */
 
 public interface ScannerView {
 

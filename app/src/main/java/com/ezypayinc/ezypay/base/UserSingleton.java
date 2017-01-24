@@ -2,10 +2,6 @@ package com.ezypayinc.ezypay.base;
 
 import com.ezypayinc.ezypay.model.User;
 
-/**
- * Created by gustavoquesada on 11/23/16.
- */
-
 public class UserSingleton {
 
     private static UserSingleton instance;

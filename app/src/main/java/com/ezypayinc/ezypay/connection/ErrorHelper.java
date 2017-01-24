@@ -1,15 +1,9 @@
 package com.ezypayinc.ezypay.connection;
 
 import android.content.Context;
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.ezypayinc.ezypay.controllers.dialogs.DialogBuilder;
-
-/**
- * Created by gustavoquesada on 11/13/16.
- */
 
 public class ErrorHelper {
 

@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.presenter.CardsPresenters;
+package com.ezypayinc.ezypay.presenter.SettingsPresenters.CardsPresenters;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -6,15 +6,10 @@ import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceV
 import com.ezypayinc.ezypay.manager.CardManager;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.Card;
-
-import org.json.JSONArray;
+import com.google.gson.JsonElement;
 import org.json.JSONException;
 
 import java.util.List;
-
-/**
- * Created by Gustavo Quesada S on 10/12/2016.
- */
 
 public class CardListPresenter implements ICardListPresenter {
     private ICardListView cardListView;
@@ -28,15 +23,11 @@ public class CardListPresenter implements ICardListPresenter {
         final CardManager cardManager = new CardManager();
         final UserManager userManager = new UserManager();
         try {
-            cardManager.getCardsByUser(new Response.Listener<JSONArray>() {
+            cardManager.getCardsByUser(new Response.Listener<JsonElement>() {
                 @Override
-                public void onResponse(JSONArray response) {
-                    List<Card> cardList = null;
-                    try {
-                        cardList = cardManager.parseGetCardsResponse(response);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                public void onResponse(JsonElement response) {
+                    List<Card> cardList;
+                    cardList = cardManager.parseGetCardsResponse(response);
                     cardListView.populateCardList(cardList);
                     userManager.addCards(cardList);
                 }

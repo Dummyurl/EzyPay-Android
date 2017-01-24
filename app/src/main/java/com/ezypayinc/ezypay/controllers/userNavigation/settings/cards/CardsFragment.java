@@ -1,7 +1,6 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.settings.cards;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,8 +19,8 @@ import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.adapters.CardsListAdapter;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews.ICardListView;
 import com.ezypayinc.ezypay.model.Card;
-import com.ezypayinc.ezypay.presenter.CardsPresenters.CardListPresenter;
-import com.ezypayinc.ezypay.presenter.CardsPresenters.ICardListPresenter;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.CardsPresenters.CardListPresenter;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.CardsPresenters.ICardListPresenter;
 
 import java.util.List;
 
@@ -30,9 +29,8 @@ import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.Car
 
 public class CardsFragment extends Fragment implements CardsListAdapter.OnItemClickListener, ICardListView {
     private RecyclerView cardListRecyclerView;
-    private CardsListAdapter adapter;
     private ICardListPresenter presenter;
-    private ProgressDialog mProgressDiaolog;
+    private ProgressDialog mProgressDialog;
 
     public CardsFragment() {
         // Required empty public constructor
@@ -48,8 +46,6 @@ public class CardsFragment extends Fragment implements CardsListAdapter.OnItemCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -108,14 +104,14 @@ public class CardsFragment extends Fragment implements CardsListAdapter.OnItemCl
     }
 
     private void setupProgressDialog(){
-        mProgressDiaolog = new ProgressDialog(this.getActivity());
-        mProgressDiaolog.setCancelable(false);
+        mProgressDialog = new ProgressDialog(this.getActivity());
+        mProgressDialog.setCancelable(false);
     }
 
 
     @Override
     public void populateCardList(List<Card> cards) {
-        adapter = new CardsListAdapter(getContext(), this, cards);
+        CardsListAdapter adapter = new CardsListAdapter(getContext(), this, cards);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         cardListRecyclerView.setLayoutManager(mLayoutManager);
         cardListRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -129,12 +125,12 @@ public class CardsFragment extends Fragment implements CardsListAdapter.OnItemCl
 
     @Override
     public void showProgressDialog() {
-        mProgressDiaolog.show();
-        mProgressDiaolog.setContentView(R.layout.custom_progress_dialog);
+        mProgressDialog.show();
+        mProgressDialog.setContentView(R.layout.custom_progress_dialog);
     }
 
     @Override
     public void hideProgressDialog() {
-        mProgressDiaolog.hide();
+        mProgressDialog.hide();
     }
 }

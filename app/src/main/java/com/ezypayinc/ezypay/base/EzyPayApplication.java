@@ -5,10 +5,6 @@ import android.app.Application;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-/**
- * Created by gustavoquesada on 11/7/16.
- */
-
 public class EzyPayApplication extends Application {
 
     private static EzyPayApplication instance;

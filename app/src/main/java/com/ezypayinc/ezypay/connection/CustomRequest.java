@@ -12,21 +12,16 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-/**
- * Created by Gustavo Quesada S on 10/12/2016.
- */
 
-public class CustomRequest extends JsonRequest<JsonElement>{
+class CustomRequest extends JsonRequest<JsonElement>{
     private final Map<String, String> headers;
-    private final Response.Listener<JsonElement> listener;
 
-    public CustomRequest(int requestMethod, String url, JSONObject jsonRequest,
+    CustomRequest(int requestMethod, String url, JSONObject jsonRequest,
                          Map<String, String> headers, Response.Listener<JsonElement> responseListener, Response.ErrorListener errorListener) {
 
         super(requestMethod, url, (jsonRequest == null) ? null : jsonRequest.toString(), responseListener,
                 errorListener);
         this.headers = headers;
-        this.listener = responseListener;
     }
 
     @Override

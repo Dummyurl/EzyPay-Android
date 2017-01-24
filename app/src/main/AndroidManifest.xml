@@ -45,7 +45,8 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".controllers.userNavigation.settings.cards.CardsMainActivity"></activity>
+        <activity android:name=".controllers.userNavigation.settings.cards.CardsMainActivity" />
+        <activity android:name=".controllers.userNavigation.settings.SettingsMainActivity"></activity>
     </application>
 
 </manifest>

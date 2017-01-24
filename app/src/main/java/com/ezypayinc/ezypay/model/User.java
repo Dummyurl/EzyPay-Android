@@ -1,14 +1,7 @@
 package com.ezypayinc.ezypay.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
-
-/**
- * Created by gustavoquesada on 11/5/16.
- */
 
 public class User extends RealmObject {
 

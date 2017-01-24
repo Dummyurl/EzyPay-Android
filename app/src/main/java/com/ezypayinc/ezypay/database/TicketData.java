@@ -4,10 +4,6 @@ import com.ezypayinc.ezypay.model.Ticket;
 
 import io.realm.Realm;
 
-/**
- * Created by gustavoquesada on 12/16/16.
- */
-
 public class TicketData {
 
     public void saveTicket(Ticket ticket) {

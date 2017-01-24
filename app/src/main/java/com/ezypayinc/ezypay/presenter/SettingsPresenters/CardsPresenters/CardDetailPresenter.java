@@ -1,7 +1,6 @@
-package com.ezypayinc.ezypay.presenter.CardsPresenters;
+package com.ezypayinc.ezypay.presenter.SettingsPresenters.CardsPresenters;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -9,14 +8,10 @@ import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews.ICardDetailView;
 import com.ezypayinc.ezypay.manager.CardManager;
 import com.ezypayinc.ezypay.model.Card;
+import com.google.gson.JsonElement;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-/**
- * Created by Gustavo Quesada S on 11/12/2016.
- */
 
 public class CardDetailPresenter implements ICardDetailPresenter {
     private ICardDetailView view;
@@ -58,9 +53,9 @@ public class CardDetailPresenter implements ICardDetailPresenter {
         view.showProgressDialog();
         final CardManager cardManager = new CardManager();
         try {
-            cardManager.saveCardInServer(card, new Response.Listener<JSONObject>() {
+            cardManager.saveCardInServer(card, new Response.Listener<JsonElement>() {
                 @Override
-                public void onResponse(JSONObject response) {
+                public void onResponse(JsonElement response) {
                     view.hideProgressDialog();
                     view.navigateToCardList();
                 }
@@ -81,11 +76,10 @@ public class CardDetailPresenter implements ICardDetailPresenter {
         view.showProgressDialog();
         CardManager manager = new CardManager();
         try {
-            manager.updateCardInServer(card, new Response.Listener<JSONArray>() {
+            manager.updateCardInServer(card, new Response.Listener<JsonElement>() {
                 @Override
-                public void onResponse(JSONArray response) {
+                public void onResponse(JsonElement response) {
                     view.hideProgressDialog();
-                    Log.e("Update card response", response.toString());
                     view.navigateToCardList();
                 }
             }, new Response.ErrorListener() {

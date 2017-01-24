@@ -2,10 +2,6 @@ package com.ezypayinc.ezypay.model;
 
 import io.realm.RealmObject;
 
-/**
- * Created by gustavoquesada on 11/6/16.
- */
-
 public class Card extends RealmObject{
 
     private int id;

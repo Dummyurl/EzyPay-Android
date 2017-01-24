@@ -14,9 +14,6 @@ import com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters.SplitAda
 
 public class SplitFragment extends Fragment {
 
-    private RecyclerView usersRecyclerView;
-    private SplitAdapter mAdapter;
-
     public SplitFragment() {
         // Required empty public constructor
     }
@@ -31,8 +28,6 @@ public class SplitFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -40,11 +35,11 @@ public class SplitFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_split, container, false);
-        usersRecyclerView = (RecyclerView) rootView.findViewById(R.id.split_fragment_recycler_view);
+        RecyclerView usersRecyclerView = (RecyclerView) rootView.findViewById(R.id.split_fragment_recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         usersRecyclerView.setLayoutManager(mLayoutManager);
         usersRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new SplitAdapter(null, getContext());
+        SplitAdapter mAdapter = new SplitAdapter(null, getContext());
         usersRecyclerView.setAdapter(mAdapter);
         return rootView;
     }

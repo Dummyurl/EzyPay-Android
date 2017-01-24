@@ -1,20 +1,18 @@
 package com.ezypayinc.ezypay.connection;
 
-import android.content.Context;
 import android.util.Base64;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.model.User;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 
-/**
- * Created by gustavoquesada on 11/21/16.
- */
 
 public class SessionServiceClient {
     private ConnectionManager connectionManager;
@@ -27,7 +25,7 @@ public class SessionServiceClient {
         connectionManager = new ConnectionManager();
     }
 
-    public void loginMethod(String username, String password, Response.Listener successHandler,
+    public void loginMethod(String username, String password, Response.Listener<JsonElement> successHandler,
                               Response.ErrorListener failureHandler) throws JSONException {
         final String basicAuth = "Basic " + Base64.encodeToString((CLIENT_ID + ":"+ SECRET_KEY).getBytes(), Base64.NO_WRAP);
         HashMap<String, String> headers = new HashMap<>();
@@ -39,14 +37,15 @@ public class SessionServiceClient {
         parameters.put("username", username);
         parameters.put("password", password);
 
-        connectionManager.sendRequest(Request.Method.POST, "auth/token", parameters, headers, successHandler, failureHandler);
+        connectionManager.sendCustomRequest(Request.Method.POST, "auth/token", parameters, headers, successHandler, failureHandler);
     }
 
-    public User parseLoginMethod(JSONObject response) throws JSONException {
-        JSONObject object = response.getJSONObject("access_token");
+    public User parseLoginMethod(JsonElement response) {
+
+        JsonObject object = response.getAsJsonObject().get("access_token").getAsJsonObject();
         User user = new User();
-        user.setId(object.getInt("userId"));
-        user.setToken(object.getString("value"));
+        user.setId(object.get("userId").getAsInt());
+        user.setToken(object.get("value").getAsString());
         return user;
     }
 

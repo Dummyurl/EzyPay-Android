@@ -15,12 +15,13 @@
     <string name="action_sign_in_user_information_next">Next</string>
     <string name="action_card_detail_add_card">Add Card</string>
     <string name="action_card_detail_edit_card">Edit Card</string>
+    <string name="action_edit_user_save">Save</string>
 
     <string name="title_activity_login" translatable="false">Log in</string>
 
     <!--Prompt-->
     <string name="prompt_name">Name</string>
-    <string name="prompt_lastname">Lastname</string>
+    <string name="prompt_lastNName">Last Name</string>
     <string name="prompt_phone_number">Phone Number</string>
     <string name="prompt_card_number">Card Number</string>
     <string name="prompt_cvv" translatable="false">cvv</string>
@@ -78,8 +79,6 @@
         <item>Friends</item>
         <item>Payment</item>
     </string-array>
-
-
 
 
     <!-- TODO: Remove or change this placeholder text -->

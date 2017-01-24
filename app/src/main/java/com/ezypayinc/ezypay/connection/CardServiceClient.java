@@ -2,22 +2,18 @@ package com.ezypayinc.ezypay.connection;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.model.Card;
 import com.ezypayinc.ezypay.model.User;
-
-import org.json.JSONArray;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-/**
- * Created by gustavoquesada on 11/6/16.
- */
 
 public class CardServiceClient {
 
@@ -29,7 +25,7 @@ public class CardServiceClient {
         connectionManager = new ConnectionManager();
     }
 
-    public void createCard(Card card, Response.Listener successHandler, Response.ErrorListener errorListener) throws JSONException {
+    public void createCard(Card card, Response.Listener<JsonElement> successHandler, Response.ErrorListener errorListener) throws JSONException {
         User user = UserSingleton.getInstance().getUser();
         //set headers
         String oauthToken = "Bearer "+ user.getToken();
@@ -44,19 +40,20 @@ public class CardServiceClient {
         parameters.put("year", card.getYear());
         parameters.put("userId", user.getId());
         int httpMethod = Request.Method.POST;
-        connectionManager.sendRequest(httpMethod,BASE_URL,parameters,headers,successHandler, errorListener);
+        connectionManager.sendCustomRequest(httpMethod,BASE_URL,parameters,headers,successHandler, errorListener);
     }
 
-    public Card parseSaveCardResponse(JSONObject response) throws JSONException {
+    public Card parseSaveCardResponse(JsonElement response) {
         Card card = new Card();
-        card.setNumber(response.getString("number"));
-        card.setCvv(response.getInt("cvv"));
-        card.setMonth(response.getInt("month"));
-        card.setYear(response.getInt("year"));
+        JsonObject object = response.getAsJsonObject();
+        card.setNumber(object.get("number").getAsString());
+        card.setCvv(object.get("cvv").getAsInt());
+        card.setMonth(object.get("month").getAsInt());
+        card.setYear(object.get("year").getAsInt());
         return card;
     }
 
-    public void getCardsByUser(Response.Listener successHandler, Response.ErrorListener errorListener) throws JSONException {
+    public void getCardsByUser(Response.Listener<JsonElement> successHandler, Response.ErrorListener errorListener) throws JSONException {
         User user = UserSingleton.getInstance().getUser();
         //set headers
         String oauthToken = "Bearer "+ user.getToken();
@@ -66,29 +63,30 @@ public class CardServiceClient {
         //set parameters
         JSONObject parameters = new JSONObject();
         parameters.put("userId", user.getId());
-        JSONArray array = new JSONArray();
-        array.put(parameters);
         int httpMethod = Request.Method.POST;
         String url = BASE_URL + "getAll";
-        connectionManager.sendArrayRequest(httpMethod,url,array,headers, successHandler, errorListener);
+        connectionManager.sendCustomRequest(httpMethod,url,parameters,headers, successHandler, errorListener);
     }
 
-    public List<Card> parseGetCardsResponse(JSONArray response) throws JSONException {
+    public List<Card> parseGetCardsResponse(JsonElement response) {
         List<Card> cardList = new ArrayList<>();
-        for(int n = 0; n < response.length(); n++) {
-            JSONObject object = response.getJSONObject(n);
-            Card card = new Card();
-            card.setId(object.getInt("id"));
-            card.setNumber(object.getString("number"));
-            card.setCvv(object.getInt("cvv"));
-            card.setMonth(object.getInt("month"));
-            card.setYear(object.getInt("year"));
-            cardList.add(card);
+        JsonArray jsonArray = response.getAsJsonArray();
+        for(int n = 0; n < jsonArray.size(); n++) {
+            JsonObject object = jsonArray.get(n).getAsJsonObject();
+            if(!object.get("month").isJsonNull()) {
+                Card card = new Card();
+                card.setId(object.get("id").getAsInt());
+                card.setNumber(object.get("number").getAsString());
+                card.setCvv(object.get("cvv").getAsInt());
+                card.setMonth(object.get("month").getAsInt());
+                card.setYear(object.get("year").getAsInt());
+                cardList.add(card);
+            }
         }
         return cardList;
     }
 
-    public void updateCard(Card card, Response.Listener successHandler, Response.ErrorListener errorListener) throws JSONException {
+    public void updateCard(Card card, Response.Listener<JsonElement> successHandler, Response.ErrorListener errorListener) throws JSONException {
         User user = UserSingleton.getInstance().getUser();
         //set headers
         String oauthToken = "Bearer "+ user.getToken();
@@ -102,10 +100,8 @@ public class CardServiceClient {
         parameters.put("month", card.getMonth());
         parameters.put("year", card.getYear());
         parameters.put("userId", user.getId());
-        JSONArray array = new JSONArray();
-        array.put(parameters);
         int httpMethod = Request.Method.PUT;
         String url = BASE_URL + card.getId();
-        connectionManager.sendArrayRequest(httpMethod,url,array,headers,successHandler, errorListener);
+        connectionManager.sendCustomRequest(httpMethod,url,parameters,headers,successHandler, errorListener);
     }
 }

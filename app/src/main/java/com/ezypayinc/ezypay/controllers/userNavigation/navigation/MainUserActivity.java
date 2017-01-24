@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.controllers.userNavigation.notifications.NotificationsFragment;
-import com.ezypayinc.ezypay.controllers.userNavigation.payment.PaymentMainActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.SettingsFragment;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -20,7 +19,6 @@ import com.roughike.bottombar.OnMenuTabSelectedListener;
 public class MainUserActivity extends AppCompatActivity {
 
     private BottomBar bottomBar;
-    private int itemSelected;
     private OnBarcodeScanned barcodeScannedListener;
 
     @Override
@@ -43,7 +41,6 @@ public class MainUserActivity extends AppCompatActivity {
         bottomBar.setItemsFromMenu(R.menu.navigation_bar_menu, new OnMenuTabSelectedListener() {
             @Override
             public void onMenuItemSelected(int itemId) {
-                itemSelected = itemId;
                 Fragment newFragment = null;
                 switch (itemId) {
                     case R.id.scanner_item:

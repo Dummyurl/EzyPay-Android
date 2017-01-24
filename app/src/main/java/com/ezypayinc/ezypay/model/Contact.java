@@ -1,9 +1,5 @@
 package com.ezypayinc.ezypay.model;
 
-/**
- * Created by gustavoquesada on 11/16/16.
- */
-
 public class Contact {
 
     private String mName;
@@ -32,9 +28,6 @@ public class Contact {
 
     public boolean equals(Object x) {
         Contact contact = (Contact) x;
-        if(contact.getName().equalsIgnoreCase(mName)) {
-            return true;
-        }
-        return false;
+        return contact.getName().equalsIgnoreCase(mName);
     }
 }

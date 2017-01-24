@@ -10,13 +10,8 @@ import com.google.gson.JsonElement;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
-
-/**
- * Created by gustavoquesada on 11/22/16.
- */
 
 public class UserManager {
     /*Database methods*/
@@ -45,38 +40,43 @@ public class UserManager {
         return userData.getCardById(cardId);
     }
 
+    public void updateLocalUser(User user) {
+        UserData userData = new UserData();
+        userData.updateUser(user);
+    }
+
     /*web services methods*/
-    public void loginMethod(String email, String password, Response.Listener successListener, Response.ErrorListener errorListener) throws JSONException {
+    public void loginMethod(String email, String password, Response.Listener<JsonElement>  successListener, Response.ErrorListener errorListener) throws JSONException {
         SessionServiceClient service = new SessionServiceClient();
         service.loginMethod(email, password,successListener, errorListener);
     }
 
-    public User parseLoginResponse(JSONObject response) throws JSONException {
+    public User parseLoginResponse(JsonElement response) {
         SessionServiceClient service = new SessionServiceClient();
         return service.parseLoginMethod(response);
     }
 
-    public void getUserByIdFromServer(int userId, Response.Listener successListener, Response.ErrorListener errorListener) throws JSONException {
+    public void getUserByIdFromServer(int userId, Response.Listener<JsonElement>  successListener, Response.ErrorListener errorListener) throws JSONException {
         UserServiceClient service = new UserServiceClient();
         service.getUserById(userId, successListener, errorListener);
     }
 
-    public User parseUserFromServer(JSONObject response) {
+    public User parseUserFromServer(JsonElement response) {
          UserServiceClient service = new UserServiceClient();
          return  service.parseUserFromServer(response);
     }
 
-    public void saveUserInServer(User user, Response.Listener successListener, Response.ErrorListener errorListener) throws JSONException {
+    public void saveUserInServer(User user, Response.Listener<JsonElement> successListener, Response.ErrorListener errorListener) throws JSONException {
         UserServiceClient service = new UserServiceClient();
         service.registerUser(user, successListener, errorListener);
     }
 
-    public int parseRegisterUser(JSONObject response) throws JSONException {
+    public int parseRegisterUser(JsonElement response) {
         UserServiceClient service = new UserServiceClient();
         return service.parseRegisterUser(response);
     }
 
-    public void validatePhoneNumbers(JSONArray phoneNumbers, Response.Listener successHandler, Response.ErrorListener failureHandler) throws JSONException {
+    public void validatePhoneNumbers(JSONArray phoneNumbers, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         UserServiceClient service = new UserServiceClient();
         service.validatePhoneNumbers(phoneNumbers, successHandler,failureHandler);
     }
@@ -84,5 +84,10 @@ public class UserManager {
     public List<User> parseValidatePhoneNumbers(JsonElement jsonElement) {
         UserServiceClient service = new UserServiceClient();
         return service.parseValidatePhoneNumbers(jsonElement);
+    }
+
+    public void updateUser(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        UserServiceClient service = new UserServiceClient();
+        service.updateUser(user, successHandler, failureHandler);
     }
 }

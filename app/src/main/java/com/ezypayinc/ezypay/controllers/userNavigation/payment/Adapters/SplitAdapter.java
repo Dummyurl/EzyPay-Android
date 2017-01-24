@@ -13,10 +13,6 @@ import com.ezypayinc.ezypay.model.User;
 
 import java.util.List;
 
-/**
- * Created by gustavoquesada on 1/19/17.
- */
-
 public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<User> mUserList;
@@ -81,21 +77,21 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return 8;
     }
 
-    public class HeaderViewHolder extends RecyclerView.ViewHolder {
-        public TextView headerTitleTextView;
+    private class HeaderViewHolder extends RecyclerView.ViewHolder {
+        TextView headerTitleTextView;
 
-        public HeaderViewHolder(View itemView) {
+        HeaderViewHolder(View itemView) {
             super(itemView);
             headerTitleTextView = (TextView) itemView.findViewById(R.id.header_title_textView);
         }
     }
 
-    public class SplitViewHolder extends RecyclerView.ViewHolder {
-        public ImageView profilePhotoImageView;
-        public TextView userNameTextView, paymentDetailTextView;
-        public SeekBar paymentSeekBar;
+    private class SplitViewHolder extends RecyclerView.ViewHolder {
+        ImageView profilePhotoImageView;
+        TextView userNameTextView, paymentDetailTextView;
+        SeekBar paymentSeekBar;
 
-        public SplitViewHolder(View itemView) {
+        SplitViewHolder(View itemView) {
             super(itemView);
             profilePhotoImageView = (ImageView) itemView.findViewById(R.id.split_fragment_imageView_profile_image);
             userNameTextView = (TextView) itemView.findViewById(R.id.split_fragment_textView_userName);
@@ -105,11 +101,11 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    public class PaymentDetailViewHolder extends  RecyclerView.ViewHolder {
-        public TextView itemNameTextView;
-        public TextView itemDetailTextView;
+    private class PaymentDetailViewHolder extends  RecyclerView.ViewHolder {
+        TextView itemNameTextView;
+        TextView itemDetailTextView;
 
-        public PaymentDetailViewHolder(View itemView) {
+        PaymentDetailViewHolder(View itemView) {
             super(itemView);
             itemNameTextView = (TextView) itemView.findViewById(R.id.item_name_payment_detail_textView);
             itemDetailTextView = (TextView) itemView.findViewById(R.id.item_detail_payment_detail_textView);

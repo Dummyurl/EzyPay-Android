@@ -8,13 +8,10 @@ import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.LoginView;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.User;
+import com.google.gson.JsonElement;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
-/**
- * Created by gustavoquesada on 11/23/16.
- */
 
 public class LoginPresenter  implements ILoginPresenter{
 
@@ -80,16 +77,13 @@ public class LoginPresenter  implements ILoginPresenter{
         loginView.showProgressDialog();
 
         try {
-            manager.loginMethod(email, password, new Response.Listener<JSONObject>() {
+            manager.loginMethod(email, password, new Response.Listener<JsonElement>() {
                 @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        User user = manager.parseLoginResponse(response);
-                        getUserFromServer(user);
-                    } catch (JSONException e) {
-                        loginView.hideProgressDialog();
-                        e.printStackTrace();
-                    }
+                public void onResponse(JsonElement response) {
+                    User user = manager.parseLoginResponse(response);
+                    getUserFromServer(user);
+                    loginView.hideProgressDialog();
+
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -104,18 +98,18 @@ public class LoginPresenter  implements ILoginPresenter{
         }
     }
 
-    public void getUserFromServer(final User user) {
+    private void getUserFromServer(final User user) {
         final UserSingleton userSingleton = UserSingleton.getInstance();
         userSingleton.setUser(user);
         final UserManager manager = new UserManager();
         try {
-            manager.getUserByIdFromServer(user.getId(), new Response.Listener<JSONObject>() {
+            manager.getUserByIdFromServer(user.getId(), new Response.Listener<JsonElement>() {
                 @Override
-                public void onResponse(JSONObject response) {
+                public void onResponse(JsonElement response) {
                     User userFromServer = manager.parseUserFromServer(response);
                     userFromServer.setToken(user.getToken());
                     userSingleton.setUser(userFromServer);
-                    manager.addUser(user);
+                    manager.addUser(userFromServer);
                     loginView.hideProgressDialog();
                     loginView.navigateToHome();
                 }

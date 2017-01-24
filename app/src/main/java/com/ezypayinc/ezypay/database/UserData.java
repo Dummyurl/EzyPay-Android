@@ -7,10 +7,6 @@ import java.util.List;
 
 import io.realm.Realm;
 
-/**
- * Created by gustavoquesada on 11/22/16.
- */
-
 public class UserData {
 
     public void addUser(final User user) {
@@ -61,5 +57,10 @@ public class UserData {
         user.getCards().addAll(cards);
         realm.commitTransaction();
 
+    }
+
+    public void updateUser(User user) {
+        deleteUser();
+        addUser(user);
     }
 }

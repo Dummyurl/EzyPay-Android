@@ -1,9 +1,5 @@
 package com.ezypayinc.ezypay.presenter.LoginPresenters;
 
-/**
- * Created by gustavoquesada on 11/25/16.
- */
-
 public interface ISignInPaymentInformationPresenter {
 
     void populateSpinners();

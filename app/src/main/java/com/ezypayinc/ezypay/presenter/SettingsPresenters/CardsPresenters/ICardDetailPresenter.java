@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.presenter.CardsPresenters;
+package com.ezypayinc.ezypay.presenter.SettingsPresenters.CardsPresenters;
 
 import com.ezypayinc.ezypay.model.Card;
 

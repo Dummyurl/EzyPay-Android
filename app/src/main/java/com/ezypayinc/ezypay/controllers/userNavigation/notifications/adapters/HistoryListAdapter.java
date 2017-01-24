@@ -7,9 +7,6 @@ import android.view.ViewGroup;
 
 import com.ezypayinc.ezypay.R;
 
-/**
- * Created by gustavoquesada on 11/18/16.
- */
 
 public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.HistoryViewHolder> {
 
@@ -32,9 +29,9 @@ public class HistoryListAdapter extends RecyclerView.Adapter<HistoryListAdapter.
         return 10;
     }
 
-    public class HistoryViewHolder extends RecyclerView.ViewHolder {
+    class HistoryViewHolder extends RecyclerView.ViewHolder {
 
-        public HistoryViewHolder(View itemView) {
+        HistoryViewHolder(View itemView) {
             super(itemView);
         }
     }

@@ -1,10 +1,6 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.settings.cards;
 
-/**
- * Created by Gustavo Quesada S on 09/12/2016.
- */
-
-public enum CardDetailViewType {
+enum CardDetailViewType {
     VIEWCARD(1), ADDCARD(2), EDITCARD(3);
 
     private final int mType;

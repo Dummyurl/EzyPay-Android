@@ -5,10 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-/**
- * Created by gustavoquesada on 11/13/16.
- */
-
 public class DialogBuilder {
 
     private Context mContext;

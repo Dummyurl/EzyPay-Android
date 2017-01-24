@@ -18,10 +18,6 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by gustavoquesada on 1/14/17.
- */
-
 public class ContactsListPresenter implements IContactsListPresenter {
     private ContactsListView mView;
 
@@ -69,7 +65,7 @@ public class ContactsListPresenter implements IContactsListPresenter {
         mView = null;
     }
 
-    public void validatePhoneNumbers(JSONArray array) {
+    private void validatePhoneNumbers(JSONArray array) {
         final UserManager userManager = new UserManager();
 
         try {

@@ -2,10 +2,6 @@ package com.ezypayinc.ezypay.model;
 
 import io.realm.RealmObject;
 
-/**
- * Created by gustavoquesada on 12/16/16.
- */
-
 public class Ticket extends RealmObject {
 
     private int ticketId;

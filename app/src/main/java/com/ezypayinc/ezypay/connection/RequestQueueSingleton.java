@@ -3,18 +3,14 @@ package com.ezypayinc.ezypay.connection;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-/**
- * Created by gustavoquesada on 11/4/16.
- */
 
-public class RequestQueueSingleton {
+class RequestQueueSingleton {
     private static RequestQueueSingleton mInstance;
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
@@ -48,14 +44,14 @@ public class RequestQueueSingleton {
         return mInstance;
     }
 
-    public RequestQueue getRequestQueue() {
+     RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
         }
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req) {
+     <T> void addToRequestQueue(Request<T> req) {
         getRequestQueue().add(req);
     }
 

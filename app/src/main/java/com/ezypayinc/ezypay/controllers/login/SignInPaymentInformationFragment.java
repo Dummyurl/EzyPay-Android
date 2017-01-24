@@ -26,9 +26,8 @@ import java.util.ArrayList;
  */
 public class SignInPaymentInformationFragment extends Fragment implements View.OnClickListener, SignInPaymentInformationView{
 
-    private EditText edtCardnumber, edtCvv;
+    private EditText edtCardNumber, edtCvv;
     private Spinner spnMonth, spnYear;
-    private Button btnSaveCard;
     private View mRootView;
     private OnFinishWizard listener;
     private ISignInPaymentInformationPresenter presenter;
@@ -47,8 +46,6 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -78,17 +75,17 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
 
     public void initComponents(View rootView) {
         mRootView = rootView;
-        edtCardnumber = (EditText)rootView.findViewById(R.id.sign_in_card_number);
+        edtCardNumber = (EditText)rootView.findViewById(R.id.sign_in_card_number);
         edtCvv = (EditText)rootView.findViewById(R.id.sign_in_cvv);
         spnMonth = (Spinner) rootView.findViewById(R.id.sign_in_spn_month);
         spnYear = (Spinner) rootView.findViewById(R.id.sign_in_spn_year);
-        btnSaveCard = (Button) rootView.findViewById(R.id.sign_in_save_card);
+        Button btnSaveCard = (Button) rootView.findViewById(R.id.sign_in_save_card);
         btnSaveCard.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
-        String cardNumber = edtCardnumber.getText().toString();
+        String cardNumber = edtCardNumber.getText().toString();
         String cvvString = edtCvv.getText().toString();
         int month = spnMonth.getSelectedItemPosition() + 1;
         int year = Integer.valueOf(spnYear.getSelectedItem().toString());
@@ -111,7 +108,7 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
 
     @Override
     public void populateYearSpinner(ArrayList<String> years) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, years);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, years);
         spnYear.setAdapter(adapter);
     }
 

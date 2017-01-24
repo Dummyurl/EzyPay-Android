@@ -17,9 +17,8 @@ import com.ezypayinc.ezypay.presenter.LoginPresenters.SignInUserInformationPrese
 
 public class SignInUserInformationFragment extends Fragment implements View.OnClickListener, SignInUserInformationView {
 
-    private Button btnSaveUser;
     public OnChangeViewListener listener;
-    private EditText edtName, edtLastname,edtPhonenumber, edtEmail,
+    private EditText edtName, edtLastName, edtPhoneNumber, edtEmail,
             edtPassword;
     private View mRootView;
     private ISignInUserInformationPresenter mPresenter;
@@ -38,8 +37,6 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
         mPresenter = new SignInUserInformationPresenter(this);
     }
 
@@ -74,11 +71,11 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
     public void initUIComponents(View rootView) {
         mRootView = rootView;
         edtName = (EditText)rootView.findViewById(R.id.sign_in_name);
-        edtLastname = (EditText)rootView.findViewById(R.id.sign_in_lastname);
-        edtPhonenumber = (EditText)rootView.findViewById(R.id.sign_in_phone_number);
+        edtLastName = (EditText)rootView.findViewById(R.id.sign_in_lastname);
+        edtPhoneNumber = (EditText)rootView.findViewById(R.id.sign_in_phone_number);
         edtEmail = (EditText)rootView.findViewById(R.id.sign_in_email);
         edtPassword = (EditText)rootView.findViewById(R.id.sign_in_password);
-        btnSaveUser = (Button)rootView.findViewById(R.id.sign_in_save_user_information);
+        Button btnSaveUser = (Button)rootView.findViewById(R.id.sign_in_save_user_information);
         btnSaveUser.setOnClickListener(this);
     }
 
@@ -86,8 +83,8 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
         User user = mPresenter.validateUser();
         if(user != null) {
             edtName.setText(user.getName());
-            edtLastname.setText(user.getLastName());
-            edtPhonenumber.setText(user.getPhoneNumber());
+            edtLastName.setText(user.getLastName());
+            edtPhoneNumber.setText(user.getPhoneNumber());
             edtEmail.setText(user.getEmail());
         }
     }
@@ -112,8 +109,8 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
     @Override
     public void onClick(View view) {
         String name = edtName.getText().toString();
-        String lastname = edtLastname.getText().toString();
-        String phoneNumber = edtPhonenumber.getText().toString();
+        String lastname = edtLastName.getText().toString();
+        String phoneNumber = edtPhoneNumber.getText().toString();
         String email = edtEmail.getText().toString();
         String password = edtPassword.getText().toString();
         mPresenter.registerUser(name, lastname, phoneNumber, email, password);

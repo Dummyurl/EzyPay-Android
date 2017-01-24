@@ -8,10 +8,6 @@ import com.ezypayinc.ezypay.controllers.login.interfaceViews.SignInUserInformati
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.User;
 
-/**
- * Created by gustavoquesada on 11/24/16.
- */
-
 public class SignInUserInformationPresenter implements ISignInUserInformationPresenter {
 
     private SignInUserInformationView view;
@@ -28,7 +24,7 @@ public class SignInUserInformationPresenter implements ISignInUserInformationPre
 
     @Override
     public void registerUser(String username, String lastName, String phoneNumber, String email, String password) {
-        if(validateFileds(username, lastName, phoneNumber, email, password)) {
+        if(validateFields(username, lastName, phoneNumber, email, password)) {
             final User user = new User();
             user.setName(username);
             user.setLastName(lastName);
@@ -44,7 +40,7 @@ public class SignInUserInformationPresenter implements ISignInUserInformationPre
         this.view = null;
     }
 
-    public boolean validateFileds(String username, String lastName, String phoneNumber, String email, String password) {
+    private boolean validateFields(String username, String lastName, String phoneNumber, String email, String password) {
         if (TextUtils.isEmpty(username)) {
             view.setErrorMessage(R.id.sign_in_name, R.string.error_field_required);
             return false;
@@ -83,11 +79,11 @@ public class SignInUserInformationPresenter implements ISignInUserInformationPre
         return true;
     }
 
-    public boolean validateEmail(String email) {
+    private boolean validateEmail(String email) {
         return email.contains("@");
     }
 
-    public void addUser(final User user) {
+    private void addUser(final User user) {
         UserManager manager = new UserManager();
         UserSingleton.getInstance().setUser(user);
         manager.deleteUser();

@@ -7,16 +7,13 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
@@ -32,7 +29,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 public class ScannerFragment extends Fragment implements MainUserActivity.OnBarcodeScanned, ScannerView, View.OnClickListener {
     private RelativeLayout preScannerView, requestServiceView;
     private IScannerPresenter presenter;
-    private Button btnScanner, btnCallWaiter, btnPayBill;
+    private Button btnScanner, btnPayBill;
 
     public ScannerFragment() {
         // Required empty public constructor
@@ -48,8 +45,6 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
     }
 
     @Override
@@ -60,7 +55,7 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
         preScannerView = (RelativeLayout) rootView.findViewById(R.id.pre_scanner_view);
         requestServiceView = (RelativeLayout) rootView.findViewById(R.id.request_service_view);
         btnScanner = (Button) rootView.findViewById(R.id.scanner_fragment_btn_scanner);
-        btnCallWaiter = (Button) rootView.findViewById(R.id.scanner_fragment_btnCallWaiter);
+        Button btnCallWaiter = (Button) rootView.findViewById(R.id.scanner_fragment_btnCallWaiter);
         btnPayBill = (Button) rootView.findViewById(R.id.scanner_fragment_btnPayBill);
         btnScanner.setOnClickListener(this);
         btnCallWaiter.setOnClickListener(this);

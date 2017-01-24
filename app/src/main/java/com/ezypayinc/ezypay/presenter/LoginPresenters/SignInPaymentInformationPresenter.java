@@ -11,18 +11,14 @@ import com.ezypayinc.ezypay.manager.CardManager;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.Card;
 import com.ezypayinc.ezypay.model.User;
+import com.google.gson.JsonElement;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import io.realm.RealmList;
-
-/**
- * Created by gustavoquesada on 11/25/16.
- */
 
 public class SignInPaymentInformationPresenter implements ISignInPaymentInformationPresenter {
     private SignInPaymentInformationView view;
@@ -37,7 +33,7 @@ public class SignInPaymentInformationPresenter implements ISignInPaymentInformat
         this.view.populateMonthSpinner(R.array.months);
 
         //populate year spinner
-        ArrayList<String> years = new ArrayList<String>();
+        ArrayList<String> years = new ArrayList<>();
         int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         for (int i = currentYear; i <= currentYear + 10; i++) {
             years.add(Integer.toString(i));
@@ -81,15 +77,11 @@ public class SignInPaymentInformationPresenter implements ISignInPaymentInformat
     private void saveUser(final User user) {
         final UserManager userManager = new UserManager();
         try {
-            userManager.saveUserInServer(user, new Response.Listener<JSONObject>() {
+            userManager.saveUserInServer(user, new Response.Listener<JsonElement>() {
                 @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        user.setId(userManager.parseRegisterUser(response));
-                        login(user);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                public void onResponse(JsonElement response) {
+                    user.setId(userManager.parseRegisterUser(response));
+                    login(user);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -105,17 +97,13 @@ public class SignInPaymentInformationPresenter implements ISignInPaymentInformat
     private void login(final User user) {
         final UserManager userManager = new UserManager();
         try {
-            userManager.loginMethod(user.getEmail(), user.getPassword(), new Response.Listener<JSONObject>() {
+            userManager.loginMethod(user.getEmail(), user.getPassword(), new Response.Listener<JsonElement>() {
                 @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        User userFromLogin = userManager.parseLoginResponse(response);
-                        user.setToken(userFromLogin.getToken());
-                        UserSingleton.getInstance().setUser(user);
-                        saveCard(user);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                public void onResponse(JsonElement response) {
+                    User userFromLogin = userManager.parseLoginResponse(response);
+                    user.setToken(userFromLogin.getToken());
+                    UserSingleton.getInstance().setUser(user);
+                    saveCard(user);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -132,19 +120,15 @@ public class SignInPaymentInformationPresenter implements ISignInPaymentInformat
         final CardManager cardManager = new CardManager();
         final UserManager userManager = new UserManager();
         try {
-            cardManager.saveCardInServer(user.getCards().get(0),  new Response.Listener<JSONObject>() {
+            cardManager.saveCardInServer(user.getCards().get(0),  new Response.Listener<JsonElement>() {
                 @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        Card card = cardManager.parseSaveCardResponse(response);
-                        user.getCards().clear();
-                        user.getCards().add(card);
-                        UserSingleton.getInstance().setUser(user);
-                        userManager.addUser(user);
-                        view.navigateToHome();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                public void onResponse(JsonElement response) {
+                    Card card = cardManager.parseSaveCardResponse(response);
+                    user.getCards().clear();
+                    user.getCards().add(card);
+                    UserSingleton.getInstance().setUser(user);
+                    userManager.addUser(user);
+                    view.navigateToHome();
                 }
             }, new Response.ErrorListener() {
                 @Override

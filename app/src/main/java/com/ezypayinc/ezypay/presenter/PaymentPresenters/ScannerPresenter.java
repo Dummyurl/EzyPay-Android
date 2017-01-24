@@ -5,13 +5,10 @@ import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ScannerView;
 import com.ezypayinc.ezypay.manager.TicketManager;
 import com.ezypayinc.ezypay.model.Ticket;
+import com.google.gson.JsonElement;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-/**
- * Created by gustavoquesada on 12/16/16.
- */
 
 public class ScannerPresenter implements IScannerPresenter {
     private ScannerView view;
@@ -42,9 +39,9 @@ public class ScannerPresenter implements IScannerPresenter {
             TicketManager manager = new TicketManager();
             manager.deleteTicket();
             manager.saveTicket(ticket);
-            manager.createTicket(ticket, new Response.Listener<JSONObject>() {
+            manager.createTicket(ticket, new Response.Listener<JsonElement>() {
                 @Override
-                public void onResponse(JSONObject response) {
+                public void onResponse(JsonElement response) {
                     view.showRestaurantDetail(ticket);
                 }
             }, new Response.ErrorListener() {

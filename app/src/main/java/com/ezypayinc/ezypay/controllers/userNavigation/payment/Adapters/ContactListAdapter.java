@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,10 +12,6 @@ import com.ezypayinc.ezypay.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by gustavoquesada on 11/16/16.
- */
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder> {
     private List<User> mUsersList;
@@ -44,7 +39,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             @Override
             public void onClick(View view) {
                 int visibility = holder.contactCheckedImageView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
-                boolean isChecked = visibility == View.VISIBLE ? true: false;
+                boolean isChecked = visibility == View.VISIBLE;
                 holder.contactCheckedImageView.setVisibility(visibility);
                 mListener.OnItemClickListener(user, isChecked);
             }
@@ -57,11 +52,11 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
          return mUsersList.size();
     }
 
-    private void setFadeAnimation(View view) {
+    /*private void setFadeAnimation(View view) {
         AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
         anim.setDuration(1000);
         view.startAnimation(anim);
-    }
+    }*/
 
     public void setFilter(List<User> filteredList) {
         mUsersList = new ArrayList<>();
@@ -70,11 +65,11 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     }
 
 
-    public class ContactsViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName;
-        public ImageView profileImage, contactCheckedImageView;
+    class ContactsViewHolder extends RecyclerView.ViewHolder {
+        TextView tvName;
+        ImageView profileImage, contactCheckedImageView;
 
-        public ContactsViewHolder(View view){
+        ContactsViewHolder(View view){
             super(view);
             tvName = (TextView) view.findViewById(R.id.payment_contact_list_name);
             profileImage = (ImageView) view.findViewById(R.id.payment_contact_list_profile_image);

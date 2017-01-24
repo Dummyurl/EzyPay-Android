@@ -19,7 +19,6 @@ import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters.ContactListAdapter;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ContactsListView;
-import com.ezypayinc.ezypay.model.Contact;
 import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.ContactsListPresenter;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.IContactsListPresenter;
@@ -49,8 +48,6 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        if (getArguments() != null) {
-        }
     }
 
     @Override

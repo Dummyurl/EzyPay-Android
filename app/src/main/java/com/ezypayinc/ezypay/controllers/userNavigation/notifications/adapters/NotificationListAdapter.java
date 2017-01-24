@@ -8,11 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.model.Notification;
 
-/**
- * Created by gustavoquesada on 11/18/16.
- */
 
 public class NotificationListAdapter extends RecyclerView.Adapter<NotificationListAdapter.NotificationViewHolder>{
 
@@ -38,11 +34,11 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         return 10;
     }
 
-    public class NotificationViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imageView;
-        public TextView restaurantName, userName, notificationDate, notificationCost;
+    class NotificationViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+        TextView restaurantName, notificationDate, notificationCost;
 
-        public NotificationViewHolder(View itemView) {
+        NotificationViewHolder(View itemView) {
             super(itemView);
             imageView = (ImageView)  itemView.findViewById(R.id.notification_list_restaurant_image);
             restaurantName = (TextView) itemView.findViewById(R.id.notification_list_restaurant_name);

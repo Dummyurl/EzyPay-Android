@@ -5,15 +5,12 @@ import com.android.volley.Response;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.model.Ticket;
 import com.ezypayinc.ezypay.model.User;
+import com.google.gson.JsonElement;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-
-/**
- * Created by gustavoquesada on 12/18/16.
- */
 
 public class TicketServiceClient {
 
@@ -25,7 +22,7 @@ public class TicketServiceClient {
         connectionManager = new ConnectionManager();
     }
 
-    public void createTicket(Ticket ticket, Response.Listener successHandler, Response.ErrorListener errorListener) throws JSONException {
+    public void createTicket(Ticket ticket, Response.Listener<JsonElement> successHandler, Response.ErrorListener errorListener) throws JSONException {
         User user = UserSingleton.getInstance().getUser();
         //set headers
         String oauthToken = "Bearer "+ user.getToken();
@@ -37,7 +34,7 @@ public class TicketServiceClient {
         parameters.put("restaurantId", ticket.getRestaurantId());
         parameters.put("tableId", ticket.getTableId());
         int httpMethod = Request.Method.POST;
-        connectionManager.sendRequest(httpMethod,BASE_URL,parameters,headers,successHandler, errorListener);
+        connectionManager.sendCustomRequest(httpMethod,BASE_URL,parameters,headers,successHandler, errorListener);
     }
 
 }
