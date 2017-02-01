@@ -21,7 +21,7 @@
 
     <!--Prompt-->
     <string name="prompt_name">Name</string>
-    <string name="prompt_lastNName">Last Name</string>
+    <string name="prompt_lastName">Last Name</string>
     <string name="prompt_phone_number">Phone Number</string>
     <string name="prompt_card_number">Card Number</string>
     <string name="prompt_cvv" translatable="false">cvv</string>

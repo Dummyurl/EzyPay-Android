@@ -87,10 +87,10 @@ public class UserServiceClient {
 
     public void validatePhoneNumbers(JSONArray phoneNumbers,Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         User user = UserSingleton.getInstance().getUser();
-        phoneNumbers = new JSONArray();
+        /*phoneNumbers = new JSONArray();
         phoneNumbers.put("89638295");
         phoneNumbers.put("88645200");
-        phoneNumbers.put("87921284");
+        phoneNumbers.put("87921284");*/
         JSONObject parameters = new JSONObject();
         parameters.put("phoneNumbers", phoneNumbers);
         String oauthToken = "Bearer "+ user.getToken();

@@ -35,11 +35,11 @@ public class ContactsListPresenter implements IContactsListPresenter {
         List<Contact> contactsList = new ArrayList<>();
         while (phones.moveToNext())
         {
-            String name =phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            String name = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             Contact contact = new Contact(name, phoneNumber);
-            if(!contactsList.contains(contact)) {
-                array.put(phoneNumber);
+            if (!contactsList.contains(contact)) {
+                array.put(phoneNumber.replaceAll("-","").replaceAll(" ", ""));
                 contactsList.add(contact);
             }
         }
@@ -51,8 +51,8 @@ public class ContactsListPresenter implements IContactsListPresenter {
     public void filterContacts(String query, List<User> usersList) {
         ArrayList<User> filterList = new ArrayList<>();
         for (User user: usersList) {
-            String fullname = user.getName() + " " + user.getLastName();
-            if (fullname.toLowerCase().contains(query.toLowerCase())) {
+            String fullName = user.getName() + " " + user.getLastName();
+            if (fullName.toLowerCase().contains(query.toLowerCase())) {
                 filterList.add(user);
             }
         }

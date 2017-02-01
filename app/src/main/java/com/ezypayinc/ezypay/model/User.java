@@ -1,9 +1,12 @@
 package com.ezypayinc.ezypay.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-public class User extends RealmObject {
+public class User extends RealmObject implements Parcelable {
 
     private int id;
     private String name;
@@ -13,6 +16,9 @@ public class User extends RealmObject {
     private String password;
     private String token;
     private RealmList<Card> cards;
+
+    public User() {
+    }
 
 
     public int getId() {
@@ -87,4 +93,46 @@ public class User extends RealmObject {
         }
         return false;
     }
+
+    public User(Parcel in) {
+        readFromParcel(in);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(lastName);
+        parcel.writeString(phoneNumber);
+        parcel.writeString(email);
+        parcel.writeString(password);
+        parcel.writeString(token);
+        parcel.writeTypedList(cards);
+    }
+
+    private void readFromParcel(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        lastName = in.readString();
+        phoneNumber = in.readString();
+        email = in.readString();
+        password = in.readString();
+        token = in.readString();
+        in.readTypedList(cards, Card.CREATOR);
+    }
+
+    public static Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>(){
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

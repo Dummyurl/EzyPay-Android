@@ -1,14 +1,20 @@
 package com.ezypayinc.ezypay.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import io.realm.RealmObject;
 
-public class Card extends RealmObject{
+public class Card extends RealmObject implements Parcelable{
 
     private int id;
     private int cvv;
     private int month;
     private int year;
     private String number;
+
+    public Card() {
+    }
 
     public int getId() {
         return id;
@@ -49,4 +55,40 @@ public class Card extends RealmObject{
     public void setNumber(String number) {
         this.number = number;
     }
+
+    public Card(Parcel in) {
+        readFromParcel(in);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeInt(cvv);
+        parcel.writeInt(month);
+        parcel.writeInt(year);
+        parcel.writeString(number);
+    }
+
+    private void readFromParcel(Parcel in) {
+        id = in.readInt();
+        cvv = in.readInt();
+        month = in.readInt();
+        year = in.readInt();
+        number = in.readString();
+    }
+
+    public static final Parcelable.Creator<Card> CREATOR = new Parcelable.Creator<Card>() {
+        public Card createFromParcel(Parcel in) {
+            return new Card(in);
+        }
+
+        public Card[] newArray(int size) {
+            return new Card[size];
+        }
+    };
 }

@@ -3,7 +3,9 @@ package com.ezypayinc.ezypay.controllers.userNavigation.payment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,11 +28,12 @@ import com.ezypayinc.ezypay.presenter.PaymentPresenters.IContactsListPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactListFragment extends Fragment implements ContactsListView, ContactListAdapter.OnItemClickListener {
+public class ContactListFragment extends Fragment implements ContactsListView, ContactListAdapter.OnItemClickListener, View.OnClickListener {
     private RecyclerView contactsRecyclerView;
     private ContactListAdapter mAdapter;
+    private FloatingActionButton fabNextAction;
     private List<User> usersList;
-    private List<User> usersSelected;
+    private ArrayList<User> usersSelected;
     private IContactsListPresenter presenter;
 
     public ContactListFragment() {
@@ -62,6 +65,8 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
         contactsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         presenter.getContacts();
         usersSelected = new ArrayList<>();
+        fabNextAction = (FloatingActionButton)rootView.findViewById(R.id.payment_contact_next_action_fab);
+        fabNextAction.setOnClickListener(this);
         return rootView;
     }
 
@@ -119,6 +124,28 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
             usersSelected.add(user);
         } else {
             usersSelected.remove(user);
+        }
+
+        if (usersSelected.isEmpty()) {
+            fabNextAction.setVisibility(View.GONE);
+        } else {
+            fabNextAction.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.payment_contact_next_action_fab:
+                Fragment fragment = SplitFragment.newInstance(usersSelected);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().
+                        replace(R.id.payment_main_container, fragment).
+                        addToBackStack(null).
+                        commit();
+                break;
+            default:
+                break;
         }
     }
 }

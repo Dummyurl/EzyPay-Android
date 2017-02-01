@@ -16,7 +16,8 @@
             tools:ignore="ContentDescription" />
 
         <LinearLayout
-            android:paddingLeft="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/split_fragment_imageView_profile_image"

@@ -10,17 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters.SplitAdapter;
+import com.ezypayinc.ezypay.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SplitFragment extends Fragment {
+
+    private static final String FRIENDS_KEY  = "FRIENDS_KEY";
+    private List<User> friends;
 
     public SplitFragment() {
         // Required empty public constructor
     }
 
-    public static SplitFragment newInstance() {
+    public static SplitFragment newInstance(ArrayList<User> friends) {
         SplitFragment fragment = new SplitFragment();
         Bundle args = new Bundle();
+        args.putParcelableArrayList(FRIENDS_KEY, friends);
         fragment.setArguments(args);
         return fragment;
     }
@@ -28,6 +37,9 @@ public class SplitFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getArguments() != null) {
+            friends = getArguments().getParcelableArrayList(FRIENDS_KEY);
+        }
     }
 
     @Override
@@ -39,7 +51,7 @@ public class SplitFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         usersRecyclerView.setLayoutManager(mLayoutManager);
         usersRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        SplitAdapter mAdapter = new SplitAdapter(null, getContext());
+        SplitAdapter mAdapter = new SplitAdapter(friends, UserSingleton.getInstance().getUser(), getContext());
         usersRecyclerView.setAdapter(mAdapter);
         return rootView;
     }

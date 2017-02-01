@@ -4,11 +4,23 @@
     android:layout_height="match_parent"
     tools:context="com.ezypayinc.ezypay.controllers.userNavigation.payment.ContactListFragment">
 
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/payment_contact_recycler_view">
 
     </android.support.v7.widget.RecyclerView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/payment_contact_next_action_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:visibility="gone"
+        android:src="@drawable/ic_check_icon"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

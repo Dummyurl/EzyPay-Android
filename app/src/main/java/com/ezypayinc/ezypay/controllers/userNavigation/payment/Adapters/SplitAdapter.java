@@ -15,28 +15,30 @@ import java.util.List;
 
 public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<User> mUserList;
-    private int index;
-    private int indexHeaders;
+    private List<User> mFriendsList;
+    private User mUser;
+    private int index, indexHeaders, indexFriends;
     private String[] headerTitles;
     private int indexPayment;
 
-    public SplitAdapter(List<User> userList, Context context) {
-        mUserList = userList;
+    public SplitAdapter(List<User> friendList, User user, Context context) {
+        mFriendsList = friendList;
+        mUser = user;
         headerTitles = context.getResources().getStringArray(R.array.split_fragment_header_titles);
         index = 0;
         indexHeaders = 0;
+        indexFriends = 0;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-        if (index == 0 || index == 2 || index == 5) {
+        if (index == 0 || index == 2 || index == (mFriendsList.size() + 3)) {
             index ++;
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.header_layout, parent, false);
             return new HeaderViewHolder(itemView);
-        } else if(index > 5){
+        } else if(index > (mFriendsList.size() + 3)){
             index ++;
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.cell_payment_detail_split_fragment, parent, false);
@@ -57,13 +59,21 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             indexHeaders ++;
         } else if (holder instanceof SplitViewHolder)  {
             SplitViewHolder view = (SplitViewHolder) holder;
-            view.userNameTextView.setText("Gustavo Quesada Sánchez");
-            view.paymentDetailTextView.setText("$1000");
+            if (position == 1) {
+                view.userNameTextView.setText(mUser.getName().concat(" ").concat(mUser.getLastName()));
+                view.paymentDetailTextView.setText("$1000");
+            } else {
+                User currentFriend = mFriendsList.get(indexFriends);
+                indexFriends++;
+                view.userNameTextView.setText(currentFriend.getName().concat(" ").concat(currentFriend.getLastName()));
+                view.paymentDetailTextView.setText("$1000");
+            }
+
         } else {
             PaymentDetailViewHolder view = (PaymentDetailViewHolder) holder;
             if(indexPayment == 0) {
                 view.itemNameTextView.setText("Faltante");
-                view.itemDetailTextView.setText("$0");
+                view.itemDetailTextView.setText("$12000");
             } else  {
                 view.itemNameTextView.setText("Total");
                 view.itemDetailTextView.setText("$15000");
@@ -74,7 +84,7 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return 8;
+        return mFriendsList.size() + 6;
     }
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -97,6 +107,7 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             userNameTextView = (TextView) itemView.findViewById(R.id.split_fragment_textView_userName);
             paymentDetailTextView = (TextView) itemView.findViewById(R.id.split_fragment_textView_paymentDetail);
             paymentSeekBar = (SeekBar) itemView.findViewById(R.id.split_fragment_seekBar_payment);
+            paymentSeekBar.setPadding(10,0,0,0);
 
         }
     }
