@@ -1,9 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/colorBackgroundViews"
     tools:context="com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment">
 
     <RelativeLayout
@@ -12,78 +11,105 @@
         android:visibility="gone"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/rest02"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom"
-                android:background="#80000000"
+                android:background="#313131"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical"
-                android:layout_alignParentBottom="true">
-
+                android:layout_height="50dp">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical"
-                    android:text="El Novillo Alegre"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:textColor="@color/white"
-                    android:layout_gravity="center"
-                    android:padding="8dp" />
-
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center"
+                    android:textStyle="italic"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:text="TINTOS  BLANCOS"/>
             </LinearLayout>
-        </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@color/greenEzypayColor"
+                android:orientation="vertical">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/rest02"
+                    android:scaleType="fitXY" />
+            </LinearLayout>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
+            android:weightSum="2"
             android:orientation="horizontal">
             <Button
                 android:id="@+id/scanner_fragment_btnCallWaiter"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="0.5"
-                android:background="@drawable/rounded_button"
-                android:text="Mesero"/>
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/ic_waiter_action" />
             <Button
                 android:id="@+id/scanner_fragment_btnPayBill"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/rounded_button"
-                android:text="Cuenta"/>
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_bill_action" />
         </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/pre_scanner_view"
+        android:visibility="visible"
         android:layout_width="match_parent"
-        android:background="#007CFF"
         android:layout_height="match_parent">
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:textColor="@color/white"
-            android:layout_above="@+id/button_view"
-            android:gravity="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:text="@string/label_scanner_fragment_touch_to_scan"/>
+            android:background="#313131"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_height="50dp">
+            <TextView
+                android:background="#757575"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:text="@string/label_scanner_fragment_scan"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circular_button"
+            android:backgroundTint="#313131">
+        </LinearLayout>
         <RelativeLayout
             android:id="@+id/button_view"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:elevation="5dp"
             android:background="@drawable/circular_button"
+            android:backgroundTint="@color/greenEzypayColor"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true">
             <Button

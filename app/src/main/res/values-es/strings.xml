@@ -26,7 +26,7 @@
     <string name="label_payment_information_from_title">Información de Pago</string>
     <string name="label_login_or">Ó</string>
     <string name="label_loading_text">Cargando</string>
-    <string name="label_scanner_fragment_touch_to_scan">Toca para Scannear</string>
+    <string name="label_scanner_fragment_scan">Scannear</string>
 
 
     <!--Spinners items-->

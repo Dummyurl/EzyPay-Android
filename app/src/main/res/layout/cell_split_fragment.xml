@@ -6,7 +6,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/greenEzypayColor">
 
         <ImageView
             android:id="@+id/split_fragment_imageView_profile_image"
@@ -27,6 +28,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorBackgroundViews"
                 android:id="@+id/split_fragment_textView_userName" />
 
             <SeekBar
@@ -37,6 +39,7 @@
             <TextView
                 android:id="@+id/split_fragment_textView_paymentDetail"
                 android:layout_width="match_parent"
+                android:textColor="@color/colorBackgroundViews"
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:textAlignment="gravity" />

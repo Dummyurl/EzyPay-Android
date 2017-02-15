@@ -35,7 +35,7 @@
     <string name="label_payment_information_from_title">Payment Information</string>
     <string name="label_login_or">OR</string>
     <string name="label_loading_text">Loading</string>
-    <string name="label_scanner_fragment_touch_to_scan">Touch to Scan</string>
+    <string name="label_scanner_fragment_scan">Scan</string>
 
     <!--Spinners items-->
     <string-array name="months">

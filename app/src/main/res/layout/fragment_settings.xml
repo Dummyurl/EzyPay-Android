@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="#E4E4E4"
+        android:background="@color/colorBackgroundViews"
         android:id="@+id/image_profile_view"
         android:src="@drawable/image_profile_circle"
         tools:ignore="ContentDescription" />
