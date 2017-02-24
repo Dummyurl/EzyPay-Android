@@ -63,8 +63,9 @@ public class MainUserActivity extends AppCompatActivity {
                         .commit();
             }
         });
-        bottomBar.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.bottom_bar_background));
-        bottomBar.setActiveTabColor("#C2185B");
+        bottomBar.hideShadow();
+        //bottomBar.setBackground(ContextCompat.getDrawable(getApplicationContext(),R.drawable.bottom_bar_background));
+        //bottomBar.setActiveTabColor("#C2185B");
     }
 
     @Override

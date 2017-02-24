@@ -16,6 +16,8 @@
     <string name="action_card_detail_add_card">Add Card</string>
     <string name="action_card_detail_edit_card">Edit Card</string>
     <string name="action_edit_user_save">Save</string>
+    <string name="action_split_send_notification">Send Notification</string>
+
 
     <string name="title_activity_login" translatable="false">Log in</string>
 

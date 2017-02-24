@@ -32,6 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
+                    android:text="quesada.tavo@gmail.com"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
 
@@ -46,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
+                android:text="tavo05"
                 android:imeActionId="@+id/login"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
@@ -56,10 +58,11 @@
 
         <Button
                 android:id="@+id/log_in_button"
-                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:background="@drawable/button_green_background"
+                android:textColor="@color/colorBackgroundViews"
                 android:text="@string/log_in"
                 android:textStyle="bold" />
 
@@ -88,22 +91,13 @@
 
             <Button
                 android:id="@+id/sign_in_button"
-                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
+                android:background="@drawable/button_white_background"
+                android:textColor="@color/colorBackgroundViews"
                 android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/sign_in_restaurant_button"
-                style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/sign_in_as_restaurant"
-                android:textStyle="bold" />
-
 
     </LinearLayout>
 </ScrollView>

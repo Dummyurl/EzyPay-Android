@@ -7,23 +7,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/split_fragment_recycler_view"
-        android:layout_weight="0.9">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/split_fragment_recycler_view"
+            android:layout_weight="0.9">
 
-    </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/split_fragment_next_button"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="0.1"
-        android:background="#000000"
-        android:text="Next"
-        android:textColor="@color/greenEzypayColor"/>
+        <Button
+            android:id="@+id/split_fragment_next_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="0.1"
+            android:background="#000000"
+            android:text="@string/action_split_send_notification"
+            android:textColor="@color/greenEzypayColor"/>
     </LinearLayout>
 
 </RelativeLayout>

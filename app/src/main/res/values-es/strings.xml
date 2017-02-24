@@ -13,6 +13,7 @@
     <string name="action_card_detail_add_card">Agregar Tarjeta</string>
     <string name="action_card_detail_edit_card">Editar Tarjeta</string>
     <string name="action_edit_user_save">Guardar</string>
+    <string name="action_split_send_notification">Enviar Notificación</string>
 
     <!--Prompt-->
     <string name="prompt_name">Nombre</string>

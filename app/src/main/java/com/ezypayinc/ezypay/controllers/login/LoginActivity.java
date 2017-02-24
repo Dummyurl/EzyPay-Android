@@ -23,7 +23,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
     // UI references.
     private EditText mPasswordView, mEmailView;
     private Button mLogInButton, mSignInButton;
-    private ProgressDialog mProgressDiaolog;
+    private ProgressDialog mProgressDialog;
     private ILoginPresenter loginPresenter;
 
     @Override
@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginPresenter = new LoginPresenter(this);
-        loginPresenter.validateUser();
         initUIComponents();
         setupProgressDialog();
 
@@ -57,8 +56,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
     }
 
     private void setupProgressDialog(){
-        mProgressDiaolog = new ProgressDialog(this);
-        mProgressDiaolog.setCancelable(false);
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCancelable(false);
     }
 
 
@@ -92,13 +91,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
 
     @Override
     public void showProgressDialog() {
-        mProgressDiaolog.show();
-        mProgressDiaolog.setContentView(R.layout.custom_progress_dialog);
+        mProgressDialog.show();
+        mProgressDialog.setContentView(R.layout.custom_progress_dialog);
     }
 
     @Override
     public void hideProgressDialog() {
-        mProgressDiaolog.dismiss();
+        mProgressDialog.dismiss();
     }
 
     @Override

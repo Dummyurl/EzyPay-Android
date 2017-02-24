@@ -33,17 +33,6 @@ public class LoginPresenter  implements ILoginPresenter{
     }
 
     @Override
-    public void validateUser() {
-        UserManager manager = new UserManager();
-        User user = manager.getUser();
-        if(user != null && user.getToken() != null) {
-            UserSingleton userSingleton = UserSingleton.getInstance();
-            userSingleton.setUser(user);
-            loginView.navigateToHome();
-        }
-    }
-
-    @Override
     public void onDestroy() {
         this.loginView = null;
     }
