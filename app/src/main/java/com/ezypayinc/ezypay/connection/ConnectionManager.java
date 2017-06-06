@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 class ConnectionManager {
 
-    private static final String BASIC_URL = "http://192.168.1.105:3000/";
+    private static final String BASIC_URL = "http://192.168.1.101:3000/";
     private Context mContext;
 
     ConnectionManager() {

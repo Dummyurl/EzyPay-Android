@@ -4,7 +4,7 @@
     android:id="@+id/activity_splash_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundViews"
+    android:background="#97CE32"
     tools:context="com.ezypayinc.ezypay.controllers.SplashScreen.SplashScreenActivity">
 
     <ImageView

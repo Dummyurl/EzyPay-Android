@@ -4,7 +4,6 @@
     android:id="@+id/activity_main_user"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundViews"
     tools:context="com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity">
     <FrameLayout
         android:layout_width="match_parent"

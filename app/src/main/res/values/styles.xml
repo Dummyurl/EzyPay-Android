@@ -1,4 +1,5 @@
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -9,12 +10,16 @@
     </style>
 
     <style name="CustomTheme" parent="@style/Theme.AppCompat.Light">
-        <item name="android:actionBarStyle">@style/MyActionBarTheme</item>
-        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:actionBarStyle" tools:ignore="NewApi">@style/MyActionBarTheme</item>
+        <item name="actionBarStyle">@style/MyActionBarTheme</item>
+        <item name="android:statusBarColor">@color/greenEzypayColor</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
-    <style name="MyActionBarTheme" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/white</item>
+    <style name="MyActionBarTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background" tools:ignore="NewApi">@color/greenEzypayColor</item>
+        <item name="background">@color/greenEzypayColor</item>
     </style>
 
     <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
