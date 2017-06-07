@@ -22,7 +22,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
 
     // UI references.
     private EditText mPasswordView, mEmailView;
-    private Button mLogInButton, mSignInButton;
+    private Button mLogInButton;
     private ProgressDialog mProgressDialog;
     private ILoginPresenter loginPresenter;
 
@@ -48,11 +48,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
         mEmailView = (EditText) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
         mLogInButton = (Button) findViewById(R.id.log_in_button);
-        mSignInButton = (Button) findViewById(R.id.sign_in_button);
 
         //set listeners
         mLogInButton.setOnClickListener(this);
-        mSignInButton.setOnClickListener(this);
     }
 
     private void setupProgressDialog(){
@@ -110,9 +108,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
     public void onClick(View view) {
         if(view.equals(mLogInButton)) {
             attemptLogin();
-        } else if(view.equals(mSignInButton)) {
-            Intent intent = new Intent(LoginActivity.this, SingInActivity.class);
-            startActivity(intent);
         }
     }
 }

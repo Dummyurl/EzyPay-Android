@@ -20,7 +20,7 @@
             android:id="@+id/activity_main_btn_signIn"
             android:layout_height="50dp"
             android:background="@drawable/button_green_background"
-            android:text="@string/action_sign_in"
+            android:text="@string/action_user"
             android:textColor="@color/white"
             android:layout_marginBottom="15dp"
             tools:ignore="ButtonStyle" />
@@ -36,7 +36,7 @@
             android:layout_height="50dp"
             android:background="@drawable/button_green_background"
             android:textColor="@color/white"
-            android:text="@string/sign_in_as_restaurant"
+            android:text="@string/action_commerce"
             tools:ignore="ButtonStyle" />
     </LinearLayout>
 

@@ -19,6 +19,12 @@
     <string name="action_split_send_notification">Send Notification</string>
     <string name="action_user">User</string>
     <string name="action_commerce">Commerce</string>
+    <string name="action_forgot_password"><u>Forgot Password?</u></string>
+    <string name="action_facebook">Sign in with Facebook</string>
+    <string name="action_google">Sign in with Google</string>
+    <string name="action_no_account">Don’t have an account? <u>Sign up here!</u></string>
+    <string name="action_register_commerce">Register new Commerce</string>
+
 
 
     <string name="title_activity_login" translatable="false">Log in</string>

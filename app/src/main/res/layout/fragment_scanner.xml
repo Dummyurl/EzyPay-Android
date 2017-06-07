@@ -80,35 +80,18 @@
         android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:background="#313131"
-            android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:layout_height="50dp">
-            <TextView
-                android:background="#757575"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/white"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:text="@string/label_scanner_fragment_scan"/>
-        </LinearLayout>
 
         <LinearLayout
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:background="@drawable/circular_black_button">
         </LinearLayout>
         <RelativeLayout
             android:id="@+id/button_view"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:elevation="5dp"
             android:background="@drawable/circular_green_button"
             android:layout_centerHorizontal="true"
