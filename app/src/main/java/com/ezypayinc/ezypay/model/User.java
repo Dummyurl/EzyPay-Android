@@ -15,6 +15,9 @@ public class User extends RealmObject implements Parcelable {
     private String email;
     private String password;
     private String token;
+    private int userType;
+    private int customerId;
+    private String avatar;
     private RealmList<Card> cards;
 
     public User() {
@@ -83,6 +86,30 @@ public class User extends RealmObject implements Parcelable {
 
     public void setCards(RealmList<Card> cards) {
         this.cards = cards;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public boolean equals(Object x) {

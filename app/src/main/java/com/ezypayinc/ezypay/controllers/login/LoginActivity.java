@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
@@ -25,10 +26,19 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
     private Button mLogInButton;
     private ProgressDialog mProgressDialog;
     private ILoginPresenter loginPresenter;
+    private LinearLayout mUserLoginContainer, mCommerceLoginContainer;
+
+    private int userType;
+    public static final String USER_TYPE_KEY = "userType";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if(intent != null) {
+            userType = intent.getExtras().getInt(USER_TYPE_KEY);
+        }
         setContentView(R.layout.activity_login);
         loginPresenter = new LoginPresenter(this);
         initUIComponents();
@@ -45,9 +55,26 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
 
     private void initUIComponents() {
         // Set up the login form.
-        mEmailView = (EditText) findViewById(R.id.email);
-        mPasswordView = (EditText) findViewById(R.id.password);
-        mLogInButton = (Button) findViewById(R.id.log_in_button);
+        if(userType == 1) {
+            mEmailView = (EditText) findViewById(R.id.email);
+            mPasswordView = (EditText) findViewById(R.id.password);
+            mLogInButton = (Button) findViewById(R.id.log_in_button);
+        } else {
+            mEmailView = (EditText) findViewById(R.id.commerce_email);
+            mPasswordView = (EditText) findViewById(R.id.commerce_password);
+            mLogInButton = (Button) findViewById(R.id.log_in_commerce_button);
+        }
+
+        mUserLoginContainer = (LinearLayout) findViewById((R.id.userLogIn));
+        mCommerceLoginContainer = (LinearLayout) findViewById((R.id.commerceLogin));
+
+        if(userType == 1) {
+            mUserLoginContainer.setVisibility(View.VISIBLE);
+            mCommerceLoginContainer.setVisibility(View.GONE);
+        } else {
+            mCommerceLoginContainer.setVisibility(View.VISIBLE);
+            mUserLoginContainer.setVisibility(View.GONE);
+        }
 
         //set listeners
         mLogInButton.setOnClickListener(this);

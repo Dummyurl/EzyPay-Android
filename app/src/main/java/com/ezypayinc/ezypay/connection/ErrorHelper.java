@@ -3,7 +3,8 @@ package com.ezypayinc.ezypay.connection;
 import android.content.Context;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
-import com.ezypayinc.ezypay.controllers.dialogs.DialogBuilder;
+import com.ezypayinc.ezypay.controllers.Dialogs.DialogBuilder;
+
 
 public class ErrorHelper {
 

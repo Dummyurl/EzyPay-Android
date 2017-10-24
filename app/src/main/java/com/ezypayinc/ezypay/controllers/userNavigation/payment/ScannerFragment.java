@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,10 +19,11 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ScannerView;
-import com.ezypayinc.ezypay.model.Ticket;
+import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.IScannerPresenter;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.ScannerPresenter;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -61,7 +63,7 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
         btnCallWaiter.setOnClickListener(this);
         btnPayBill.setOnClickListener(this);
         presenter = new ScannerPresenter(this);
-        presenter.validateTicket();
+        presenter.validatePayment();
         return rootView;
     }
 
@@ -114,11 +116,11 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
 
     @Override
     public void scanResult(String qrCode) {
-        presenter.addTicket(qrCode);
+        presenter.addPayment(qrCode);
     }
 
     @Override
-    public void showRestaurantDetail(Ticket ticket) {
+    public void showRestaurantDetail(Payment ticket) {
         fadeInAnimation(requestServiceView, preScannerView);
         setHasOptionsMenu(true);
     }
@@ -131,7 +133,7 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
 
     @Override
     public void onNetworkError(Object error) {
-        ErrorHelper.handleError(error, getContext());
+        ErrorHelper.handleError(error, EzyPayApplication.getInstance().getApplicationContext());
     }
 
     @Override
@@ -144,7 +146,7 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.scanner_delete_ticket_item) {
-            presenter.deleteTicket();
+            presenter.deletePayment();
         }
         return super.onOptionsItemSelected(item);
     }

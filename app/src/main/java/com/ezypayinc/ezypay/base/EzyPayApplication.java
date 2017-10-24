@@ -1,6 +1,8 @@
 package com.ezypayinc.ezypay.base;
 
 import android.app.Application;
+import android.content.Context;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 

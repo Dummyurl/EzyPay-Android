@@ -1,4 +1,4 @@
-package com.ezypayinc.ezypay.controllers.dialogs;
+package com.ezypayinc.ezypay.controllers.Dialogs;
 
 
 import android.app.AlertDialog;

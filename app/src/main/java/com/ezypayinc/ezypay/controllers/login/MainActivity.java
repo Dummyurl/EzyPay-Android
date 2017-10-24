@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.activity_main_btn_signIn:
-                navigateToLogInView();
+                navigateToLogInView(1);
                 break;
             case R.id.activity_main_btn_signInRestaurant:
-                navigateToLogInView();
+                navigateToLogInView(2);
                 break;
             default:
                 break;
@@ -53,20 +53,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    void navigateLoginActivity() {
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
     void navigateToHomeActivity() {
         Intent intent = new Intent(MainActivity.this, MainUserActivity.class);
         startActivity(intent);
         finish();
     }
 
-    void navigateToLogInView() {
+    void navigateToLogInView(int userType) {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        Bundle extra = new Bundle();
+        extra.putInt(LoginActivity.USER_TYPE_KEY, userType);
+        intent.putExtras(extra);
         startActivity(intent);
+        finish();
     }
 }

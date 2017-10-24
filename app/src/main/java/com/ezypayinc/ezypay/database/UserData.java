@@ -20,7 +20,6 @@ public class UserData {
         userRealm.setEmail(user.getEmail());
         userRealm.setToken(user.getToken());
         realm.commitTransaction();
-
     }
 
     public User getUser() {

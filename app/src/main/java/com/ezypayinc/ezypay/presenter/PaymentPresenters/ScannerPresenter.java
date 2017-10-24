@@ -1,14 +1,20 @@
 package com.ezypayinc.ezypay.presenter.PaymentPresenters;
 
+import android.os.Debug;
+import android.util.Log;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ScannerView;
-import com.ezypayinc.ezypay.manager.TicketManager;
-import com.ezypayinc.ezypay.model.Ticket;
+import com.ezypayinc.ezypay.manager.PaymentManager;
+import com.ezypayinc.ezypay.model.Payment;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ScannerPresenter implements IScannerPresenter {
     private ScannerView view;
@@ -18,31 +24,41 @@ public class ScannerPresenter implements IScannerPresenter {
     }
 
     @Override
-    public void validateTicket() {
-        TicketManager manager = new TicketManager();
-        Ticket ticket = manager.getTicket();
-        if (ticket == null) {
-            view.showScannerView();
-        } else {
-            view.showRestaurantDetail(ticket);
-        }
+    public void validatePayment() {
+        final PaymentManager manager = new PaymentManager();
+        manager.deletePayment();
+        manager.getActivePaymentByUser(UserSingleton.getInstance().getUser(), new Response.Listener<JsonElement>() {
+            @Override
+            public void onResponse(JsonElement response) {
+                Payment payment = manager.parsePayment(response);
+                if(payment != null) {
+                    manager.addPayment(payment);
+                    view.showRestaurantDetail(new Payment());
+                } else {
+                    view.showScannerView();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                view.onNetworkError(error);
+            }
+        });
     }
 
     @Override
-    public void addTicket(String qrString) {
+    public void addPayment(String qrString) {
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonObject = jsonParser.parse(qrString).getAsJsonObject();
+        PaymentManager manager = new PaymentManager();
+        final Payment payment = manager.parsePayment(jsonObject);
+        manager.deletePayment();
+        manager.addPayment(payment);
         try {
-            JSONObject jsonObject = new JSONObject(qrString);
-            final Ticket ticket = new Ticket();
-            ticket.setTicketId(jsonObject.getInt("ticketId"));
-            ticket.setRestaurantId(jsonObject.getInt("restaurantId"));
-            ticket.setTableId(jsonObject.getInt("tableId"));
-            TicketManager manager = new TicketManager();
-            manager.deleteTicket();
-            manager.saveTicket(ticket);
-            manager.createTicket(ticket, new Response.Listener<JsonElement>() {
+            manager.createPayment(payment, UserSingleton.getInstance().getUser().getToken(), new Response.Listener<JsonElement>() {
                 @Override
                 public void onResponse(JsonElement response) {
-                    view.showRestaurantDetail(ticket);
+                    view.showRestaurantDetail(payment);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -50,15 +66,16 @@ public class ScannerPresenter implements IScannerPresenter {
                     view.onNetworkError(error);
                 }
             });
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (JSONException ex) {
+            Log.e("JSONException", ex.getMessage());
         }
+
     }
 
     @Override
-    public void deleteTicket() {
-        TicketManager manager = new TicketManager();
-        manager.deleteTicket();
+    public void deletePayment() {
+        PaymentManager manager = new PaymentManager();
+        manager.deletePayment();
         view.showScannerView();
     }
 

@@ -32,7 +32,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
-                    android:text="quesada.tavo@gmail.com"
                     android:inputType="textEmailAddress"
                     android:maxLines="1" />
 
@@ -47,7 +46,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
-                    android:text="tavo05"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -71,7 +69,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_green_background"
-                android:textColor="@color/white"
+                android:textColor="#FFFFFF"
                 android:text="@string/log_in"
                 android:textStyle="bold" />
 
@@ -128,13 +126,13 @@
                     android:text="@string/action_facebook"
                     android:background="#3A5799"
                     android:layout_marginBottom="10dp"
-                    android:textColor="@color/white"/>
+                    android:textColor="#FFFFFF"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/action_google"
                     android:background="#D64630"
-                    android:textColor="@color/white"/>
+                    android:textColor="#FFFFFF"/>
             </LinearLayout>
 
             <TextView
@@ -152,7 +150,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
-        android:id="@+id/commerce_login"
+        android:id="@+id/commerceLogin"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -183,7 +181,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
-                    android:text="tavo05"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
@@ -207,7 +204,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_green_background"
-                android:textColor="@color/white"
+                android:textColor="#FFFFFF"
                 android:text="@string/log_in"
                 android:textStyle="bold" />
 
@@ -250,7 +247,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <Button
-                android:textColor="@color/white"
+                android:textColor="#FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_green_background"

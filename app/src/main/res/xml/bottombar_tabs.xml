@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/scanner_item"
+        icon="@drawable/ic_scan"
+        title="@string/navigation_bar_scanner_item" />
+    <tab
+        id="@+id/notifications_item"
+        icon="@drawable/ic_history"
+        title="@string/navigation_bar_notifications_item" />
+    <tab
+        id="@+id/settings_item"
+        icon="@drawable/ic_settings"
+        title="@string/navigation_bar_settings_item" />
+</tabs>
