@@ -21,6 +21,8 @@
     <string name="action_google">Registrarse con Google</string>
     <string name="action_no_account">¿No tenés una cuenta? <u>¡Registraté acá!</u></string>
     <string name="action_register_commerce">Registrar nuevo Comercio</string>
+    <string name="action_commerce_detail_alone">Solo</string>
+    <string name="action_commerce_detail_split">Dividir</string>
 
     <!--Prompt-->
     <string name="prompt_name">Nombre</string>
@@ -35,6 +37,7 @@
     <string name="label_login_or">Ó</string>
     <string name="label_loading_text">Cargando</string>
     <string name="label_scanner_fragment_scan">Scannear</string>
+    <string name="label_payment_option">¿Cómo deseas pagar la cuenta?</string>
 
 
     <!--Spinners items-->

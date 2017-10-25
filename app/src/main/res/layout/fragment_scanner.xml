@@ -8,70 +8,107 @@
         android:id="@+id/request_service_view"
         android:layout_width="match_parent"
         android:visibility="gone"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="60dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/commerce_container"
+            android:layout_margin="20dp"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:background="#313131"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical"
-                android:layout_height="50dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/white"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center"
-                    android:textStyle="italic"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:text="TINTOS  BLANCOS"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@color/greenEzypayColor"
+                android:layout_height="175dp"
+                android:background="@color/colorBackgroundViews"
                 android:orientation="vertical">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="10dp"
+                    android:id="@+id/commerce_imageView"
                     android:src="@drawable/rest02"
                     android:scaleType="fitXY"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/payment_option_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:textAlignment="center"
+                android:text="@string/label_payment_option"/>
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/commerce_container"
+            android:background="#c3c3c3"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:weightSum="2"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/scanner_fragment_btnCallWaiter"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="50dp"
-                android:layout_weight="1"
-                android:background="@drawable/ic_waiter_action"
-                tools:ignore="ButtonStyle" />
-            <Button
-                android:id="@+id/scanner_fragment_btnPayBill"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/ic_bill_action"
-                tools:ignore="ButtonStyle" />
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/restaurant_options_container"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rounded_scanner_buttons_background"
+                android:weightSum="2"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/scanner_fragment_btnCallWaiter"
+                    android:layout_width="0dp"
+                    android:layout_height="125dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_waiter_action"
+                    tools:ignore="ButtonStyle" />
+                <Button
+                    android:id="@+id/scanner_fragment_btnPayBill"
+                    android:layout_width="0dp"
+                    android:layout_height="125dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_bill_action"
+                    tools:ignore="ButtonStyle" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/payment_options_container"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/alone_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/rounded_button"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="25dp"
+                    android:text="@string/action_commerce_detail_alone"/>
+                <Button
+                    android:id="@+id/split_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/rounded_button"
+                    android:textColor="@color/white"
+                    android:layout_marginBottom="25dp"
+                    android:text="@string/action_commerce_detail_split"/>
+
+            </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
 

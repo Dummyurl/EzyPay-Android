@@ -15,6 +15,7 @@ import java.util.HashMap;
 class ConnectionManager {
 
     private static final String BASIC_URL = "http://192.168.1.102:8080/";
+    //private static final String BASIC_URL = "https://ugwo-platform.appspot.com/";
     private Context mContext;
 
     ConnectionManager() {

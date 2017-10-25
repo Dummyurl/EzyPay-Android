@@ -6,5 +6,8 @@ public interface IScannerPresenter {
     void validatePayment();
     void addPayment(String qrString);
     void deletePayment();
+    void callWaiter();
+    void sendBillRequest();
+    void splitPayment();
     void onDestroy();
 }

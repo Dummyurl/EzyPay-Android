@@ -16,7 +16,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.EzyPayApplication;
@@ -30,8 +32,10 @@ import com.google.zxing.integration.android.IntentIntegrator;
 
 public class ScannerFragment extends Fragment implements MainUserActivity.OnBarcodeScanned, ScannerView, View.OnClickListener {
     private RelativeLayout preScannerView, requestServiceView;
+    private LinearLayout restaurantOptionsContainer, paymentOptionsContainer;
     private IScannerPresenter presenter;
-    private Button btnScanner, btnPayBill;
+    private TextView labelPaymentOption;
+    private Button btnScanner, btnPayBill, btnCallWaiter, btnAlone, btnSplit;
 
     public ScannerFragment() {
         // Required empty public constructor
@@ -56,12 +60,19 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
         View rootView  = inflater.inflate(R.layout.fragment_scanner, container, false);
         preScannerView = (RelativeLayout) rootView.findViewById(R.id.pre_scanner_view);
         requestServiceView = (RelativeLayout) rootView.findViewById(R.id.request_service_view);
+        restaurantOptionsContainer = (LinearLayout) rootView.findViewById(R.id.restaurant_options_container);
+        paymentOptionsContainer = (LinearLayout) rootView.findViewById(R.id.payment_options_container);
+        labelPaymentOption = (TextView) rootView.findViewById(R.id.payment_option_textView);
         btnScanner = (Button) rootView.findViewById(R.id.scanner_fragment_btn_scanner);
-        Button btnCallWaiter = (Button) rootView.findViewById(R.id.scanner_fragment_btnCallWaiter);
+        btnCallWaiter = (Button) rootView.findViewById(R.id.scanner_fragment_btnCallWaiter);
         btnPayBill = (Button) rootView.findViewById(R.id.scanner_fragment_btnPayBill);
+        btnSplit = (Button) rootView.findViewById(R.id.split_button);
+        btnAlone = (Button) rootView.findViewById(R.id.alone_button);
         btnScanner.setOnClickListener(this);
         btnCallWaiter.setOnClickListener(this);
         btnPayBill.setOnClickListener(this);
+        btnSplit.setOnClickListener(this);
+        btnAlone.setOnClickListener(this);
         presenter = new ScannerPresenter(this);
         presenter.validatePayment();
         return rootView;
@@ -120,8 +131,12 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
     }
 
     @Override
-    public void showRestaurantDetail(Payment ticket) {
+    public void showRestaurantDetail(Payment payment) {
         fadeInAnimation(requestServiceView, preScannerView);
+        boolean paymentHasCost = payment.getCost() > 0;
+        paymentOptionsContainer.setVisibility(paymentHasCost? View.VISIBLE : View.GONE);
+        restaurantOptionsContainer.setVisibility(paymentHasCost? View.GONE : View.VISIBLE);
+        labelPaymentOption.setVisibility(paymentHasCost? View.VISIBLE : View.GONE);
         setHasOptionsMenu(true);
     }
 
@@ -134,6 +149,12 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
     @Override
     public void onNetworkError(Object error) {
         ErrorHelper.handleError(error, EzyPayApplication.getInstance().getApplicationContext());
+    }
+
+    @Override
+    public void goToContactsList() {
+        Intent intent = new Intent(getActivity(), PaymentMainActivity.class);
+        getActivity().startActivity(intent);
     }
 
     @Override
@@ -161,8 +182,11 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
             integrator.setBeepEnabled(false);
             integrator.initiateScan();
         } else if (view.getId() == btnPayBill.getId()) {
-            Intent intent = new Intent(getActivity(), PaymentMainActivity.class);
-            getActivity().startActivity(intent);
+            presenter.sendBillRequest();
+        } else if(view.getId() == btnCallWaiter.getId()) {
+            presenter.callWaiter();
+        } else if(view.getId() == btnSplit.getId()) {
+            presenter.splitPayment();
         }
     }
 }

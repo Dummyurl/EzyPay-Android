@@ -8,4 +8,5 @@ public interface ScannerView {
     void showRestaurantDetail(Payment payment);
     void showScannerView();
     void onNetworkError(Object error);
+    void goToContactsList();
 }

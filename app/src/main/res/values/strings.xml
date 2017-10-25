@@ -24,7 +24,8 @@
     <string name="action_google">Sign in with Google</string>
     <string name="action_no_account">Don’t have an account? <u>Sign up here!</u></string>
     <string name="action_register_commerce">Register new Commerce</string>
-
+    <string name="action_commerce_detail_alone">Alone</string>
+    <string name="action_commerce_detail_split">Split</string>
 
 
     <string name="title_activity_login" translatable="false">Log in</string>
@@ -46,6 +47,7 @@
     <string name="label_login_or">OR</string>
     <string name="label_loading_text">Loading</string>
     <string name="label_scanner_fragment_scan">Scan</string>
+    <string name="label_payment_option">How would you like to pay the check?</string>
 
     <!--Spinners items-->
     <string-array name="months">

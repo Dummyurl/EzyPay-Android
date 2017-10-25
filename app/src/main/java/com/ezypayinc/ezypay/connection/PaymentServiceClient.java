@@ -91,4 +91,26 @@ public class PaymentServiceClient {
 
         connectionManager.sendCustomRequest(Request.Method.POST, BASIC_URL, object, headers, successHandler, failureHandler);
     }
+
+    public void deletePayment(int paymentId, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        String url = BASIC_URL  + String.valueOf(paymentId);
+        String oauthToken = "Bearer "+ token;
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.DELETE, url, null, headers, successHandler, failureHandler);
+    }
+
+    public void updatePayment(Payment payment, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String oauthToken = "Bearer "+ token;
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+        JSONObject object = payment.toJSON();
+        object.put("commerceId", payment.getCommerce().getId());
+        object.put("currencyId", payment.getCurrency() == null ? 1 : payment.getCurrency().getId());
+
+        connectionManager.sendCustomRequest(Request.Method.PUT, BASIC_URL, object, headers, successHandler, failureHandler);
+    }
 }
