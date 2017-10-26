@@ -6,7 +6,7 @@
     android:paddingLeft="16dp"
     android:textAllCaps="true"
     android:textColor="@color/white"
-    android:background="@android:color/transparent"
+    android:background="#c3c3c3"
     android:textSize="16sp"
     android:id="@+id/header_title_textView"
     android:textStyle="bold" />

@@ -9,6 +9,7 @@ import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ContactsListView;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.Contact;
+import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonElement;
 
@@ -48,12 +49,12 @@ public class ContactsListPresenter implements IContactsListPresenter {
     }
 
     @Override
-    public void filterContacts(String query, List<User> usersList) {
-        ArrayList<User> filterList = new ArrayList<>();
-        for (User user: usersList) {
-            String fullName = user.getName() + " " + user.getLastName();
+    public void filterContacts(String query, List<Friend> friends) {
+        ArrayList<Friend> filterList = new ArrayList<>();
+        for (Friend friend : friends) {
+            String fullName = friend.getName() + " " + friend.getLastname();
             if (fullName.toLowerCase().contains(query.toLowerCase())) {
-                filterList.add(user);
+                filterList.add(friend);
             }
         }
 
@@ -73,8 +74,8 @@ public class ContactsListPresenter implements IContactsListPresenter {
                 @Override
                 public void onResponse(JsonElement response) {
                    if(response.isJsonArray()) {
-                       List<User> userList = userManager.parseValidatePhoneNumbers(response);
-                       mView.displayListOfContacts(userList);
+                       List<Friend> friends = userManager.parseValidatePhoneNumbers(response);
+                       mView.displayListOfContacts(friends);
                    }
                 }
             }, new Response.ErrorListener() {

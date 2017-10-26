@@ -18,7 +18,7 @@ public class Payment extends RealmObject {
     private float cost;
     private int employeeId;
     private boolean isCanceled;
-    private Date paymentDate;
+    private String paymentDate;
     private int tableNumber;
     private float userCost;
     private int userId;
@@ -61,11 +61,11 @@ public class Payment extends RealmObject {
         isCanceled = canceled;
     }
 
-    public Date getPaymentDate() {
+    public String getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(Date paymentDate) {
+    public void setPaymentDate(String paymentDate) {
         this.paymentDate = paymentDate;
     }
 
@@ -117,7 +117,7 @@ public class Payment extends RealmObject {
         this.friends = friends;
     }
 
-    public JSONObject toJSON() throws JSONException{
+    public JSONObject toJSON() throws JSONException {
         Gson gson = new Gson();
         String json = gson.toJson(this);
         return new JSONObject(json);

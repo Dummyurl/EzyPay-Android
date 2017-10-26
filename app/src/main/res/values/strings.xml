@@ -85,6 +85,10 @@
     <string name="error_invalid_card_number">Invalid card number</string>
     <string name="error_invalid_year">Invalid year</string>
 
+    <!--Views titles-->
+    <string name="scanner_view_title">Scanner</string>
+    <string name="contacts_view_title">Contacts</string>
+
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">
         <item>Me</item>

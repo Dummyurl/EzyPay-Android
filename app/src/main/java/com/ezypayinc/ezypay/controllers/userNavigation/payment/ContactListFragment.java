@@ -16,12 +16,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters.ContactListAdapter;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ContactsListView;
+import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.ContactsListPresenter;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.IContactsListPresenter;
@@ -33,8 +33,8 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
     private RecyclerView contactsRecyclerView;
     private ContactListAdapter mAdapter;
     private FloatingActionButton fabNextAction;
-    private List<User> usersList;
-    private ArrayList<User> usersSelected;
+    private List<Friend> friendsList;
+    private ArrayList<Friend> friendsSelected;
     private IContactsListPresenter presenter;
 
     public ContactListFragment() {
@@ -65,14 +65,20 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
         contactsRecyclerView.setLayoutManager(mLayoutManager);
         contactsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         presenter.getContacts();
-        usersSelected = new ArrayList<>();
+        friendsSelected = new ArrayList<>();
         fabNextAction = (FloatingActionButton)rootView.findViewById(R.id.payment_contact_next_action_fab);
         fabNextAction.setOnClickListener(this);
         return rootView;
     }
 
     @Override
-    public void setFilter(List<User> contacts) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getActivity().setTitle(R.string.contacts_view_title);
+    }
+
+    @Override
+    public void setFilter(List<Friend> contacts) {
         mAdapter.setFilter(contacts);
     }
 
@@ -89,13 +95,13 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                presenter.filterContacts(query, usersList);
+                presenter.filterContacts(query, friendsList);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                presenter.filterContacts(newText, usersList);
+                presenter.filterContacts(newText, friendsList);
                 return true;
             }
         });
@@ -108,9 +114,9 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
     }
 
     @Override
-    public void displayListOfContacts(List<User> users) {
-        usersList = users;
-        mAdapter = new ContactListAdapter(usersList, this);
+    public void displayListOfContacts(List<Friend> friends) {
+        friendsList = friends;
+        mAdapter = new ContactListAdapter(friendsList, this, getContext());
         contactsRecyclerView.setAdapter(mAdapter);
     }
 
@@ -120,14 +126,14 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
     }
 
     @Override
-    public void OnItemClickListener(User user, boolean isChecked) {
+    public void OnItemClickListener(Friend friend, boolean isChecked) {
         if(isChecked) {
-            usersSelected.add(user);
+            friendsSelected.add(friend);
         } else {
-            usersSelected.remove(user);
+            friendsSelected.remove(friend);
         }
 
-        if (usersSelected.isEmpty()) {
+        if (friendsSelected.isEmpty()) {
             fabNextAction.setVisibility(View.GONE);
         } else {
             fabNextAction.setVisibility(View.VISIBLE);
@@ -138,7 +144,7 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.payment_contact_next_action_fab:
-                Fragment fragment = SplitFragment.newInstance(usersSelected);
+                Fragment fragment = SplitFragment.newInstance(friendsSelected);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().
                         replace(R.id.payment_main_container, fragment).

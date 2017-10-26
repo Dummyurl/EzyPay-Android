@@ -24,18 +24,10 @@ public class MainUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_user);
-        setupNavigationBar(savedInstanceState);
-        if(savedInstanceState == null){
-            Fragment fragment = ScannerFragment.newInstance();
-            barcodeScannedListener = (OnBarcodeScanned) fragment;
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container_activity_main_user, fragment)
-                    .commit();
-        }
-
+        setupNavigationBar();
     }
 
-    public void setupNavigationBar(Bundle savedInstance) {
+    public void setupNavigationBar() {
         bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override

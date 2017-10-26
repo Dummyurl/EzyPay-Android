@@ -27,7 +27,6 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:id="@+id/commerce_imageView"
-                    android:src="@drawable/rest02"
                     android:scaleType="fitXY"
                     tools:ignore="ContentDescription" />
             </LinearLayout>

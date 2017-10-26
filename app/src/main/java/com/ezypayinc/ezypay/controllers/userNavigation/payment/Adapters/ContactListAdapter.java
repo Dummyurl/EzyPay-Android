@@ -1,5 +1,6 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,19 +9,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.model.User;
+import com.ezypayinc.ezypay.model.Friend;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder> {
-    private List<User> mUsersList;
+    private List<Friend> mFriendsList;
     private OnItemClickListener mListener;
+    private Context mContext;
 
-    public ContactListAdapter(List<User> usersList, OnItemClickListener listener){
-        mUsersList = usersList;
+    public ContactListAdapter(List<Friend> usersList, OnItemClickListener listener, Context context){
+        mFriendsList = usersList;
         mListener = listener;
-
+        mContext = context;
     }
 
     @Override
@@ -33,15 +38,16 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public void onBindViewHolder(final ContactsViewHolder holder, int position) {
-        final User user = mUsersList.get(position);
-        holder.tvName.setText(user.getName() + " " + user.getLastName());
+        final Friend friend = mFriendsList.get(position);
+        holder.tvName.setText(friend.getName() + " " + friend.getLastname());
+        loadProfileImage(friend, holder.profileImage);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int visibility = holder.contactCheckedImageView.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
                 boolean isChecked = visibility == View.VISIBLE;
                 holder.contactCheckedImageView.setVisibility(visibility);
-                mListener.OnItemClickListener(user, isChecked);
+                mListener.OnItemClickListener(friend, isChecked);
             }
         });
         //setFadeAnimation(holder.itemView);
@@ -49,7 +55,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public int getItemCount() {
-         return mUsersList.size();
+         return mFriendsList.size();
     }
 
     /*private void setFadeAnimation(View view) {
@@ -58,9 +64,15 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         view.startAnimation(anim);
     }*/
 
-    public void setFilter(List<User> filteredList) {
-        mUsersList = new ArrayList<>();
-        mUsersList.addAll(filteredList);
+    private void loadProfileImage(Friend friend, ImageView imageView) {
+        if(friend != null && friend.getAvatar() != null) {
+            Picasso.with(mContext).load(friend.getAvatar()).transform(new CropCircleTransformation()).into(imageView);
+        }
+    }
+
+    public void setFilter(List<Friend> filteredList) {
+        mFriendsList = new ArrayList<>();
+        mFriendsList.addAll(filteredList);
         notifyDataSetChanged();
     }
 
@@ -79,6 +91,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
 
     public interface OnItemClickListener {
-        void OnItemClickListener(User user, boolean isChecked);
+        void OnItemClickListener(Friend friend, boolean isChecked);
     }
 }

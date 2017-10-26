@@ -52,8 +52,8 @@ public class PaymentManager {
         service.deletePayment(paymentId, token, successHandler, failureHandler);
     }
 
-    public void updatePayment(Payment payment, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+    public void updatePayment(Payment payment, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         PaymentServiceClient service = new PaymentServiceClient();
-        service.updatePayment(payment, token, successHandler, failureHandler);
+        service.updatePayment(payment, user, successHandler, failureHandler);
     }
 }

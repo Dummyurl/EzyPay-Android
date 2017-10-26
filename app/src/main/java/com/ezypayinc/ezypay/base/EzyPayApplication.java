@@ -13,6 +13,7 @@ import io.realm.RealmConfiguration;
 public class EzyPayApplication extends Application {
 
     private static EzyPayApplication instance;
+    private static final String dateFormat = "yyyy-MM-dd";
 
     @Override
     public void onCreate() {
@@ -26,5 +27,11 @@ public class EzyPayApplication extends Application {
 
     public static EzyPayApplication getInstance() {
         return instance;
+    }
+
+    public String getCurrentDate() {
+        SimpleDateFormat simpleDate =  new SimpleDateFormat(dateFormat);
+        String strDt = simpleDate.format(new Date());
+        return strDt;
     }
 }

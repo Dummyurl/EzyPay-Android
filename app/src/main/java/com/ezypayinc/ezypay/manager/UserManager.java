@@ -5,6 +5,7 @@ import com.ezypayinc.ezypay.connection.SessionServiceClient;
 import com.ezypayinc.ezypay.connection.UserServiceClient;
 import com.ezypayinc.ezypay.database.UserData;
 import com.ezypayinc.ezypay.model.Card;
+import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonElement;
 
@@ -81,7 +82,7 @@ public class UserManager {
         service.validatePhoneNumbers(phoneNumbers, successHandler,failureHandler);
     }
 
-    public List<User> parseValidatePhoneNumbers(JsonElement jsonElement) {
+    public List<Friend> parseValidatePhoneNumbers(JsonElement jsonElement) {
         UserServiceClient service = new UserServiceClient();
         return service.parseValidatePhoneNumbers(jsonElement);
     }

@@ -63,6 +63,7 @@ public class PaymentServiceClient {
             commerce.setId(object.get("id").isJsonNull() ? 0 : object.get("id").getAsInt());
             commerce.setName(object.get("name").isJsonNull() ? null : object.get("name").getAsString());
             commerce.setUserType(object.get("userType").isJsonNull() ? 0 : object.get("userType").getAsInt());
+            commerce.setAvatar(object.get("avatar").isJsonNull()? null : object.get("avatar").getAsString());
             return commerce;
         }
         return null;
@@ -102,15 +103,18 @@ public class PaymentServiceClient {
         connectionManager.sendCustomRequest(Request.Method.DELETE, url, null, headers, successHandler, failureHandler);
     }
 
-    public void updatePayment(Payment payment, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
-        String oauthToken = "Bearer "+ token;
+    public void updatePayment(Payment payment, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = BASIC_URL  + String.valueOf(payment.getId());
+        String oauthToken = "Bearer "+ user.getToken();
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", oauthToken);
         headers.put("Content-Type", CONTENT_TYPE);
-        JSONObject object = payment.toJSON();
+        JSONObject object = new JSONObject();
         object.put("commerceId", payment.getCommerce().getId());
-        object.put("currencyId", payment.getCurrency() == null ? 1 : payment.getCurrency().getId());
+        object.put("userId", user.getId());
+        object.put("cost", payment.getCost());
+        object.put("paymentDate", payment.getPaymentDate());
 
-        connectionManager.sendCustomRequest(Request.Method.PUT, BASIC_URL, object, headers, successHandler, failureHandler);
+        connectionManager.sendCustomRequest(Request.Method.PUT, url, object, headers, successHandler, failureHandler);
     }
 }

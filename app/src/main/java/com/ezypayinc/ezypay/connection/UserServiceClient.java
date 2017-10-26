@@ -5,6 +5,7 @@ import android.util.Base64;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.base.UserSingleton;
+import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -74,6 +75,7 @@ public class UserServiceClient {
         String name = object.get("name").getAsString();
         String lastName = object.get("lastName").getAsString();
         String phoneNumber = object.get("phoneNumber").getAsString();
+        String avatar =  object.get("avatar").getAsString();
 
         //set user
         user.setId(id);
@@ -81,6 +83,7 @@ public class UserServiceClient {
         user.setName(name);
         user.setLastName(lastName);
         user.setPhoneNumber(phoneNumber);
+        user.setAvatar(avatar);
 
         return user;
     }
@@ -99,22 +102,21 @@ public class UserServiceClient {
         connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
     }
 
-    public List<User> parseValidatePhoneNumbers(JsonElement jsonElement) {
-        List<User> userList = new ArrayList<>();
+    public List<Friend> parseValidatePhoneNumbers(JsonElement jsonElement) {
+        List<Friend> friends = new ArrayList<>();
         if(jsonElement.isJsonArray()) {
             JsonArray jsonArray = jsonElement.getAsJsonArray();
             for (int i = 0; i < jsonArray.size(); i++) {
                 JsonObject object = jsonArray.get(i).getAsJsonObject();
-                User user = new User();
-                user.setId(object.get("id").getAsInt());
-                user.setEmail(object.get("email").getAsString());
-                user.setName(object.get("name").getAsString());
-                user.setLastName(object.get("lastName").getAsString());
-                user.setPhoneNumber(object.get("phoneNumber").getAsString());
-                userList.add(user);
+                Friend friend = new Friend();
+                friend.setId(object.get("id").getAsInt());
+                friend.setName(object.get("name").getAsString());
+                friend.setLastname(object.get("lastName").getAsString());
+                friend.setAvatar(object.get("avatar").getAsString());
+                friends.add(friend);
             }
         }
-        return userList;
+        return friends;
     }
 
     /*update user*/

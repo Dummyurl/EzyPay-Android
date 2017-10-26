@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,10 +33,13 @@ import com.ezypayinc.ezypay.presenter.PaymentPresenters.ScannerPresenter;
 import com.google.zxing.integration.android.IntentIntegrator;
 
 public class ScannerFragment extends Fragment implements MainUserActivity.OnBarcodeScanned, ScannerView, View.OnClickListener {
+    private Activity mActivity;
+    private ProgressDialog mProgressDialog;
     private RelativeLayout preScannerView, requestServiceView;
     private LinearLayout restaurantOptionsContainer, paymentOptionsContainer;
     private IScannerPresenter presenter;
     private TextView labelPaymentOption;
+    private ImageView commerceImageView;
     private Button btnScanner, btnPayBill, btnCallWaiter, btnAlone, btnSplit;
 
     public ScannerFragment() {
@@ -56,6 +61,7 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onCreateView(inflater,container,savedInstanceState);
         // Inflate the layout for this fragment
         View rootView  = inflater.inflate(R.layout.fragment_scanner, container, false);
         preScannerView = (RelativeLayout) rootView.findViewById(R.id.pre_scanner_view);
@@ -63,6 +69,7 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
         restaurantOptionsContainer = (LinearLayout) rootView.findViewById(R.id.restaurant_options_container);
         paymentOptionsContainer = (LinearLayout) rootView.findViewById(R.id.payment_options_container);
         labelPaymentOption = (TextView) rootView.findViewById(R.id.payment_option_textView);
+        commerceImageView = (ImageView) rootView.findViewById(R.id.commerce_imageView);
         btnScanner = (Button) rootView.findViewById(R.id.scanner_fragment_btn_scanner);
         btnCallWaiter = (Button) rootView.findViewById(R.id.scanner_fragment_btnCallWaiter);
         btnPayBill = (Button) rootView.findViewById(R.id.scanner_fragment_btnPayBill);
@@ -73,9 +80,12 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
         btnPayBill.setOnClickListener(this);
         btnSplit.setOnClickListener(this);
         btnAlone.setOnClickListener(this);
-        presenter = new ScannerPresenter(this);
-        presenter.validatePayment();
         return rootView;
+    }
+
+    private void setupProgressDialog(){
+        mProgressDialog = new ProgressDialog(mActivity);
+        mProgressDialog.setCancelable(false);
     }
 
     public void fadeInAnimation(final View viewFadeIn, final View viewToHide) {
@@ -126,6 +136,18 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+        mActivity.setTitle(R.string.scanner_view_title);
+        setupProgressDialog();
+        if(presenter == null) {
+            presenter = new ScannerPresenter(this);
+            presenter.validatePayment();
+        }
+    }
+
+    @Override
     public void scanResult(String qrCode) {
         presenter.addPayment(qrCode);
     }
@@ -137,18 +159,38 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
         paymentOptionsContainer.setVisibility(paymentHasCost? View.VISIBLE : View.GONE);
         restaurantOptionsContainer.setVisibility(paymentHasCost? View.GONE : View.VISIBLE);
         labelPaymentOption.setVisibility(paymentHasCost? View.VISIBLE : View.GONE);
+        mActivity.setTitle(payment.getCommerce().getName());
+        presenter.loadCommerceImage(mActivity, commerceImageView);
         setHasOptionsMenu(true);
     }
 
     @Override
     public void showScannerView() {
         fadeOutAnimation(requestServiceView, preScannerView);
+        mActivity.setTitle(R.string.scanner_view_title);
         setHasOptionsMenu(false);
     }
 
     @Override
+    public void showProgressDialog() {
+        if(mProgressDialog == null)
+        {
+            setupProgressDialog();
+        }
+        mProgressDialog.show();
+        mProgressDialog.setContentView(R.layout.custom_progress_dialog);
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+        if (mProgressDialog != null) {
+           mProgressDialog.dismiss();
+        }
+    }
+
+    @Override
     public void onNetworkError(Object error) {
-        ErrorHelper.handleError(error, EzyPayApplication.getInstance().getApplicationContext());
+        ErrorHelper.handleError(error, mActivity);
     }
 
     @Override

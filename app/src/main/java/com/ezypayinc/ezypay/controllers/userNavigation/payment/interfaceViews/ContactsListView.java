@@ -1,5 +1,6 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews;
 
+import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.User;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 
 public interface ContactsListView {
 
-    void displayListOfContacts(List<User> contacts);
-    void setFilter(List<User> contacts);
+    void displayListOfContacts(List<Friend> contacts);
+    void setFilter(List<Friend> contacts);
     void onNetworkError(Object error);
 }

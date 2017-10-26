@@ -9,25 +9,31 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<User> mFriendsList;
+    private Context mContext;
+    private List<Friend> mFriendsList;
     private User mUser;
     private int index, indexHeaders, indexFriends;
     private String[] headerTitles;
     private int indexPayment;
 
-    public SplitAdapter(List<User> friendList, User user, Context context) {
+    public SplitAdapter(List<Friend> friendList, User user, Context context) {
         mFriendsList = friendList;
         mUser = user;
         headerTitles = context.getResources().getStringArray(R.array.split_fragment_header_titles);
         index = 0;
         indexHeaders = 0;
         indexFriends = 0;
+        mContext = context;
     }
 
     @Override
@@ -61,12 +67,14 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             SplitViewHolder view = (SplitViewHolder) holder;
             if (position == 1) {
                 view.userNameTextView.setText(mUser.getName().concat(" ").concat(mUser.getLastName()));
-                view.paymentDetailTextView.setText("$1000");
+                view.paymentDetailTextView.setText("$0");
+                getUserProfile(view.profilePhotoImageView, mUser.getAvatar());
             } else {
-                User currentFriend = mFriendsList.get(indexFriends);
+                Friend currentFriend = mFriendsList.get(indexFriends);
                 indexFriends++;
-                view.userNameTextView.setText(currentFriend.getName().concat(" ").concat(currentFriend.getLastName()));
-                view.paymentDetailTextView.setText("$1000");
+                view.userNameTextView.setText(currentFriend.getName().concat(" ").concat(currentFriend.getLastname()));
+                view.paymentDetailTextView.setText("$0");
+                getUserProfile(view.profilePhotoImageView, currentFriend.getAvatar());
             }
 
         } else {
@@ -80,6 +88,10 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             }
             indexPayment ++;
         }
+    }
+
+    public void getUserProfile(ImageView imageView, String avatar) {
+        Picasso.with(mContext).load(avatar).transform(new CropCircleTransformation()).into(imageView);
     }
 
     @Override

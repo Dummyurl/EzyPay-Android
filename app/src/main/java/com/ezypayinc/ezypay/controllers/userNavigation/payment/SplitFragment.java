@@ -14,6 +14,7 @@ import android.widget.Button;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters.SplitAdapter;
+import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.User;
 
 import java.util.ArrayList;
@@ -22,14 +23,14 @@ import java.util.List;
 public class SplitFragment extends Fragment implements View.OnClickListener {
 
     private static final String FRIENDS_KEY  = "FRIENDS_KEY";
-    private List<User> friends;
+    private List<Friend> friends;
     private Button btnNext;
 
     public SplitFragment() {
         // Required empty public constructor
     }
 
-    public static SplitFragment newInstance(ArrayList<User> friends) {
+    public static SplitFragment newInstance(ArrayList<Friend> friends) {
         SplitFragment fragment = new SplitFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList(FRIENDS_KEY, friends);
