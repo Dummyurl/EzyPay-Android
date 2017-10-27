@@ -1,6 +1,7 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,20 +40,15 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-        if (index == 0 || index == 2 || index == (mFriendsList.size() + 3)) {
+        if (index == 0 || index == 2) {
             index ++;
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.header_layout, parent, false);
             return new HeaderViewHolder(itemView);
-        } else if(index > (mFriendsList.size() + 3)){
-            index ++;
-            itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cell_payment_detail_split_fragment, parent, false);
-            return new PaymentDetailViewHolder(itemView);
         } else {
-            index ++;
             itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.cell_split_fragment, parent, false);
+            index ++;
             return new SplitViewHolder(itemView);
         }
     }
@@ -66,12 +62,14 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         } else if (holder instanceof SplitViewHolder)  {
             SplitViewHolder view = (SplitViewHolder) holder;
             if (position == 1) {
+                view.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
                 view.userNameTextView.setText(mUser.getName().concat(" ").concat(mUser.getLastName()));
                 view.paymentDetailTextView.setText("$0");
                 getUserProfile(view.profilePhotoImageView, mUser.getAvatar());
             } else {
                 Friend currentFriend = mFriendsList.get(indexFriends);
                 indexFriends++;
+                view.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.greenEzypayColor));
                 view.userNameTextView.setText(currentFriend.getName().concat(" ").concat(currentFriend.getLastname()));
                 view.paymentDetailTextView.setText("$0");
                 getUserProfile(view.profilePhotoImageView, currentFriend.getAvatar());
@@ -96,7 +94,7 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return mFriendsList.size() + 6;
+        return mFriendsList.size() + 3;
     }
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder {

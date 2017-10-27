@@ -38,6 +38,8 @@
     <string name="label_loading_text">Cargando</string>
     <string name="label_scanner_fragment_scan">Scannear</string>
     <string name="label_payment_option">¿Cómo deseas pagar la cuenta?</string>
+    <string name="label_split_shortage">Faltante</string>
+    <string name="label_split_total">Total</string>
 
 
     <!--Spinners items-->

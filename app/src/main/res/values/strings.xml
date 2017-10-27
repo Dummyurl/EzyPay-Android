@@ -48,6 +48,8 @@
     <string name="label_loading_text">Loading</string>
     <string name="label_scanner_fragment_scan">Scan</string>
     <string name="label_payment_option">How would you like to pay the check?</string>
+    <string name="label_split_shortage">Shortage</string>
+    <string name="label_split_total">Total</string>
 
     <!--Spinners items-->
     <string-array name="months">
