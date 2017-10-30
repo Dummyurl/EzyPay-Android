@@ -38,16 +38,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:textSize="16dp"
+                        android:textSize="17sp"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:text="@string/label_split_shortage"/>
                     <TextView
-                        android:textSize="16dp"
+                        android:textSize="17sp"
                         android:id="@+id/split_shortage_textView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$ 0.00"/>
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
                 <TextView
@@ -63,16 +62,15 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <TextView
-                        android:textSize="16dp"
+                        android:textSize="17sp"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:text="@string/label_split_total"/>
                     <TextView
-                        android:textSize="16dp"
+                        android:textSize="17sp"
                         android:id="@+id/split_total_texView"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$200"/>
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -88,6 +86,49 @@
                 android:layout_weight="0.10" />
         </LinearLayout>
 
+        <RelativeLayout
+            android:id="@+id/change_payment_container"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent">
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#c3c3c3"
+                android:padding="10dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/split_fragment_payment_editText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginBottom="20dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+                    <Button
+                        android:id="@+id/split_payment_cancel_button"
+                        android:background="@drawable/button_green_background"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="0.5"
+                        android:layout_marginRight="10dp"
+                        android:layout_height="match_parent"
+                        android:text="@string/action_cancel"/>
+                    <Button
+                        android:id="@+id/split_payment_change_button"
+                        android:background="@drawable/button_green_background"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:text="@string/action_change"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.ezypayinc.ezypay.presenter.PaymentPresenters;
 
+import com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters.SplitAdapter;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ISplitListView;
 import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.Payment;
@@ -44,6 +45,12 @@ public class SplitListPresenter implements ISplitListPresenter {
             mView.setPaymentData(payment, 0);
             return currentQuantity - payment.getCost();
         }
+    }
+
+    @Override
+    public void changePaymentQuantity(float quantity, SplitAdapter.SplitViewHolder cell, Payment payment) {
+        int progress = (int) ((quantity / payment.getCost()) * 100);
+        cell.paymentSeekBar.setProgress(progress);
     }
 
     @Override

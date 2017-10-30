@@ -3,7 +3,6 @@ package com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +27,9 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Payment mPayment;
     private int index, indexHeaders, indexFriends;
     private String[] headerTitles;
-    private ISeekBarListener mSeekBarListener;
+    private ISplitListEvents mEventsListener;
 
-    public SplitAdapter(Payment payment,User user, Context context, ISeekBarListener seekBarListener) {
+    public SplitAdapter(Payment payment,User user, Context context, ISplitListEvents eventsListener) {
         mPayment = payment;
         mFriendsList = mPayment.getFriends();
         mUser = user;
@@ -39,7 +38,7 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         indexHeaders = 0;
         indexFriends = 0;
         mContext = context;
-        mSeekBarListener = seekBarListener;
+        mEventsListener = eventsListener;
     }
 
     @Override
@@ -80,6 +79,7 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         view.paymentDetailTextView.setText(mPayment.getCurrency().getCurrencySymbol() + " 0");
         getUserProfile(view.profilePhotoImageView, mUser.getAvatar());
         setSeekBarListener(view, null);
+        setOnLongTapListener(view);
     }
 
     private void setupFriendCell(SplitViewHolder view) {
@@ -90,13 +90,14 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         view.paymentDetailTextView.setText(mPayment.getCurrency().getCurrencySymbol() + "  0");
         getUserProfile(view.profilePhotoImageView, currentFriend.getAvatar());
         setSeekBarListener(view, currentFriend);
+        setOnLongTapListener(view);
     }
 
     private void setSeekBarListener(final SplitViewHolder view, final Friend friend) {
         view.paymentSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int progressValidated = mSeekBarListener.seekBarProgressChanged(progress, mPayment, friend);
+                int progressValidated = mEventsListener.seekBarProgressChanged(progress, mPayment, friend);
                 float quantity = (mPayment.getCost() * progressValidated) / 100;
                 view.paymentDetailTextView.setText(mPayment.getCurrency().getCurrencySymbol() + " " + quantity);
                 seekBar.setProgress(progressValidated);
@@ -108,6 +109,15 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+    }
+
+    private void setOnLongTapListener(final SplitViewHolder view) {
+        view.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return mEventsListener.onLongTapCell(view);
             }
         });
     }
@@ -130,10 +140,10 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    private class SplitViewHolder extends RecyclerView.ViewHolder {
+    public class SplitViewHolder extends RecyclerView.ViewHolder {
         ImageView profilePhotoImageView;
         TextView userNameTextView, paymentDetailTextView;
-        SeekBar paymentSeekBar;
+        public SeekBar paymentSeekBar;
 
         SplitViewHolder(View itemView) {
             super(itemView);
@@ -146,7 +156,8 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    public interface ISeekBarListener {
+    public interface ISplitListEvents {
         int seekBarProgressChanged(int progress, Payment payment, Friend friend);
+        boolean onLongTapCell(SplitViewHolder holder);
     }
 }
