@@ -73,6 +73,7 @@
     <!--Views titles-->
     <string name="scanner_view_title">Escanér</string>
     <string name="contacts_view_title">Contactos</string>
+    <string name="split_view_title">Dividir Cuenta</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">

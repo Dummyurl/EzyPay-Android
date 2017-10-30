@@ -2,12 +2,14 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginBottom="1dp"
+    android:background="@color/greenEzypayColor"
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/greenEzypayColor">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/split_fragment_imageView_profile_image"

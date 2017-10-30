@@ -21,6 +21,7 @@ public class User extends RealmObject implements Parcelable {
     private RealmList<Card> cards;
 
     public User() {
+        cards = new RealmList<>();
     }
 
 
@@ -150,7 +151,9 @@ public class User extends RealmObject implements Parcelable {
         email = in.readString();
         password = in.readString();
         token = in.readString();
-        in.readTypedList(cards, Card.CREATOR);
+        if (cards != null ) {
+            in.readTypedList(cards, Card.CREATOR);
+        }
     }
 
     public static Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>(){

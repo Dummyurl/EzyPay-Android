@@ -6,11 +6,12 @@ import android.provider.ContactsContract;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ContactsListView;
+import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.IContactsListView;
+import com.ezypayinc.ezypay.manager.PaymentManager;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.Contact;
 import com.ezypayinc.ezypay.model.Friend;
-import com.ezypayinc.ezypay.model.User;
+import com.ezypayinc.ezypay.model.Payment;
 import com.google.gson.JsonElement;
 
 import org.json.JSONArray;
@@ -20,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsListPresenter implements IContactsListPresenter {
-    private ContactsListView mView;
+    private IContactsListView mView;
 
-    public ContactsListPresenter(ContactsListView view) {
+    public ContactsListPresenter(IContactsListView view) {
         mView = view;
     }
 
@@ -87,6 +88,11 @@ public class ContactsListPresenter implements IContactsListPresenter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    public void removeFriendsFromPayment(Payment payment) {
+        PaymentManager manager = new PaymentManager();
+        manager.removeFriendsFromPayment(payment);
     }
 }

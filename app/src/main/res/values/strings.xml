@@ -90,6 +90,7 @@
     <!--Views titles-->
     <string name="scanner_view_title">Scanner</string>
     <string name="contacts_view_title">Contacts</string>
+    <string name="split_view_title">Split</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">

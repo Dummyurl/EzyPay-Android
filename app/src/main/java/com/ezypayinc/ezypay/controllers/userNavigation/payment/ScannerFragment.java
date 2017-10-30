@@ -23,16 +23,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
-import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ScannerView;
+import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.IScannerView;
 import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.IScannerPresenter;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.ScannerPresenter;
 import com.google.zxing.integration.android.IntentIntegrator;
 
-public class ScannerFragment extends Fragment implements MainUserActivity.OnBarcodeScanned, ScannerView, View.OnClickListener {
+public class ScannerFragment extends Fragment implements MainUserActivity.OnBarcodeScanned, IScannerView, View.OnClickListener {
     private Activity mActivity;
     private ProgressDialog mProgressDialog;
     private RelativeLayout preScannerView, requestServiceView;
@@ -194,8 +193,11 @@ public class ScannerFragment extends Fragment implements MainUserActivity.OnBarc
     }
 
     @Override
-    public void goToContactsList() {
+    public void goToContactsList(Payment payment) {
         Intent intent = new Intent(getActivity(), PaymentMainActivity.class);
+        Bundle extras = new Bundle();
+        extras.putParcelable(PaymentMainActivity.PAYMENT_KEY, payment);
+        intent.putExtras(extras);
         getActivity().startActivity(intent);
     }
 

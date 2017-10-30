@@ -26,4 +26,11 @@ public class PaymentData {
         }
         realm.commitTransaction();
     }
+
+    public void removeFriendsFromPayment(Payment payment) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        payment.getFriends().clear();
+        realm.commitTransaction();
+    }
 }

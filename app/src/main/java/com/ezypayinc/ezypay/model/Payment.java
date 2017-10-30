@@ -1,5 +1,8 @@
 package com.ezypayinc.ezypay.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -12,7 +15,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 
 
-public class Payment extends RealmObject {
+public class Payment extends RealmObject implements Parcelable {
 
     private int id;
     private float cost;
@@ -27,7 +30,11 @@ public class Payment extends RealmObject {
     private Currency currency;
     private RealmList<Friend> friends;
 
-    public Payment(){}
+    public Payment(){
+        friends = new RealmList<>();
+        commerce = new User();
+        currency = new Currency();
+    }
 
     public int getId() {
         return id;
@@ -122,4 +129,53 @@ public class Payment extends RealmObject {
         String json = gson.toJson(this);
         return new JSONObject(json);
     }
+
+    public Payment(Parcel in) {
+        readFromParcel(in);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeValue(currency);
+        parcel.writeFloat(cost);
+        parcel.writeInt(employeeId);
+        parcel.writeInt(isCanceled ? 1 : 0);
+        parcel.writeString(paymentDate);
+        parcel.writeInt(tableNumber);
+        parcel.writeFloat(userCost);
+        parcel.writeInt(userId);
+        parcel.writeValue(commerce);
+        parcel.writeTypedList(friends);
+    }
+
+    private void readFromParcel(Parcel in) {
+        id = in.readInt();
+        currency = (Currency) in.readValue(Currency.class.getClassLoader());
+        cost = in.readFloat();
+        employeeId = in.readInt();
+        isCanceled = in.readInt() == 1;
+        paymentDate = in.readString();
+        tableNumber = in.readInt();
+        userCost = in.readFloat();
+        userId = in.readInt();
+        commerce = (User) in.readValue(User.class.getClassLoader());
+        friends = friends == null ? new RealmList<Friend>() : friends;
+        in.readTypedList(friends, Friend.CREATOR);
+    }
+
+    public static Parcelable.Creator<Payment> CREATOR = new Parcelable.Creator<Payment>(){
+        public Payment createFromParcel(Parcel in) {
+            return new Payment(in);
+        }
+
+        public Payment[] newArray(int size) {
+            return new Payment[size];
+        }
+    };
 }

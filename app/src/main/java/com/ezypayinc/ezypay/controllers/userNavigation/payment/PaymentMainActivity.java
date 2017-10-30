@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.model.Payment;
 
 public class PaymentMainActivity extends AppCompatActivity {
+
+    public static final String PAYMENT_KEY = "payment_key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,9 +18,13 @@ public class PaymentMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment_main);
 
         if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().
-                    add(R.id.payment_main_container, ContactListFragment.newInstance())
-                    .commit();
+            Bundle bundle = getIntent().getExtras();
+            if(bundle != null) {
+                Payment payment = bundle.getParcelable(PAYMENT_KEY);
+                getSupportFragmentManager().beginTransaction().
+                        add(R.id.payment_main_container, ContactListFragment.newInstance(payment))
+                        .commit();
+            }
         }
         handleIntent(getIntent());
     }

@@ -6,7 +6,7 @@ import com.ezypayinc.ezypay.model.User;
 import java.util.List;
 
 
-public interface ContactsListView {
+public interface IContactsListView {
 
     void displayListOfContacts(List<Friend> contacts);
     void setFilter(List<Friend> contacts);

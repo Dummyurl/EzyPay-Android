@@ -3,6 +3,7 @@ package com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.model.Friend;
+import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.model.User;
 import com.squareup.picasso.Picasso;
 
@@ -23,18 +25,21 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context mContext;
     private List<Friend> mFriendsList;
     private User mUser;
+    private Payment mPayment;
     private int index, indexHeaders, indexFriends;
     private String[] headerTitles;
-    private int indexPayment;
+    private ISeekBarListener mSeekBarListener;
 
-    public SplitAdapter(List<Friend> friendList, User user, Context context) {
-        mFriendsList = friendList;
+    public SplitAdapter(Payment payment,User user, Context context, ISeekBarListener seekBarListener) {
+        mPayment = payment;
+        mFriendsList = mPayment.getFriends();
         mUser = user;
         headerTitles = context.getResources().getStringArray(R.array.split_fragment_header_titles);
         index = 0;
         indexHeaders = 0;
         indexFriends = 0;
         mContext = context;
+        mSeekBarListener = seekBarListener;
     }
 
     @Override
@@ -59,36 +64,55 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             HeaderViewHolder view = (HeaderViewHolder) holder;
             view.headerTitleTextView.setText(headerTitles[indexHeaders]);
             indexHeaders ++;
-        } else if (holder instanceof SplitViewHolder)  {
+        } else {
             SplitViewHolder view = (SplitViewHolder) holder;
             if (position == 1) {
-                view.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
-                view.userNameTextView.setText(mUser.getName().concat(" ").concat(mUser.getLastName()));
-                view.paymentDetailTextView.setText("$0");
-                getUserProfile(view.profilePhotoImageView, mUser.getAvatar());
+                setupUserCell(view);
             } else {
-                Friend currentFriend = mFriendsList.get(indexFriends);
-                indexFriends++;
-                view.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.greenEzypayColor));
-                view.userNameTextView.setText(currentFriend.getName().concat(" ").concat(currentFriend.getLastname()));
-                view.paymentDetailTextView.setText("$0");
-                getUserProfile(view.profilePhotoImageView, currentFriend.getAvatar());
+                setupFriendCell(view);
             }
-
-        } else {
-            PaymentDetailViewHolder view = (PaymentDetailViewHolder) holder;
-            if(indexPayment == 0) {
-                view.itemNameTextView.setText("Faltante");
-                view.itemDetailTextView.setText("$12000");
-            } else  {
-                view.itemNameTextView.setText("Total");
-                view.itemDetailTextView.setText("$15000");
-            }
-            indexPayment ++;
         }
     }
 
-    public void getUserProfile(ImageView imageView, String avatar) {
+    private void setupUserCell(SplitViewHolder view) {
+        view.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+        view.userNameTextView.setText(mUser.getName().concat(" ").concat(mUser.getLastName()));
+        view.paymentDetailTextView.setText(mPayment.getCurrency().getCurrencySymbol() + " 0");
+        getUserProfile(view.profilePhotoImageView, mUser.getAvatar());
+        setSeekBarListener(view, null);
+    }
+
+    private void setupFriendCell(SplitViewHolder view) {
+        Friend currentFriend = mFriendsList.get(indexFriends);
+        indexFriends++;
+        view.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.greenEzypayColor));
+        view.userNameTextView.setText(currentFriend.getName().concat(" ").concat(currentFriend.getLastname()));
+        view.paymentDetailTextView.setText(mPayment.getCurrency().getCurrencySymbol() + "  0");
+        getUserProfile(view.profilePhotoImageView, currentFriend.getAvatar());
+        setSeekBarListener(view, currentFriend);
+    }
+
+    private void setSeekBarListener(final SplitViewHolder view, final Friend friend) {
+        view.paymentSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int progressValidated = mSeekBarListener.seekBarProgressChanged(progress, mPayment, friend);
+                float quantity = (mPayment.getCost() * progressValidated) / 100;
+                view.paymentDetailTextView.setText(mPayment.getCurrency().getCurrencySymbol() + " " + quantity);
+                seekBar.setProgress(progressValidated);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
+        });
+    }
+
+    private void getUserProfile(ImageView imageView, String avatar) {
         Picasso.with(mContext).load(avatar).transform(new CropCircleTransformation()).into(imageView);
     }
 
@@ -122,15 +146,7 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
-    private class PaymentDetailViewHolder extends  RecyclerView.ViewHolder {
-        TextView itemNameTextView;
-        TextView itemDetailTextView;
-
-        PaymentDetailViewHolder(View itemView) {
-            super(itemView);
-            itemNameTextView = (TextView) itemView.findViewById(R.id.item_name_payment_detail_textView);
-            itemDetailTextView = (TextView) itemView.findViewById(R.id.item_detail_payment_detail_textView);
-        }
+    public interface ISeekBarListener {
+        int seekBarProgressChanged(int progress, Payment payment, Friend friend);
     }
-
 }

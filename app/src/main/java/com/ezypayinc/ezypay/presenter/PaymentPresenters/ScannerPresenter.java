@@ -1,7 +1,6 @@
 package com.ezypayinc.ezypay.presenter.PaymentPresenters;
 
 import android.content.Context;
-import android.os.Debug;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -9,26 +8,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.ezypayinc.ezypay.base.UserSingleton;
-import com.ezypayinc.ezypay.connection.PushNotificationsServiceClient;
-import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ScannerView;
+import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.IScannerView;
 import com.ezypayinc.ezypay.manager.PaymentManager;
 import com.ezypayinc.ezypay.manager.PushNotificationsManager;
 import com.ezypayinc.ezypay.model.Payment;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
-import java.util.Date;
-
 public class ScannerPresenter implements IScannerPresenter {
-    private ScannerView view;
+    private IScannerView view;
     private Payment activePayment;
 
-    public ScannerPresenter(ScannerView view) {
+    public ScannerPresenter(IScannerView view) {
         this.view = view;
     }
 
@@ -173,7 +167,7 @@ public class ScannerPresenter implements IScannerPresenter {
                     @Override
                     public void onResponse(JsonElement response) {
                         view.dismissProgressDialog();
-                        view.goToContactsList();
+                        view.goToContactsList(activePayment);
                     }
                 }, new Response.ErrorListener() {
                     @Override

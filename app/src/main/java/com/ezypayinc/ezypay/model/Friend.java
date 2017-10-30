@@ -5,10 +5,6 @@ import android.os.Parcelable;
 
 import io.realm.RealmObject;
 
-/**
- * Created by gustavoquesada on 10/22/17.
- */
-
 public class Friend extends RealmObject implements Parcelable {
 
     private int id;

@@ -20,30 +20,33 @@ import android.view.ViewGroup;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters.ContactListAdapter;
-import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ContactsListView;
+import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.IContactsListView;
 import com.ezypayinc.ezypay.model.Friend;
-import com.ezypayinc.ezypay.model.User;
+import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.ContactsListPresenter;
 import com.ezypayinc.ezypay.presenter.PaymentPresenters.IContactsListPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactListFragment extends Fragment implements ContactsListView, ContactListAdapter.OnItemClickListener, View.OnClickListener {
+public class ContactListFragment extends Fragment implements IContactsListView, ContactListAdapter.OnItemClickListener, View.OnClickListener {
     private RecyclerView contactsRecyclerView;
     private ContactListAdapter mAdapter;
     private FloatingActionButton fabNextAction;
     private List<Friend> friendsList;
     private ArrayList<Friend> friendsSelected;
     private IContactsListPresenter presenter;
+    private Payment mPayment;
 
     public ContactListFragment() {
         // Required empty public constructor
     }
 
-    public static ContactListFragment newInstance() {
+    public static ContactListFragment newInstance(Payment payment) {
         ContactListFragment fragment = new ContactListFragment();
         Bundle args = new Bundle();
+        args.putParcelable(PaymentMainActivity.PAYMENT_KEY, payment);
+        fragment.setArguments(args);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,6 +54,9 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getArguments() != null) {
+            mPayment = getArguments().getParcelable(PaymentMainActivity.PAYMENT_KEY);
+        }
         setHasOptionsMenu(true);
     }
 
@@ -144,7 +150,9 @@ public class ContactListFragment extends Fragment implements ContactsListView, C
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.payment_contact_next_action_fab:
-                Fragment fragment = SplitFragment.newInstance(friendsSelected);
+                presenter.removeFriendsFromPayment(mPayment);
+                mPayment.getFriends().addAll(friendsSelected);
+                Fragment fragment = SplitFragment.newInstance(mPayment);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 fragmentManager.beginTransaction().
                         replace(R.id.payment_main_container, fragment).

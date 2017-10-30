@@ -27,6 +27,11 @@ public class PaymentManager {
         data.deletePayment();
     }
 
+    public void removeFriendsFromPayment(Payment payment) {
+        PaymentData data = new PaymentData();
+        data.removeFriendsFromPayment(payment);
+    }
+
     /**
      *
      * WEB Service Methods

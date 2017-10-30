@@ -19,6 +19,7 @@ public class UserData {
         userRealm.setPhoneNumber(user.getPhoneNumber());
         userRealm.setEmail(user.getEmail());
         userRealm.setToken(user.getToken());
+        userRealm.setAvatar(user.getAvatar());
         realm.commitTransaction();
     }
 
