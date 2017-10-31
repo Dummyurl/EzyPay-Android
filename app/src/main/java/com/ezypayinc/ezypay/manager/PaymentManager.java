@@ -32,6 +32,11 @@ public class PaymentManager {
         data.removeFriendsFromPayment(payment);
     }
 
+    public void updatePayment(Payment payment) {
+        PaymentData data = new PaymentData();
+        data.updatePayment(payment);
+    }
+
     /**
      *
      * WEB Service Methods
@@ -60,5 +65,15 @@ public class PaymentManager {
     public void updatePayment(Payment payment, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         PaymentServiceClient service = new PaymentServiceClient();
         service.updatePayment(payment, user, successHandler, failureHandler);
+    }
+
+    public void addPaymentToFriends(Payment payment, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        PaymentServiceClient service = new PaymentServiceClient();
+        service.addPaymentToFriends(payment, user,successHandler, failureHandler);
+    }
+
+    public void performPayment(Payment payment, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        PaymentServiceClient service = new PaymentServiceClient();
+        service.performPayment(payment, token, successHandler, failureHandler);
     }
 }

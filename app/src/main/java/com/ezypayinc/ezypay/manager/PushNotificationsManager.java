@@ -19,4 +19,9 @@ public class PushNotificationsManager {
         PushNotificationsServiceClient service = new PushNotificationsServiceClient();
         service.sendBillRequestNotification(payment, token, successHandler, failureHandler);
     }
+
+    public void sendPaymentNotifications(Payment payment, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        PushNotificationsServiceClient service = new PushNotificationsServiceClient();
+        service.sendPaymentNotifications(payment, token, successHandler, failureHandler);
+    }
 }

@@ -25,6 +25,7 @@
     <string name="action_commerce_detail_split">Dividir</string>
     <string name="action_cancel">Cancelar</string>
     <string name="action_change">Cambiar</string>
+    <string name="action_payment">Pago</string>
 
     <!--Prompt-->
     <string name="prompt_name">Nombre</string>
@@ -76,11 +77,11 @@
     <string name="scanner_view_title">Escanér</string>
     <string name="contacts_view_title">Contactos</string>
     <string name="split_view_title">Dividir Cuenta</string>
+    <string name="payment_view_title">Pago</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">
         <item>Yo</item>
         <item>Amigos</item>
-        <item>Pago</item>
     </string-array>
 </resources>

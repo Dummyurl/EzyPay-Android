@@ -4,11 +4,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.model.Currency;
+import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.model.User;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +26,7 @@ public class PaymentServiceClient {
     private ConnectionManager connectionManager;
     private static final String CONTENT_TYPE = "application/json";
     private static final String BASIC_URL = "payment/";
+    private static final String USER_PAYMENT_URL = "userPayment/";
 
     public PaymentServiceClient() {
         connectionManager = new ConnectionManager();
@@ -116,5 +120,52 @@ public class PaymentServiceClient {
         object.put("paymentDate", payment.getPaymentDate());
 
         connectionManager.sendCustomRequest(Request.Method.PUT, url, object, headers, successHandler, failureHandler);
+    }
+
+    public void addPaymentToFriends(Payment payment, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = USER_PAYMENT_URL + "addFriends";
+        String oauthToken = "Bearer "+ user.getToken();
+
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        JSONObject parameters = new JSONObject();
+        parameters.put("friends", getArrayFriends(payment, user));
+
+        connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
+    }
+
+    private JSONArray getArrayFriends(Payment payment, User user) throws JSONException {
+        JSONArray friendsArray = new JSONArray();
+        friendsArray.put(friendData(user.getId(), payment.getId(), payment.getUserCost(), 1));
+        for (Friend friend: payment.getFriends()) {
+            friendsArray.put(friendData(friend.getId(), payment.getId(), friend.getCost(),0));
+        }
+        return friendsArray;
+    }
+
+    private JSONObject friendData(int userId, int paymentId, float cost, int state) throws JSONException {
+        JSONObject userToFriend = new JSONObject();
+        userToFriend.put("userId", userId);
+        userToFriend.put("paymentId", paymentId);
+        userToFriend.put("cost", cost);
+        userToFriend.put("state", state);
+
+        return userToFriend;
+    }
+
+    public void performPayment(Payment payment, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = BASIC_URL + "pay";
+        String oauthToken = "Bearer "+ token;
+
+        JSONObject parameters = new JSONObject();
+        parameters.put("id", payment.getId());
+
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
     }
 }

@@ -131,14 +131,6 @@ public class SplitAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return mFriendsList.size() + 3;
     }
 
-    private class HeaderViewHolder extends RecyclerView.ViewHolder {
-        TextView headerTitleTextView;
-
-        HeaderViewHolder(View itemView) {
-            super(itemView);
-            headerTitleTextView = (TextView) itemView.findViewById(R.id.header_title_textView);
-        }
-    }
 
     public class SplitViewHolder extends RecyclerView.ViewHolder {
         ImageView profilePhotoImageView;

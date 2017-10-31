@@ -13,10 +13,12 @@ import java.util.Date;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 
 public class Payment extends RealmObject implements Parcelable {
 
+    @PrimaryKey
     private int id;
     private float cost;
     private int employeeId;

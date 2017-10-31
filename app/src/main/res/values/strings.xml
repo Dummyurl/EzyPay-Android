@@ -28,6 +28,7 @@
     <string name="action_commerce_detail_split">Split</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_change">Change</string>
+    <string name="action_payment">Payment</string>
 
 
     <string name="title_activity_login" translatable="false">Log in</string>
@@ -93,12 +94,12 @@
     <string name="scanner_view_title">Scanner</string>
     <string name="contacts_view_title">Contacts</string>
     <string name="split_view_title">Split</string>
+    <string name="payment_view_title">Payment</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">
         <item>Me</item>
-        <item>Friends</item>
-        <item>Payment</item>
+        <item>Others</item>
     </string-array>
 
 

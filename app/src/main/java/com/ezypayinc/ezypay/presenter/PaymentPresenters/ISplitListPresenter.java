@@ -9,5 +9,6 @@ public interface ISplitListPresenter {
 
     int validateQuantity(int progress, Payment payment, Friend friend);
     void changePaymentQuantity(float quantity, SplitAdapter.SplitViewHolder cell, Payment payment);
+    void addFriendsToPayment(Payment payment);
     void onDestroy();
 }

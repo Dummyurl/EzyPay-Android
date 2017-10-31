@@ -33,4 +33,11 @@ public class PaymentData {
         payment.getFriends().clear();
         realm.commitTransaction();
     }
+
+    public void updatePayment(Payment payment) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.copyToRealmOrUpdate(payment);
+        realm.commitTransaction();
+    }
 }

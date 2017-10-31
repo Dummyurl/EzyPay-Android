@@ -11,27 +11,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/split_fragment_imageView_profile_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/image_profile_circle"
-            tools:ignore="ContentDescription" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/split_cell_profile_container"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/split_fragment_imageView_profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/image_profile_circle"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
 
         <LinearLayout
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/split_fragment_imageView_profile_image"
+            android:layout_toEndOf="@+id/split_cell_profile_container"
             android:layout_centerVertical="true"
             android:orientation="vertical"
             android:id="@+id/linearLayout">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorBackgroundViews"
-                android:id="@+id/split_fragment_textView_userName" />
 
             <SeekBar
                 android:layout_width="match_parent"
@@ -47,6 +49,13 @@
                 android:textAlignment="gravity" />
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorBackgroundViews"
+            android:layout_below="@+id/split_cell_profile_container"
+            android:id="@+id/split_fragment_textView_userName" />
 
     </RelativeLayout>
 </android.support.v7.widget.CardView>

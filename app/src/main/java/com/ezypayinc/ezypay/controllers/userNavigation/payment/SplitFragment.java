@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
+import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters.SplitAdapter;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.ISplitListView;
 import com.ezypayinc.ezypay.model.Friend;
@@ -74,6 +75,7 @@ public class SplitFragment extends Fragment implements View.OnClickListener, ISp
         btnNext.setOnClickListener(this);
         btnChange.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+        mChangePaymentContainer.setOnClickListener(this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         usersRecyclerView.setLayoutManager(mLayoutManager);
@@ -98,21 +100,23 @@ public class SplitFragment extends Fragment implements View.OnClickListener, ISp
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.split_fragment_next_button :
-                goToPaymentView();
+                mPresenter.addFriendsToPayment(mPayment);
                 break;
             case R.id.split_payment_cancel_button:
-                cancelButtonAction();
+                hideChangePaymentView();
                 break;
             case R.id.split_payment_change_button:
                 changeButtonAction();
                 break;
+            case R.id.change_payment_container:
+                hideChangePaymentView();
             default:
                 break;
         }
     }
 
-    private void goToPaymentView() {
-        Fragment fragment = PaymentFragment.newInstance();
+    public void goToPaymentView() {
+        Fragment fragment = PaymentFragment.newInstance(mPayment);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().
                 replace(R.id.payment_main_container, fragment).
@@ -120,7 +124,12 @@ public class SplitFragment extends Fragment implements View.OnClickListener, ISp
                 commit();
     }
 
-    private void cancelButtonAction() {
+    @Override
+    public void onNetworkError(Object object) {
+        ErrorHelper.handleError(object, getContext());
+    }
+
+    private void hideChangePaymentView() {
         mChangePaymentContainer.setVisibility(View.GONE);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         View focusView = getActivity().getCurrentFocus();
@@ -134,7 +143,7 @@ public class SplitFragment extends Fragment implements View.OnClickListener, ISp
         if(currentCell != null) {
             float quantity = Float.parseFloat(editTextChange.getText().toString());
             mPresenter.changePaymentQuantity(quantity, currentCell, mPayment);
-            cancelButtonAction();
+            hideChangePaymentView();
         }
     }
 

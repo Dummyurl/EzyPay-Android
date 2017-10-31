@@ -1,5 +1,7 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,39 +10,89 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.model.Friend;
+import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.model.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by gustavoquesada on 2/22/17.
- */
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.PaymentViewHolder> {
-    private List<User> mFriendList;
 
-    public PaymentAdapter(List<User> friendList) {
-        mFriendList = friendList;
+public class PaymentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private Context mContext;
+    private List<Friend> mFriendList;
+    private Payment mPayment;
+    private int index, indexHeaders, indexFriends;
+    private User mUser;
+    private String[] headerTitles;
+
+    public PaymentAdapter(Payment payment, User user, Context context) {
+        mContext = context;
+        mPayment = payment;
+        mFriendList = mPayment.getFriends();
+        mUser = user;
+        headerTitles = mContext.getResources().getStringArray(R.array.split_fragment_header_titles);
     }
 
     @Override
-    public PaymentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
-        itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cell_payment_fragment, parent, false);
-        return new PaymentViewHolder(itemView);
+        if (index == 0 || index == 2) {
+            index ++;
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.header_layout, parent, false);
+            return new HeaderViewHolder(itemView);
+        } else {
+            itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.cell_payment_fragment, parent, false);
+            index ++;
+            return new PaymentViewHolder(itemView);
+        }
     }
 
     @Override
-    public void onBindViewHolder(PaymentViewHolder holder, int position) {
-        holder.paymentDetailTextView.setText("$4000");
-        holder.userNameTextView.setText("Gustavo Quesada");
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof HeaderViewHolder) {
+            HeaderViewHolder view = (HeaderViewHolder) holder;
+            view.headerTitleTextView.setText(headerTitles[indexHeaders]);
+            indexHeaders++;
+        } else  {
+            PaymentViewHolder view = (PaymentViewHolder) holder;
+            if (position == 1) {
+                setupUserCell(view);
+            } else {
+                setupFriendCell(view);
+            }
+        }
     }
 
+    private void setupUserCell(PaymentViewHolder view) {
+        view.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+        view.userNameTextView.setText(mUser.getName().concat(" ").concat(mUser.getLastName()));
+        view.paymentDetailTextView.setText(mPayment.getCurrency().getCurrencySymbol() + " " + mPayment.getUserCost());
+        getUserProfile(view.profilePhotoImageView, mUser.getAvatar());
+
+    }
+
+    private void setupFriendCell(PaymentViewHolder view) {
+        Friend currentFriend = mFriendList.get(indexFriends);
+        indexFriends++;
+        view.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.greenEzypayColor));
+        view.userNameTextView.setText(currentFriend.getName().concat(" ").concat(currentFriend.getLastname()));
+        view.paymentDetailTextView.setText(mPayment.getCurrency().getCurrencySymbol() + " " + currentFriend.getCost());
+        getUserProfile(view.profilePhotoImageView, currentFriend.getAvatar());
+    }
+
+    private void getUserProfile(ImageView imageView, String avatar) {
+        Picasso.with(mContext).load(avatar).transform(new CropCircleTransformation()).into(imageView);
+    }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return mFriendList.size() + 3;
     }
 
     class PaymentViewHolder extends RecyclerView.ViewHolder {
@@ -56,3 +108,5 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.PaymentV
         }
     }
 }
+
+

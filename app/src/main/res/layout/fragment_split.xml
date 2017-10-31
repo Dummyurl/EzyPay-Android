@@ -111,6 +111,7 @@
                     android:layout_height="50dp"
                     android:orientation="horizontal">
                     <Button
+                        android:textColor="@color/white"
                         android:id="@+id/split_payment_cancel_button"
                         android:background="@drawable/button_green_background"
                         android:layout_width="wrap_content"
@@ -119,6 +120,7 @@
                         android:layout_height="match_parent"
                         android:text="@string/action_cancel"/>
                     <Button
+                        android:textColor="@color/white"
                         android:id="@+id/split_payment_change_button"
                         android:background="@drawable/button_green_background"
                         android:layout_width="wrap_content"
