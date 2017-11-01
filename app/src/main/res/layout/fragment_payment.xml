@@ -20,6 +20,7 @@
         android:weightSum="2">
 
         <Button
+            android:id="@+id/payment_fragment_cancel_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -29,6 +30,7 @@
             android:textColor="@color/white"/>
 
         <Button
+            android:id="@+id/payment_fragment_payment_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

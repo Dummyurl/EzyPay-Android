@@ -1,18 +1,33 @@
 package com.ezypayinc.ezypay.model;
 
-/**
- * Created by gustavoquesada on 10/22/17.
- */
+import com.google.gson.Gson;
 
-public class LocalToken {
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import io.realm.RealmObject;
+
+
+public class LocalToken extends RealmObject {
+
+    private static final String DEVICE_PLATFORM  = "Android";
     private String deviceId;
     private String devicePlatform;
     private String deviceToken;
     private boolean isSaved;
     private int userId;
 
-    public LocalToken() {}
+    public LocalToken() {
+        devicePlatform = DEVICE_PLATFORM;
+    }
+
+    public LocalToken(LocalToken localToken) {
+        deviceId = localToken.getDeviceId();
+        deviceToken = localToken.getDeviceToken();
+        devicePlatform = localToken.getDevicePlatform();
+        isSaved = localToken.isSaved();
+        userId = localToken.getUserId();
+    }
 
     public String getDeviceId() {
         return deviceId;
@@ -26,9 +41,6 @@ public class LocalToken {
         return devicePlatform;
     }
 
-    public void setDevicePlatform(String devicePlatform) {
-        this.devicePlatform = devicePlatform;
-    }
 
     public String getDeviceToken() {
         return deviceToken;
@@ -52,5 +64,11 @@ public class LocalToken {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public JSONObject toJSON() throws JSONException {
+        Gson gson = new Gson();
+        String json = gson.toJson(this);
+        return new JSONObject(json);
     }
 }

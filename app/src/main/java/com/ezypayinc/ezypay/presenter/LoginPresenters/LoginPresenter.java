@@ -1,20 +1,26 @@
 package com.ezypayinc.ezypay.presenter.LoginPresenters;
 
 import android.text.TextUtils;
+import android.util.Log;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.LoginView;
+import com.ezypayinc.ezypay.database.DeviceTokenData;
+import com.ezypayinc.ezypay.manager.DeviceTokenManager;
 import com.ezypayinc.ezypay.manager.UserManager;
+import com.ezypayinc.ezypay.model.LocalToken;
 import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonElement;
 
 import org.json.JSONException;
 
 
-public class LoginPresenter  implements ILoginPresenter{
+public class LoginPresenter  implements ILoginPresenter {
 
+    private static final String DEVICE_TOKEN_ERROR = "Error saving token";
     private LoginView loginView;
 
     public LoginPresenter(LoginView loginView) {
@@ -101,6 +107,7 @@ public class LoginPresenter  implements ILoginPresenter{
                     manager.addUser(userFromServer);
                     loginView.hideProgressDialog();
                     loginView.navigateToHome();
+                    registerLocalToken();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -113,6 +120,29 @@ public class LoginPresenter  implements ILoginPresenter{
             loginView.hideProgressDialog();
             e.printStackTrace();
         }
+    }
 
+    private void registerLocalToken() {
+        final DeviceTokenManager manager = new DeviceTokenManager();
+        final LocalToken localToken = new LocalToken(manager.getLocalToken());
+        if (localToken != null && !localToken.isSaved()) {
+            localToken.setUserId(UserSingleton.getInstance().getUser().getId());
+            try {
+                manager.registerDeviceToken(localToken, UserSingleton.getInstance().getUser().getToken(), new Response.Listener<JsonElement>() {
+                    @Override
+                    public void onResponse(JsonElement response) {
+                        localToken.setSaved(true);
+                        manager.updateLocalToken(localToken);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e(DEVICE_TOKEN_ERROR, error.getMessage());
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

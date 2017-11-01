@@ -2,6 +2,7 @@ package com.ezypayinc.ezypay.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.telephony.TelephonyManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,5 +34,10 @@ public class EzyPayApplication extends Application {
         SimpleDateFormat simpleDate =  new SimpleDateFormat(dateFormat);
         String strDt = simpleDate.format(new Date());
         return strDt;
+    }
+
+    public String getDeviceUUID() {
+        TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        return tManager.getDeviceId();
     }
 }

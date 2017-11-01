@@ -1,31 +1,27 @@
 {
   "project_info": {
-    "project_number": "930664635103",
-    "firebase_url": "https://fir-ezypay.firebaseio.com",
-    "project_id": "firebase-ezypay",
-    "storage_bucket": "firebase-ezypay.appspot.com"
+    "project_number": "152733716410",
+    "firebase_url": "https://ugwo-8634e.firebaseio.com",
+    "project_id": "ugwo-8634e",
+    "storage_bucket": "ugwo-8634e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:930664635103:android:0c197a5d5b8babe0",
+        "mobilesdk_app_id": "1:152733716410:android:0c197a5d5b8babe0",
         "android_client_info": {
           "package_name": "com.ezypayinc.ezypay"
         }
       },
       "oauth_client": [
         {
-          "client_id": "930664635103-0af097n4bpj017fdauijeeokgej11u4b.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "930664635103-7jqmukqkr39br2der48gk6lqb2qdau9m.apps.googleusercontent.com",
+          "client_id": "152733716410-0904o62734c5teajikdm29dr4gfmqtfo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDdtHSESF0cMcvNC5VB8eTwpElH8ajQhA8"
+          "current_key": "AIzaSyAh5RMpBVt1T_HaOS_xzl7P5JuAHw-2Txo"
         }
       ],
       "services": {

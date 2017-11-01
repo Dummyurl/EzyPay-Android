@@ -9,17 +9,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
+import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters.PaymentAdapter;
+import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.IPaymentListView;
 import com.ezypayinc.ezypay.model.Payment;
+import com.ezypayinc.ezypay.presenter.PaymentPresenters.IPaymentPresenter;
+import com.ezypayinc.ezypay.presenter.PaymentPresenters.PaymentPresenter;
 
-public class PaymentFragment extends Fragment  {
+public class PaymentFragment extends Fragment implements IPaymentListView, View.OnClickListener {
 
     private RecyclerView paymentRecyclerView;
     private Payment mPayment;
+    private Button btnPayment;
+    private IPaymentPresenter mPresenter;
 
 
     public PaymentFragment() {
@@ -52,6 +60,9 @@ public class PaymentFragment extends Fragment  {
         paymentRecyclerView.setLayoutManager(mLayoutManager);
         paymentRecyclerView.setItemAnimator(new DefaultItemAnimator());
         paymentRecyclerView.setAdapter(new PaymentAdapter(mPayment, UserSingleton.getInstance().getUser(),getContext()));
+        mPresenter = new PaymentPresenter(this);
+        btnPayment = (Button) rootView.findViewById(R.id.payment_fragment_payment_button);
+        btnPayment.setOnClickListener(this);
         return rootView;
     }
 
@@ -59,5 +70,26 @@ public class PaymentFragment extends Fragment  {
     public void onAttach(Context context) {
         super.onAttach(context);
         getActivity().setTitle(R.string.payment_view_title);
+    }
+
+    @Override
+    public void goToResultView() {
+        Toast.makeText(getContext(), "Go to result view", Toast.LENGTH_LONG);
+    }
+
+    @Override
+    public void onNetworkError(Object object) {
+        ErrorHelper.handleError(object, getContext());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.payment_fragment_payment_button :
+                mPresenter.performPayment(mPayment);
+                break;
+            default:
+                break;
+        }
     }
 }
