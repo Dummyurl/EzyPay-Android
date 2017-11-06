@@ -41,7 +41,7 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.Card
     @Override
     public void onBindViewHolder(CardsViewHolder holder, int position) {
         final Card card = mCardList.get(position);
-        holder.tvCard.setText(card.getNumber());
+        holder.tvCard.setText(card.getCardNumber());
         holder.imgCardIcon.setImageResource(getCardIcon(card));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,10 +57,9 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.Card
     }
 
     public int getCardIcon(Card card) {
-        int iins = Integer.valueOf(card.getNumber().substring(0,2));
-        if(iins > 39 && iins < 50) {
+        if(card.getCardVendor() == 1) {
             return R.drawable.ic_visa;
-        } else if (iins > 50 && iins < 56) {
+        } else if (card.getCardVendor() == 2) {
             return R.drawable.ic_mastercard;
         }
         return R.drawable.ic_credit_card;

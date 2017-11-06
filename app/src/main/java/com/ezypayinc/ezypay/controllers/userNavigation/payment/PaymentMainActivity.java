@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.ezypayinc.ezypay.model.Payment;
 
 public class PaymentMainActivity extends AppCompatActivity {
@@ -26,6 +27,7 @@ public class PaymentMainActivity extends AppCompatActivity {
                         .commit();
             }
         }
+        ((EzyPayApplication)getApplication()).setCurrentActivity(this);
         handleIntent(getIntent());
     }
 

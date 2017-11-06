@@ -44,10 +44,10 @@ public class SignInPaymentInformationPresenter implements ISignInPaymentInformat
     @Override
     public void registerRecord(String cardNumber, int cvv, int moth, int year) {
         Card card = new Card();
-        card.setNumber(cardNumber);
+        /*card.setNumber(cardNumber);
         card.setCvv(cvv);
         card.setMonth(moth);
-        card.setYear(year);
+        card.setYear(year);*/
         User user = UserSingleton.getInstance().getUser();
         if(user.getCards() == null){
             user.setCards(new RealmList<Card>());

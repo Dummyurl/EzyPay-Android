@@ -12,6 +12,9 @@ public class NotificationFactory {
             case 1:
                 handler = new GeneralNotifiactionHandler();
                 break;
+            case 3:
+                handler = new SendBillNotificationHandler();
+                break;
             default:
                 handler = null;
         }

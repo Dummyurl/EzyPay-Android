@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">EzyPay</string>
+    <string name="app_name" translatable="false">Ugwo</string>
 
     <!--Navigation Bar Items-->
     <string name="navigation_bar_scanner_item" translatable="false">Scanner</string>
@@ -29,6 +29,7 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_change">Change</string>
     <string name="action_payment">Payment</string>
+    <string name="action_ok">OK</string>
 
 
     <string name="title_activity_login" translatable="false">Log in</string>

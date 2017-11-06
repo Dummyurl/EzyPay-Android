@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.ezypayinc.ezypay.controllers.userNavigation.notifications.NotificationsFragment;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.SettingsFragment;
@@ -15,15 +16,19 @@ import com.google.zxing.integration.android.IntentResult;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import java.security.PublicKey;
+
 public class MainUserActivity extends AppCompatActivity {
 
     private BottomBar bottomBar;
     private OnBarcodeScanned barcodeScannedListener;
+    public static final String SCANNER_FRAGMENT_TAG  = "SCANNER_FRAGMENT_TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_user);
+        ((EzyPayApplication)getApplication()).setCurrentActivity(this);
         setupNavigationBar();
     }
 
@@ -33,9 +38,11 @@ public class MainUserActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 Fragment newFragment = null;
+                String tag = null;
                 switch (tabId) {
                     case R.id.scanner_item:
                         newFragment = ScannerFragment.newInstance();
+                        tag = SCANNER_FRAGMENT_TAG;
                         barcodeScannedListener = (OnBarcodeScanned) newFragment;
                         break;
                     case R.id.notifications_item:
@@ -50,7 +57,7 @@ public class MainUserActivity extends AppCompatActivity {
 
 
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_activity_main_user, newFragment)
+                        .replace(R.id.container_activity_main_user, newFragment, tag)
                         .commit();
             }
         });
@@ -76,6 +83,10 @@ public class MainUserActivity extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    public void setBarcodeScannedListener(OnBarcodeScanned listener) {
+        barcodeScannedListener = listener;
     }
 
     public interface OnBarcodeScanned {

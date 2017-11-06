@@ -3,6 +3,7 @@ package com.ezypayinc.ezypay.controllers.userNavigation.settings;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,15 +12,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardsMainActivity;
 import com.ezypayinc.ezypay.model.User;
+import com.squareup.picasso.Picasso;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class SettingsFragment extends Fragment {
 
     private EditText mName, mLastName, mEmail, mPhoneNumber;
+    private ImageView mProfileImage;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -58,14 +64,22 @@ public class SettingsFragment extends Fragment {
         mLastName = (EditText) rootView.findViewById(R.id.settings_view_lastName);
         mEmail = (EditText) rootView.findViewById(R.id.settings_view_email);
         mPhoneNumber = (EditText) rootView.findViewById(R.id.settings_view_phone_number);
+        mProfileImage = (ImageView)rootView.findViewById(R.id.image_profile_view);
     }
 
     private void getUser() {
         User user = UserSingleton.getInstance().getUser();
-        mName.setText(user.getName());
-        mLastName.setText(user.getLastName());
-        mEmail.setText(user.getEmail());
-        mPhoneNumber.setText(user.getPhoneNumber());
+        if(user != null) {
+            mName.setText(user.getName());
+            mLastName.setText(user.getLastName());
+            mEmail.setText(user.getEmail());
+            mPhoneNumber.setText(user.getPhoneNumber());
+            getImage(user);
+        }
+    }
+
+    private void getImage(User user) {
+        Picasso.with(getContext()).load(user.getAvatar()).transform(new CropCircleTransformation()).into(mProfileImage);
     }
 
     @Override
@@ -74,6 +88,7 @@ public class SettingsFragment extends Fragment {
         inflater.inflate(R.menu.settings_view_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

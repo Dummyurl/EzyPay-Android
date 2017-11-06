@@ -124,8 +124,9 @@ public class LoginPresenter  implements ILoginPresenter {
 
     private void registerLocalToken() {
         final DeviceTokenManager manager = new DeviceTokenManager();
-        final LocalToken localToken = new LocalToken(manager.getLocalToken());
-        if (localToken != null && !localToken.isSaved()) {
+        LocalToken tokenSaved = new LocalToken(manager.getLocalToken());
+        if (tokenSaved != null && !tokenSaved.isSaved()) {
+            final LocalToken localToken = new LocalToken(tokenSaved);
             localToken.setUserId(UserSingleton.getInstance().getUser().getId());
             try {
                 manager.registerDeviceToken(localToken, UserSingleton.getInstance().getUser().getToken(), new Response.Listener<JsonElement>() {

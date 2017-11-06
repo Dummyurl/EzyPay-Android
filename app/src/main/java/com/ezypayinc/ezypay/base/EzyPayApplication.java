@@ -1,20 +1,20 @@
 package com.ezypayinc.ezypay.base;
 
+import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
+import io.realm.RealmConfiguration;
+import java.text.SimpleDateFormat;
 import android.app.Application;
 import android.content.Context;
-import android.telephony.TelephonyManager;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
+
 
 public class EzyPayApplication extends Application {
 
     private static EzyPayApplication instance;
     private static final String dateFormat = "yyyy-MM-dd";
+    private AppCompatActivity mCurrentActivity;
 
     @Override
     public void onCreate() {
@@ -39,5 +39,13 @@ public class EzyPayApplication extends Application {
     public String getDeviceUUID() {
         TelephonyManager tManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         return tManager.getDeviceId();
+    }
+
+    public void setCurrentActivity(AppCompatActivity activity) {
+        mCurrentActivity = activity;
+    }
+
+    public AppCompatActivity getCurrentActivity() {
+        return mCurrentActivity;
     }
 }

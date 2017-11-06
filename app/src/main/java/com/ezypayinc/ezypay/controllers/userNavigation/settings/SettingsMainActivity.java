@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.base.EzyPayApplication;
 
 public class SettingsMainActivity extends AppCompatActivity {
 
@@ -18,6 +19,7 @@ public class SettingsMainActivity extends AppCompatActivity {
                     .commit();
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((EzyPayApplication)getApplication()).setCurrentActivity(this);
     }
 
 

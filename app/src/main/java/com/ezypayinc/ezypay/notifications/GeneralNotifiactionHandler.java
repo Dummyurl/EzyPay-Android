@@ -1,16 +1,22 @@
 package com.ezypayinc.ezypay.notifications;
 
+import com.ezypayinc.ezypay.controllers.Dialogs.DialogBuilder;
 import com.google.firebase.messaging.RemoteMessage;
-
-/**
- * Created by gustavoquesada on 10/31/17.
- */
+import android.support.v7.app.AppCompatActivity;
 
 public class GeneralNotifiactionHandler implements INotificationHandler {
 
 
     @Override
-    public void notificationAction(RemoteMessage notification) {
-
+    public void notificationAction(final RemoteMessage notification, final AppCompatActivity currentActivity) {
+        if(notification.getNotification().getBody() != null) {
+            currentActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    DialogBuilder dialogBuilder = new DialogBuilder(currentActivity);
+                    dialogBuilder.defaultAlertDialog(notification.getNotification().getBody());
+                }
+            });
+        }
     }
 }

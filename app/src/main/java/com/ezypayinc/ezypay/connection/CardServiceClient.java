@@ -34,11 +34,11 @@ public class CardServiceClient {
         headers.put("Content-Type", CONTENT_TYPE);
         //set parameters
         JSONObject parameters = new JSONObject();
-        parameters.put("number", card.getNumber());
+        /*parameters.put("number", card.getNumber());
         parameters.put("cvv", card.getCvv());
         parameters.put("month", card.getMonth());
         parameters.put("year", card.getYear());
-        parameters.put("userId", user.getId());
+        parameters.put("userId", user.getId());*/
         int httpMethod = Request.Method.POST;
         connectionManager.sendCustomRequest(httpMethod,BASE_URL,parameters,headers,successHandler, errorListener);
     }
@@ -46,10 +46,10 @@ public class CardServiceClient {
     public Card parseSaveCardResponse(JsonElement response) {
         Card card = new Card();
         JsonObject object = response.getAsJsonObject();
-        card.setNumber(object.get("number").getAsString());
+        /*card.setNumber(object.get("number").getAsString());
         card.setCvv(object.get("cvv").getAsInt());
         card.setMonth(object.get("month").getAsInt());
-        card.setYear(object.get("year").getAsInt());
+        card.setYear(object.get("year").getAsInt());*/
         return card;
     }
 
@@ -73,15 +73,13 @@ public class CardServiceClient {
         JsonArray jsonArray = response.getAsJsonArray();
         for(int n = 0; n < jsonArray.size(); n++) {
             JsonObject object = jsonArray.get(n).getAsJsonObject();
-            if(!object.get("month").isJsonNull()) {
-                Card card = new Card();
-                card.setId(object.get("id").getAsInt());
-                card.setNumber(object.get("number").getAsString());
-                card.setCvv(object.get("cvv").getAsInt());
-                card.setMonth(object.get("month").getAsInt());
-                card.setYear(object.get("year").getAsInt());
-                cardList.add(card);
-            }
+            Card card = new Card();
+            card.setId(object.get("id").getAsInt());
+            card.setUserId(object.get("userId").getAsInt());
+            card.setCvv(object.get("ccv").getAsInt());
+            card.setCardNumber(object.get("cardNumber").getAsString());
+            card.setCardVendor(object.get("cardVendor").getAsInt());
+            cardList.add(card);
         }
         return cardList;
     }
@@ -95,11 +93,11 @@ public class CardServiceClient {
         headers.put("Content-Type", CONTENT_TYPE);
         //set parameters
         JSONObject parameters = new JSONObject();
-        parameters.put("number", card.getNumber());
+        /*parameters.put("number", card.getNumber());
         parameters.put("cvv", card.getCvv());
         parameters.put("month", card.getMonth());
         parameters.put("year", card.getYear());
-        parameters.put("userId", user.getId());
+        parameters.put("userId", user.getId());*/
         int httpMethod = Request.Method.PUT;
         String url = BASE_URL + card.getId();
         connectionManager.sendCustomRequest(httpMethod,url,parameters,headers,successHandler, errorListener);

@@ -134,10 +134,10 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
 
     public void setComponentsWithCard() {
         if(mCard != null) {
-            edtCardNumber.setText(mCard.getNumber());
-            edtMonth.setText(String.valueOf(mCard.getMonth()));
+            edtCardNumber.setText(mCard.getCardNumber());
+            /*edtMonth.setText(String.valueOf(mCard.getMonth()));
             edtYear.setText(String.valueOf(mCard.getYear()));
-            edtCvv.setText(String.valueOf(mCard.getCvv()));
+            edtCvv.setText(String.valueOf(mCard.getCvv()));*/
         }
     }
 
@@ -178,10 +178,10 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
         String yearString = edtYear.getText().toString();
         if (presenter.validateFields(number, cvvString, monthString, yearString)) {
             Card card = new Card();
-            card.setNumber(number);
-            card.setCvv(Integer.valueOf(cvvString));
-            card.setMonth(Integer.valueOf(monthString));
-            card.setYear(Integer.valueOf(yearString));
+            card.setCardNumber(number);
+            //card.setCvv(cvvString);
+           /* card.setMonth(Integer.valueOf(monthString));
+            card.setYear(Integer.valueOf(yearString));*/
             if (mCardDetailViewType == ADDCARD.getType()) {
                 presenter.insertCard(card);
             } else if (mCardDetailViewType == EDITCARD.getType()) {

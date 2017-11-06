@@ -1,11 +1,10 @@
 package com.ezypayinc.ezypay.notifications;
 
+import android.support.v7.app.AppCompatActivity;
+
 import com.google.firebase.messaging.RemoteMessage;
 
-/**
- * Created by gustavoquesada on 10/31/17.
- */
 
 public interface INotificationHandler {
-    void notificationAction(RemoteMessage notification);
+    void notificationAction(RemoteMessage notification, AppCompatActivity currentActivity);
 }

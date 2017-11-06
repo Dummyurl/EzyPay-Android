@@ -22,16 +22,16 @@ public class ErrorHelper {
 
     private static void handleAuthFailureError(Context context) {
         DialogBuilder dialogBuilder = new DialogBuilder(context);
-        dialogBuilder.showAlertDialog("Your session is expired");
+        dialogBuilder.defaultAlertDialog("Your session is expired");
     }
 
     private static void handleNetworkError(Context context) {
         DialogBuilder dialogBuilder = new DialogBuilder(context);
-        dialogBuilder.showAlertDialog("Please verify your internet connection");
+        dialogBuilder.defaultAlertDialog("Please verify your internet connection");
     }
 
     private static void handleComunicationError(Context context) {
         DialogBuilder dialogBuilder = new DialogBuilder(context);
-        dialogBuilder.showAlertDialog("Communication Error");
+        dialogBuilder.defaultAlertDialog("Communication Error");
     }
 }
