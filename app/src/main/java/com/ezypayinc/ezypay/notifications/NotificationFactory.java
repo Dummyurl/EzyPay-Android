@@ -15,8 +15,12 @@ public class NotificationFactory {
             case 3:
                 handler = new SendBillNotificationHandler();
                 break;
+            case 4:
+                handler = new SplitRequestNotificationHandler();
+                break;
             default:
-                handler = null;
+                handler = new GeneralNotifiactionHandler();
+                break;
         }
         return  handler;
     }

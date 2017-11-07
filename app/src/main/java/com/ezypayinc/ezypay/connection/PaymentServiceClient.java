@@ -61,6 +61,16 @@ public class PaymentServiceClient {
         return null;
     }
 
+    public void getPaymentById(int paymentId, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        String url = BASIC_URL + String.valueOf(paymentId);
+        String oauthToken = "Bearer "+ token;
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.GET, url, null, headers, successHandler, failureHandler);
+    }
+
     private User getCommerce(JsonObject object) {
         if(!object.isJsonNull()) {
             User commerce = new User();
@@ -167,5 +177,18 @@ public class PaymentServiceClient {
         headers.put("Content-Type", CONTENT_TYPE);
 
         connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
+    }
+
+    public void updateUserPayment(User user, int paymentId, int state, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = USER_PAYMENT_URL + String.valueOf(paymentId);
+        JSONObject parameters = friendData(user.getId(), paymentId, 0, state);
+        parameters.remove("cost");
+
+        HashMap<String, String> headers = new HashMap<>();
+        String oauthToken = "Bearer "+ user.getToken();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.PUT, url, parameters, headers, successHandler, failureHandler);
     }
 }

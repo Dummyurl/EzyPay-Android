@@ -3,6 +3,7 @@ package com.ezypayinc.ezypay.connection;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.model.Payment;
+import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonElement;
 
 import org.json.JSONArray;
@@ -75,6 +76,20 @@ public class PushNotificationsServiceClient {
         headers.put("Content-Type", CONTENT_TYPE);
 
         connectionManager.sendCustomRequest(Request.Method.POST, url, finalObject, headers, successHandler, failureHandler);
+    }
 
+    public void responseSplitNotification(User user, int paymentId, int response, int clientId, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = BASIC_URL + "splitResponse";
+        JSONObject parameters = new JSONObject();
+        parameters.put("userId", clientId);
+        parameters.put("response", response);
+        parameters.put("paymentId", paymentId);
+
+        String oauthToken = "Bearer "+ user.getToken();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
     }
 }

@@ -47,9 +47,15 @@ public class PaymentManager {
         service.getActivePaymentByUser(user, successHandler, failureHandler);
     }
 
+
     public Payment parsePayment(JsonElement response) {
         PaymentServiceClient service = new PaymentServiceClient();
         return  service.parsePayment(response);
+    }
+
+    public void getPaymentById(int paymentId, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        PaymentServiceClient service = new PaymentServiceClient();
+        service.getPaymentById(paymentId, token, successHandler, failureHandler);
     }
 
     public void createPayment(Payment payment, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
@@ -75,5 +81,10 @@ public class PaymentManager {
     public void performPayment(Payment payment, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         PaymentServiceClient service = new PaymentServiceClient();
         service.performPayment(payment, token, successHandler, failureHandler);
+    }
+
+    public void updateUserPayment(User user, int paymentId, int state, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        PaymentServiceClient service = new PaymentServiceClient();
+        service.updateUserPayment(user, paymentId, state, successHandler, failureHandler);
     }
 }

@@ -63,7 +63,9 @@ public class SendBillNotificationHandler implements INotificationHandler {
     }
 
     private void displayAlert(final Payment payment, RemoteMessage notification, final AppCompatActivity currentActivity) {
-        final DialogBuilder builder = new DialogBuilder(currentActivity, notification.getNotification().getBody(), false);
+        String title = notification.getNotification().getTitle();
+        String message = notification.getNotification().getBody();
+        final DialogBuilder builder = new DialogBuilder(currentActivity, title, message, false);
         builder.buildAlertDialog();
         builder.setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
             @Override
