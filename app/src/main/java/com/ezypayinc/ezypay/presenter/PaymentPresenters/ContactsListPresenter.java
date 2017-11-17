@@ -41,7 +41,7 @@ public class ContactsListPresenter implements IContactsListPresenter {
             String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             Contact contact = new Contact(name, phoneNumber);
             if (!contactsList.contains(contact)) {
-                array.put(phoneNumber.replaceAll("-","").replaceAll(" ", ""));
+                array.put(phoneNumber.replaceAll("-",""));
                 contactsList.add(contact);
             }
         }

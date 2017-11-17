@@ -6,7 +6,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.model.Friend;
+import com.ezypayinc.ezypay.model.HistoryDate;
 import com.ezypayinc.ezypay.model.User;
+import com.ezypayinc.ezypay.model.UserHistory;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,7 +18,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +30,8 @@ public class UserServiceClient {
     private static final String SECRET_KEY = "9F=_wPs^;W]=Hqf!3e^)ZpdR;MUym+";
     private static final String CONTENT_TYPE = "application/json";
     private static final String BASIC_URL = "user/";
+    private static final String HISTORY_URL = "history/";
+    private static final String HISTORY_DATES_URL = "history/dates/";
 
     public UserServiceClient() {
         connectionManager = new ConnectionManager();
@@ -138,4 +145,53 @@ public class UserServiceClient {
         connectionManager.sendCustomRequest(Request.Method.PUT, url, parameters, headers, successHandler, failureHandler);
     }
 
+    public void getUserHistory(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        String url = BASIC_URL + HISTORY_URL + String.valueOf(user.getId());
+
+        HashMap<String, String> headers = new HashMap<>();
+        String oauthToken = "Bearer "+ user.getToken();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.GET, url, null, headers, successHandler, failureHandler);
+    }
+
+    public List<UserHistory> parseUserHistory(JsonElement response) {
+        Gson gson = new Gson();
+        UserHistory[] historyArray = gson.fromJson(response,UserHistory[].class);
+        List<UserHistory> userHistoryList = Arrays.asList(historyArray);
+        return userHistoryList;
+    }
+
+    public void getUserHistoryDates(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        String url = BASIC_URL + HISTORY_DATES_URL + String.valueOf(user.getId());
+
+        HashMap<String, String> headers = new HashMap<>();
+        String oauthToken = "Bearer "+ user.getToken();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.GET, url, null, headers, successHandler, failureHandler);
+    }
+
+    public List<HistoryDate> parseUserHistoryDates(JsonElement response) {
+        Gson gson = new Gson();
+        HistoryDate[] historyArray = gson.fromJson(response,HistoryDate[].class);
+        List<HistoryDate> dateList = Arrays.asList(historyArray);
+        return dateList;
+    }
+
+    public void updatePassword(String newPassword, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = BASIC_URL + "password";
+        HashMap<String, String> headers = new HashMap<>();
+        String oauthToken = "Bearer "+ user.getToken();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        JSONObject parameters = new JSONObject();
+        parameters.put("newPassword", newPassword);
+        parameters.put("email", user.getEmail());
+
+        connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
+    }
 }

@@ -39,7 +39,11 @@ public class ScannerPresenter implements IScannerPresenter {
                 if(payment != null) {
                     activePayment = payment;
                     manager.addPayment(payment);
-                    view.showRestaurantDetail(payment);
+                    if (payment.getFriends() != null && payment.getFriends().size() > 0) {
+                        view.goToContactsList(payment);
+                    } else {
+                        view.showRestaurantDetail(payment);
+                    }
                 } else {
                     view.showScannerView();
                 }
@@ -142,7 +146,7 @@ public class ScannerPresenter implements IScannerPresenter {
                 manager.sendBillRequestNotification(activePayment, UserSingleton.getInstance().getUser().getToken(), new Response.Listener<JsonElement>() {
                     @Override
                     public void onResponse(JsonElement response) {
-                        Log.e("Bill Request Response", response.toString());
+                        Log.d("Bill Request Response", response.toString());
                     }
                 }, new Response.ErrorListener() {
                     @Override

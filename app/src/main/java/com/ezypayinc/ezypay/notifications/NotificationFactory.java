@@ -1,9 +1,5 @@
 package com.ezypayinc.ezypay.notifications;
 
-/**
- * Created by gustavoquesada on 10/31/17.
- */
-
 public class NotificationFactory {
 
     public static INotificationHandler initNotificationHandler(int category) {
@@ -17,6 +13,9 @@ public class NotificationFactory {
                 break;
             case 4:
                 handler = new SplitRequestNotificationHandler();
+                break;
+            case 5:
+                handler = new ResponseSplitRequestNotificationHandler();
                 break;
             default:
                 handler = new GeneralNotifiactionHandler();

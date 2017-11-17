@@ -15,7 +15,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import io.realm.RealmList;
 
 /**
  * Created by gustavoquesada on 10/22/17.
@@ -55,6 +59,11 @@ public class PaymentServiceClient {
             payment.setTableNumber(jsonObject.get("tableNumber") == null ? 0 : jsonObject.get("tableNumber").getAsInt());
             payment.setCommerce(getCommerce(jsonObject.get("Commerce").getAsJsonObject()));
             payment.setCurrency(jsonObject.get("Currency").isJsonNull() ? null : getCurrency(jsonObject.get("Currency").getAsJsonObject()));
+            List<Friend> friends = getFriends(!jsonObject.has("Friends") ? null :
+                    (jsonObject.get("Friends").isJsonNull() ? null : jsonObject.get("Friends").getAsJsonArray()));
+            if(friends != null) {
+                payment.getFriends().addAll(friends);
+            }
 
             return payment;
         }
@@ -91,6 +100,26 @@ public class PaymentServiceClient {
             currency.setName(object.get("name").isJsonNull() ? null : object.get("name").getAsString());
             currency.setCode(object.get("code").isJsonNull() ? null : object.get("code").getAsString());
             return currency;
+        }
+        return null;
+    }
+
+    private List<Friend> getFriends(JsonArray friendsArray) {
+        if(friendsArray != null && !friendsArray.isJsonNull()) {
+            List<Friend> friends = new ArrayList<>();
+            for (int i = 0; i < friendsArray.size() ; i++) {
+                JsonObject jsonPayment = friendsArray.get(i).getAsJsonObject();
+                Friend friend = new Friend();
+                friend.setId(jsonPayment.get("id").isJsonNull() ? 0 : jsonPayment.get("id").getAsInt());
+                friend.setCost(jsonPayment.get("cost").isJsonNull() ? 0 : jsonPayment.get("cost").getAsFloat());
+                friend.setAvatar(jsonPayment.get("avatar").isJsonNull() ? null : jsonPayment.get("avatar").getAsString());
+                friend.setName(jsonPayment.get("name").isJsonNull() ? null : jsonPayment.get("name").getAsString());
+                friend.setLastname(jsonPayment.get("lastname").isJsonNull() ? null : jsonPayment.get("lastname").getAsString());
+                friend.setState(jsonPayment.get("state").isJsonNull() ? 0 : jsonPayment.get("state").getAsInt());
+
+                friends.add(friend);
+            }
+            return friends;
         }
         return null;
     }

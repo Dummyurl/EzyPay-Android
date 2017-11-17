@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
@@ -69,12 +70,19 @@ public class PaymentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    public void updateData(Payment payment) {
+        mPayment = payment;
+        mFriendList = payment.getFriends();
+        notifyDataSetChanged();
+    }
+
     private void setupUserCell(PaymentViewHolder view) {
         view.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
         view.userNameTextView.setText(mUser.getName().concat(" ").concat(mUser.getLastName()));
         view.paymentDetailTextView.setText(mPayment.getCurrency().getCurrencySymbol() + " " + mPayment.getUserCost());
+        view.paymentProgressBar.setVisibility(View.GONE);
+        view.statusImageView.setVisibility(View.VISIBLE);
         getUserProfile(view.profilePhotoImageView, mUser.getAvatar());
-
     }
 
     private void setupFriendCell(PaymentViewHolder view) {
@@ -83,6 +91,8 @@ public class PaymentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         view.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.greenEzypayColor));
         view.userNameTextView.setText(currentFriend.getName().concat(" ").concat(currentFriend.getLastname()));
         view.paymentDetailTextView.setText(mPayment.getCurrency().getCurrencySymbol() + " " + currentFriend.getCost());
+        view.paymentProgressBar.setVisibility(currentFriend.getState() == 1 ? View.GONE : View.VISIBLE);
+        view.statusImageView.setVisibility(currentFriend.getState() == 1 ? View.VISIBLE : View.GONE);
         getUserProfile(view.profilePhotoImageView, currentFriend.getAvatar());
     }
 
@@ -98,6 +108,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     class PaymentViewHolder extends RecyclerView.ViewHolder {
         ImageView profilePhotoImageView, statusImageView;
         TextView userNameTextView, paymentDetailTextView;
+        ProgressBar paymentProgressBar;
 
         PaymentViewHolder(View itemView) {
             super(itemView);
@@ -105,6 +116,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             statusImageView = (ImageView) itemView.findViewById(R.id.payment_fragment_imageView_status);
             userNameTextView = (TextView) itemView.findViewById(R.id.payment_fragment_textView_userName);
             paymentDetailTextView = (TextView) itemView.findViewById(R.id.payment_fragment_textView_paymentDetail);
+            paymentProgressBar = (ProgressBar) itemView.findViewById(R.id.payment_fragment_cell_progressBar);
         }
     }
 }

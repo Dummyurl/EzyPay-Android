@@ -12,6 +12,7 @@ import com.ezypayinc.ezypay.model.Payment;
 public class PaymentMainActivity extends AppCompatActivity {
 
     public static final String PAYMENT_KEY = "payment_key";
+    public static final String PAYMENT_FRAGMENT_TAG  = "PAYMENT_FRAGMENT_TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +23,15 @@ public class PaymentMainActivity extends AppCompatActivity {
             Bundle bundle = getIntent().getExtras();
             if(bundle != null) {
                 Payment payment = bundle.getParcelable(PAYMENT_KEY);
-                getSupportFragmentManager().beginTransaction().
-                        add(R.id.payment_main_container, ContactListFragment.newInstance(payment))
-                        .commit();
+                if(payment.getFriends() != null && payment.getFriends().size() > 0) {
+                    getSupportFragmentManager().beginTransaction().
+                            add(R.id.payment_main_container, PaymentFragment.newInstance(payment), PAYMENT_FRAGMENT_TAG)
+                            .commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().
+                            add(R.id.payment_main_container, ContactListFragment.newInstance(payment))
+                            .commit();
+                }
             }
         }
         ((EzyPayApplication)getApplication()).setCurrentActivity(this);

@@ -7,9 +7,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="#E4E4E4"
+        android:background="@color/white"
         android:id="@+id/image_profile_view_edit_user_fragment"
-        android:src="@drawable/image_profile_circle"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
@@ -86,9 +85,27 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/password_editText_edit_user_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_password"
+                android:text="@string/prompt_password"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@color/greenEzypayColor"
+            android:textColor="@color/white"
             android:id="@+id/save_button_edit_user_fragment"
             android:text="@string/action_edit_user_save"/>
 

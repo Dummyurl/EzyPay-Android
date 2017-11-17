@@ -1,6 +1,7 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.settings;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -38,6 +39,7 @@ public class SettingsFragment extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,12 @@ public class SettingsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getUser();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getActivity().setTitle(R.string.settings_view_title);
     }
 
     private void initUIComponents(View rootView) {

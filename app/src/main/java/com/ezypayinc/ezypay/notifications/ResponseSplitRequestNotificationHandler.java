@@ -1,13 +1,12 @@
 package com.ezypayinc.ezypay.notifications;
 
+import com.ezypayinc.ezypay.controllers.userNavigation.payment.PaymentMainActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
-import com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment;
+import com.ezypayinc.ezypay.controllers.userNavigation.payment.PaymentFragment;
 import com.ezypayinc.ezypay.controllers.Dialogs.DialogBuilder;
-import com.ezypayinc.ezypay.manager.PaymentManager;
 import com.ezypayinc.ezypay.model.CustomNotification;
 import com.google.firebase.messaging.RemoteMessage;
-
-import android.content.Intent;
+import com.ezypayinc.ezypay.manager.PaymentManager;
 import android.support.v7.app.AppCompatActivity;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.model.Payment;
@@ -16,15 +15,15 @@ import android.content.DialogInterface;
 import com.android.volley.VolleyError;
 import com.android.volley.Response;
 import com.google.gson.JsonElement;
+import android.content.Intent;
 import com.ezypayinc.ezypay.R;
-import android.util.Log;
 
-public class SendBillNotificationHandler implements INotificationHandler {
+
+public class ResponseSplitRequestNotificationHandler implements INotificationHandler {
 
     private User mUser;
-    private static final String ERROR_TAG = "ERROR GETTING PAYMENT";
 
-    public SendBillNotificationHandler() {
+    public ResponseSplitRequestNotificationHandler() {
         mUser = UserSingleton.getInstance().getUser();
     }
 
@@ -43,24 +42,22 @@ public class SendBillNotificationHandler implements INotificationHandler {
     }
 
     private void getPayment(final int paymentId, final RemoteMessage notification, final AppCompatActivity currentActivity) {
-        if (mUser != null) {
-            final PaymentManager manager = new PaymentManager();
-            manager.getActivePaymentByUser(mUser, new Response.Listener<JsonElement>() {
-                @Override
-                public void onResponse(JsonElement response) {
-                    Payment payment = manager.parsePayment(response);
-                    if(payment != null && payment.getId() == paymentId) {
-                        manager.updatePayment(payment);
-                        displayAlert(payment, notification, currentActivity);
-                    }
+        final PaymentManager manager = new PaymentManager();
+        manager.getActivePaymentByUser(mUser, new Response.Listener<JsonElement>() {
+            @Override
+            public void onResponse(JsonElement response) {
+                Payment payment = manager.parsePayment(response);
+                if(payment.getId() == paymentId) {
+                    manager.updatePayment(payment);
+                    displayAlert(payment, notification, currentActivity);
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e(ERROR_TAG, error.getMessage());
-                }
-            });
-        }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
     }
 
     private void displayAlert(final Payment payment, RemoteMessage notification, final AppCompatActivity currentActivity) {
@@ -72,23 +69,24 @@ public class SendBillNotificationHandler implements INotificationHandler {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 builder.dismissAlertDialog();
-                goToFragment(payment, currentActivity);
+                splitResponseAction(payment, currentActivity);
             }
         });
+
         builder.showAlertDialog();
     }
 
-    private void goToFragment(Payment payment, AppCompatActivity currentActivity) {
-        if(currentActivity instanceof MainUserActivity) {
-            ScannerFragment fragment = (ScannerFragment) currentActivity.getSupportFragmentManager().
-                    findFragmentByTag(MainUserActivity.SCANNER_FRAGMENT_TAG);
+
+    private void splitResponseAction(Payment payment, AppCompatActivity currentActivity) {
+        if(currentActivity instanceof PaymentMainActivity) {
+            PaymentFragment fragment = (PaymentFragment) currentActivity.getSupportFragmentManager().
+                    findFragmentByTag(PaymentMainActivity.PAYMENT_FRAGMENT_TAG);
             if(fragment != null && fragment.isVisible()) {
-                fragment.showRestaurantDetail(payment);
+                fragment.updateData(payment);
             } else {
-                ScannerFragment scannerFragment = ScannerFragment.newInstance();
-                ((MainUserActivity) currentActivity).setBarcodeScannedListener(scannerFragment);
+                PaymentFragment paymentFragment = PaymentFragment.newInstance(payment);
                 currentActivity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_activity_main_user, scannerFragment, MainUserActivity.SCANNER_FRAGMENT_TAG)
+                        .replace(R.id.container_activity_main_user, paymentFragment, PaymentMainActivity.PAYMENT_FRAGMENT_TAG)
                         .commit();
             }
         } else {

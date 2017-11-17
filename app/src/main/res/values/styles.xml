@@ -15,11 +15,13 @@
         <item name="android:statusBarColor">@color/greenEzypayColor</item>
         <item name="titleTextColor">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="MyActionBarTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background" tools:ignore="NewApi">@color/greenEzypayColor</item>
         <item name="background">@color/greenEzypayColor</item>
+        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">

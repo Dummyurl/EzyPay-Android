@@ -7,10 +7,10 @@ import android.widget.TextView;
 import com.ezypayinc.ezypay.R;
 
 
-class HeaderViewHolder extends RecyclerView.ViewHolder {
-    TextView headerTitleTextView;
+public class HeaderViewHolder extends RecyclerView.ViewHolder {
+    public TextView headerTitleTextView;
 
-    HeaderViewHolder(View itemView) {
+    public HeaderViewHolder(View itemView) {
         super(itemView);
         headerTitleTextView = (TextView) itemView.findViewById(R.id.header_title_textView);
     }

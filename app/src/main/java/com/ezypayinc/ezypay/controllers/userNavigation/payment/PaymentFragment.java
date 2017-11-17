@@ -28,6 +28,7 @@ public class PaymentFragment extends Fragment implements IPaymentListView, View.
     private Payment mPayment;
     private Button btnPayment;
     private IPaymentPresenter mPresenter;
+    private PaymentAdapter mAdapter;
 
 
     public PaymentFragment() {
@@ -59,7 +60,8 @@ public class PaymentFragment extends Fragment implements IPaymentListView, View.
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         paymentRecyclerView.setLayoutManager(mLayoutManager);
         paymentRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        paymentRecyclerView.setAdapter(new PaymentAdapter(mPayment, UserSingleton.getInstance().getUser(),getContext()));
+        mAdapter = new PaymentAdapter(mPayment, UserSingleton.getInstance().getUser(),getContext());
+        paymentRecyclerView.setAdapter(mAdapter);
         mPresenter = new PaymentPresenter(this);
         btnPayment = (Button) rootView.findViewById(R.id.payment_fragment_payment_button);
         btnPayment.setOnClickListener(this);
@@ -70,6 +72,11 @@ public class PaymentFragment extends Fragment implements IPaymentListView, View.
     public void onAttach(Context context) {
         super.onAttach(context);
         getActivity().setTitle(R.string.payment_view_title);
+    }
+
+    public void updateData(Payment payment) {
+        mPayment = payment;
+        mAdapter.updateData(mPayment);
     }
 
     @Override

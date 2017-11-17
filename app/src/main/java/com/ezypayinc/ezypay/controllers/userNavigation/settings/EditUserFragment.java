@@ -1,13 +1,16 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.settings;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
@@ -16,9 +19,13 @@ import com.ezypayinc.ezypay.controllers.userNavigation.settings.interfaceViews.I
 import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.presenter.SettingsPresenters.EditUserPresenter;
 import com.ezypayinc.ezypay.presenter.SettingsPresenters.IEditUserPresenter;
+import com.squareup.picasso.Picasso;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class EditUserFragment extends Fragment implements IEditUserView, View.OnClickListener{
-    private EditText mEdtName, mEdtLastName, mEdtEmail, mEdtPhoneNumber;
+    private EditText mEdtName, mEdtLastName, mEdtEmail, mEdtPhoneNumber, mEdtPassword;
+    private ImageView mProfileImage;
     private View rootView;
     private ProgressDialog mProgressDialog;
     private IEditUserPresenter presenter;
@@ -63,8 +70,18 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
         mEdtLastName = (EditText) rootView.findViewById(R.id.lastName_editText_edit_user_fragment);
         mEdtEmail = (EditText) rootView.findViewById(R.id.email_editText_edit_user_fragment);
         mEdtPhoneNumber = (EditText) rootView.findViewById(R.id.phoneNumber_editText_edit_user_fragment);
+        mEdtPassword = (EditText) rootView.findViewById(R.id.password_editText_edit_user_fragment);
+        mProfileImage = (ImageView) rootView.findViewById(R.id.image_profile_view_edit_user_fragment);
         Button mBtnSave = (Button) rootView.findViewById(R.id.save_button_edit_user_fragment);
         mBtnSave.setOnClickListener(this);
+        mEdtPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus) {
+                    GoToPasswordFragment();
+                }
+            }
+        });
     }
 
     private void getUser() {
@@ -73,6 +90,11 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
         mEdtLastName.setText(user.getLastName());
         mEdtEmail.setText(user.getEmail());
         mEdtPhoneNumber.setText(user.getPhoneNumber());
+        getImage(user);
+    }
+
+    private void getImage(User user) {
+        Picasso.with(getContext()).load(user.getAvatar()).transform(new CropCircleTransformation()).into(mProfileImage);
     }
 
     private void setupProgressDialog(){
@@ -120,7 +142,16 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
         }
     }
 
-    public void updateUser() {
+    private void GoToPasswordFragment() {
+        Fragment fragment = EditUserPasswordFragment.newInstance();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().
+                replace(R.id.settings_main_container, fragment).
+                addToBackStack(null).
+                commit();
+    }
+
+    private void updateUser() {
         String name = mEdtName.getText().toString();
         String lastName = mEdtLastName.getText().toString();
         String email = mEdtEmail.getText().toString();

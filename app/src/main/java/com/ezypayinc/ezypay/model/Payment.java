@@ -6,10 +6,13 @@ import android.os.Parcelable;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
@@ -143,32 +146,26 @@ public class Payment extends RealmObject implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeValue(currency);
-        parcel.writeFloat(cost);
-        parcel.writeInt(employeeId);
-        parcel.writeInt(isCanceled ? 1 : 0);
-        parcel.writeString(paymentDate);
-        parcel.writeInt(tableNumber);
-        parcel.writeFloat(userCost);
-        parcel.writeInt(userId);
-        parcel.writeValue(commerce);
-        parcel.writeTypedList(friends);
+        Gson gson = new Gson();
+        String json = gson.toJson(this);
+        parcel.writeString(json);
     }
 
     private void readFromParcel(Parcel in) {
-        id = in.readInt();
-        currency = (Currency) in.readValue(Currency.class.getClassLoader());
-        cost = in.readFloat();
-        employeeId = in.readInt();
-        isCanceled = in.readInt() == 1;
-        paymentDate = in.readString();
-        tableNumber = in.readInt();
-        userCost = in.readFloat();
-        userId = in.readInt();
-        commerce = (User) in.readValue(User.class.getClassLoader());
-        friends = friends == null ? new RealmList<Friend>() : friends;
-        in.readTypedList(friends, Friend.CREATOR);
+        String json = in.readString();
+        Payment payment = new Gson().fromJson(json, Payment.class);
+        id = payment.getId();
+        cost = payment.getCost();
+        employeeId = payment.getEmployeeId();
+        isCanceled = payment.isCanceled();
+        paymentDate = payment.getPaymentDate();
+        tableNumber = payment.getTableNumber();
+        userCost = payment.getUserCost();
+        userId = payment.getUserId();
+        commerce = payment.getCommerce();
+        currency = payment.getCurrency();
+        friends = new RealmList<>();
+        friends.addAll(payment.getFriends());
     }
 
     public static Parcelable.Creator<Payment> CREATOR = new Parcelable.Creator<Payment>(){

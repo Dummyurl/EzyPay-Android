@@ -6,7 +6,9 @@ import com.ezypayinc.ezypay.connection.UserServiceClient;
 import com.ezypayinc.ezypay.database.UserData;
 import com.ezypayinc.ezypay.model.Card;
 import com.ezypayinc.ezypay.model.Friend;
+import com.ezypayinc.ezypay.model.HistoryDate;
 import com.ezypayinc.ezypay.model.User;
+import com.ezypayinc.ezypay.model.UserHistory;
 import com.google.gson.JsonElement;
 
 import org.json.JSONArray;
@@ -90,5 +92,30 @@ public class UserManager {
     public void updateUser(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         UserServiceClient service = new UserServiceClient();
         service.updateUser(user, successHandler, failureHandler);
+    }
+
+    public void getUserHistory(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        UserServiceClient service = new UserServiceClient();
+        service.getUserHistory(user, successHandler, failureHandler);
+    }
+
+    public List<UserHistory> parseUserHistory(JsonElement response) {
+        UserServiceClient service = new UserServiceClient();
+        return service.parseUserHistory(response);
+    }
+
+    public void getUserHistoryDates(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        UserServiceClient service = new UserServiceClient();
+        service.getUserHistoryDates(user, successHandler, failureHandler);
+    }
+
+    public List<HistoryDate> parseUserHistoryDates(JsonElement response) {
+        UserServiceClient service = new UserServiceClient();
+        return  service.parseUserHistoryDates(response);
+    }
+
+    public void updatePassword(String newPassword, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        UserServiceClient service = new UserServiceClient();
+        service.updatePassword(newPassword,user, successHandler, failureHandler);
     }
 }

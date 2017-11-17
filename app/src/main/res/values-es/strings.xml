@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Navigation Bar Items-->
-    <string name="navigation_bar_notifications_item">Notificaciones</string>
+    <string name="navigation_bar_history_item">Historial</string>
     <string name="navigation_bar_credit_card_item">Tarjetas</string>
     <string name="navigation_bar_settings_item">Configuración</string>
 
@@ -34,6 +34,7 @@
     <string name="prompt_phone_number">Número Telefónico</string>
     <string name="prompt_card_number">Número de Tarjeta</string>
     <string name="prompt_password">Contraseña</string>
+    <string name="prompt_code">Código</string>
 
     <!--Labels-->
     <string name="label_user_information_from_title">Información Personal</string>
@@ -79,6 +80,9 @@
     <string name="contacts_view_title">Contactos</string>
     <string name="split_view_title">Dividir Cuenta</string>
     <string name="payment_view_title">Pago</string>
+    <string name="history_view_title">Historial</string>
+    <string name="settings_view_title">Configuración</string>
+    <string name="edit_password_view_title">Editar Contraseña</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">

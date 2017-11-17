@@ -47,7 +47,6 @@ public class ContactListFragment extends Fragment implements IContactsListView, 
         Bundle args = new Bundle();
         args.putParcelable(PaymentMainActivity.PAYMENT_KEY, payment);
         fragment.setArguments(args);
-        fragment.setArguments(args);
         return fragment;
     }
 

@@ -5,18 +5,17 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.EzyPayApplication;
-import com.ezypayinc.ezypay.controllers.userNavigation.notifications.NotificationsFragment;
+import com.ezypayinc.ezypay.controllers.userNavigation.history.HistoryFragment;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.SettingsFragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
-
-import java.security.PublicKey;
 
 public class MainUserActivity extends AppCompatActivity {
 
@@ -30,6 +29,10 @@ public class MainUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_user);
         ((EzyPayApplication)getApplication()).setCurrentActivity(this);
         setupNavigationBar();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            Log.d("Bundle", bundle.toString());
+        }
     }
 
     public void setupNavigationBar() {
@@ -46,7 +49,7 @@ public class MainUserActivity extends AppCompatActivity {
                         barcodeScannedListener = (OnBarcodeScanned) newFragment;
                         break;
                     case R.id.notifications_item:
-                        newFragment = NotificationsFragment.newInstance();
+                        newFragment = HistoryFragment.newInstance();
                         barcodeScannedListener = null;
                         break;
                     case R.id.settings_item:

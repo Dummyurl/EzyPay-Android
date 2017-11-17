@@ -7,6 +7,7 @@ import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.controllers.Dialogs.DialogBuilder;
 import com.ezypayinc.ezypay.manager.PaymentManager;
 import com.ezypayinc.ezypay.manager.PushNotificationsManager;
+import com.ezypayinc.ezypay.model.CustomNotification;
 import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.base.UserSingleton;
 
@@ -136,4 +137,8 @@ public class SplitRequestNotificationHandler implements INotificationHandler {
         }
     }
 
+    @Override
+    public CustomNotification parseNotification(RemoteMessage notification) {
+        return null;
+    }
 }

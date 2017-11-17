@@ -7,7 +7,7 @@
     <tab
         id="@+id/notifications_item"
         icon="@drawable/ic_history"
-        title="@string/navigation_bar_notifications_item" />
+        title="@string/navigation_bar_history_item" />
     <tab
         id="@+id/settings_item"
         icon="@drawable/ic_settings"

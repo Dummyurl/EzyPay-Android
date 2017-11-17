@@ -3,7 +3,7 @@
 
     <!--Navigation Bar Items-->
     <string name="navigation_bar_scanner_item" translatable="false">Scanner</string>
-    <string name="navigation_bar_notifications_item">Notifications</string>
+    <string name="navigation_bar_history_item">History</string>
     <string name="navigation_bar_credit_card_item">Cards</string>
     <string name="navigation_bar_settings_item">Settings</string>
 
@@ -44,6 +44,8 @@
     <string name="prompt_password">Password</string>
     <string name="prompt_month" translatable="false">MM</string>
     <string name="prompt_year" translatable="false">YY</string>
+    <string name="prompt_code">Code</string>
+
 
     <!--Labels-->
     <string name="label_user_information_from_title">Personal Information</string>
@@ -71,10 +73,6 @@
         <item>December</item>
     </string-array>
 
-    <!-- TABS-->
-    <string name="tab_notification_fragment_notification">Notifications</string>
-    <string name="tab_notification_fragment_history">History</string>
-
     <!--MENU ITEMS-->
     <string name="menu_item_cards_fragment_add_card_item">Add Card</string>
     <string name="menu_item_card_detail_fragment_edit_card_item">Edit Card</string>
@@ -96,6 +94,9 @@
     <string name="contacts_view_title">Contacts</string>
     <string name="split_view_title">Split</string>
     <string name="payment_view_title">Payment</string>
+    <string name="history_view_title">History</string>
+    <string name="settings_view_title">Settings</string>
+    <string name="edit_password_view_title">Edit Password</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">

@@ -119,7 +119,7 @@ public class SplitFragment extends Fragment implements View.OnClickListener, ISp
         Fragment fragment = PaymentFragment.newInstance(mPayment);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().
-                replace(R.id.payment_main_container, fragment).
+                replace(R.id.payment_main_container, fragment, PaymentMainActivity.PAYMENT_FRAGMENT_TAG).
                 addToBackStack(null).
                 commit();
     }
