@@ -1,5 +1,6 @@
 package com.ezypayinc.ezypay.manager;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.connection.SessionServiceClient;
 import com.ezypayinc.ezypay.connection.UserServiceClient;
@@ -117,5 +118,10 @@ public class UserManager {
     public void updatePassword(String newPassword, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         UserServiceClient service = new UserServiceClient();
         service.updatePassword(newPassword,user, successHandler, failureHandler);
+    }
+
+    public void uploadImge(byte[] encodeImage, User user, Response.Listener<NetworkResponse> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        UserServiceClient service = new UserServiceClient();
+        service.uploadImge(encodeImage, user, successHandler, failureHandler);
     }
 }

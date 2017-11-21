@@ -1,13 +1,24 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.settings;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.EzyPayApplication;
+import com.ezypayinc.ezypay.controllers.Helpers.OnChangeImageListener;
+
+import java.io.File;
+import java.io.IOException;
 
 public class SettingsMainActivity extends AppCompatActivity {
+
+    private OnChangeImageListener mImageListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +42,47 @@ public class SettingsMainActivity extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setImageListener(OnChangeImageListener listener) {
+        mImageListener = listener;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            Uri pickUri = getPickImageResultUri(data);
+            Bitmap bitmap = null;
+            if(pickUri != null) {
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                  bitmap = (Bitmap) data.getExtras().get("data");
+            }
+            if(bitmap != null && mImageListener != null) {
+                mImageListener.changedImage(bitmap);
+            }
+        }
+    }
+
+    private Uri getPickImageResultUri(Intent data) {
+        boolean isCamera = true;
+        if (data != null) {
+            String action = data.getAction();
+            isCamera = action != null && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
+        }
+        return isCamera ? getCaptureImageOutputUri() : data.getData();
+    }
+
+    private Uri getCaptureImageOutputUri() {
+        Uri outputFileUri = null;
+        File getImage = getExternalCacheDir();
+        if (getImage != null) {
+            outputFileUri = Uri.fromFile(new File(getImage.getPath(), "profile.png"));
+        }
+        return outputFileUri;
     }
 }

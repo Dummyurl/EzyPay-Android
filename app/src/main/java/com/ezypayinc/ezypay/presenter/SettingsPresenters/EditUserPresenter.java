@@ -1,7 +1,9 @@
 package com.ezypayinc.ezypay.presenter.SettingsPresenters;
 
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.R;
@@ -51,6 +53,26 @@ public class EditUserPresenter implements IEditUserPresenter {
                 mView.hideProgressDialog();
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void uploadImage(byte[] encodedImage) {
+        User user  = UserSingleton.getInstance().getUser();
+        UserManager manager = new UserManager();
+        try {
+            manager.uploadImge(encodedImage, user, new Response.Listener<NetworkResponse>() {
+                @Override
+                public void onResponse(NetworkResponse response) {
+                    Log.d("Response", response.toString());
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("Error Response", error.toString());
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

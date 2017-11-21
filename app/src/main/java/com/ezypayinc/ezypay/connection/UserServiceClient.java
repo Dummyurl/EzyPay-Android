@@ -2,6 +2,7 @@ package com.ezypayinc.ezypay.connection;
 
 import android.util.Base64;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.base.UserSingleton;
@@ -18,7 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -193,5 +193,14 @@ public class UserServiceClient {
         parameters.put("email", user.getEmail());
 
         connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
+    }
+
+    public void uploadImge(byte[] encodeImage, User user, Response.Listener<NetworkResponse> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = BASIC_URL + "uploadImage/" + String.valueOf(user.getId());
+        HashMap<String, String> headers = new HashMap<>();
+        String oauthToken = "Bearer "+ user.getToken();
+        headers.put("Authorization", oauthToken);
+
+        connectionManager.sendMultiPartRequest(Request.Method.POST, url,encodeImage, headers, successHandler, failureHandler);
     }
 }
