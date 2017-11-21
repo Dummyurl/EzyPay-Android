@@ -26,6 +26,7 @@ import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.Helpers.OnChangeImageListener;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.interfaceViews.IEditUserView;
+import com.ezypayinc.ezypay.helpers.CameraHelper;
 import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.presenter.SettingsPresenters.EditUserPresenter;
 import com.ezypayinc.ezypay.presenter.SettingsPresenters.IEditUserPresenter;
@@ -155,7 +156,7 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
                 updateUser();
                 break;
             case R.id.image_profile_view_edit_user_fragment :
-                startActivityForResult(getPickImageChooserIntent(), 200);
+                startActivityForResult(CameraHelper.getPickImageChooserIntent(getActivity()), 200);
             default:
                 break;
         }
@@ -202,92 +203,15 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
         String email = mEdtEmail.getText().toString();
         String phoneNumber = mEdtPhoneNumber.getText().toString();
         //presenter.updateUser(name, lastName, email, phoneNumber);
-        presenter.uploadImage(getImageEncoded());
-    }
-
-    private Intent getPickImageChooserIntent() {
-
-        // Determine Uri of camera image to save.
-        Uri outputFileUri = getCaptureImageOutputUri();
-
-        List<Intent> allIntents = new ArrayList();
-        PackageManager packageManager = getActivity().getPackageManager();
-
-        // collect all camera intents
-        Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for (ResolveInfo res : listCam) {
-            Intent intent = new Intent(captureIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(res.activityInfo.packageName);
-            if (outputFileUri != null) {
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-            }
-            allIntents.add(intent);
-        }
-
-        // collect all gallery intents
-        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("image/*");
-        List<ResolveInfo> listGallery = packageManager.queryIntentActivities(galleryIntent, 0);
-        for (ResolveInfo res : listGallery) {
-            Intent intent = new Intent(galleryIntent);
-            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
-            intent.setPackage(res.activityInfo.packageName);
-            allIntents.add(intent);
-        }
-
-        Intent mainIntent = allIntents.get(allIntents.size() - 1);
-        for (Intent intent : allIntents) {
-            if (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity")) {
-                mainIntent = intent;
-                break;
-            }
-        }
-        allIntents.remove(mainIntent);
-
-        // Create a chooser from the main intent
-        Intent chooserIntent = Intent.createChooser(mainIntent, "Select source");
-
-        // Add all other intents
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, allIntents.toArray(new Parcelable[allIntents.size()]));
-
-        return chooserIntent;
-    }
-
-
-    /**
-     * Get URI to image received from capture by camera.
-     */
-    private Uri getCaptureImageOutputUri() {
-        Uri outputFileUri = null;
-        File getImage = getActivity().getExternalCacheDir();
-        if (getImage != null) {
-            outputFileUri = Uri.fromFile(new File(getImage.getPath(), "profile.png"));
-        }
-        return outputFileUri;
+        presenter.uploadImage(CameraHelper.getImageEncoded(newUserImage));
     }
 
     @Override
     public void changedImage(Bitmap bitmap) {
         newUserImage = bitmap;
-        Uri uri = getImageUri(getContext(), bitmap);
+        Uri uri = CameraHelper.getImageUri(getContext(), bitmap);
         Picasso.with(getContext()).load(uri).transform(new CropCircleTransformation()).into(mProfileImage);
     }
 
-    private Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
 
-    private byte[] getImageEncoded() {
-        if(newUserImage != null) {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            newUserImage.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
-            return byteArrayOutputStream.toByteArray();
-        }
-        return null;
-    }
 }
