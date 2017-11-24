@@ -8,6 +8,7 @@ import com.android.volley.Response;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.HistoryDate;
+import com.ezypayinc.ezypay.model.PhoneCode;
 import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.model.UserHistory;
 import com.google.gson.Gson;
@@ -32,6 +33,7 @@ public class UserServiceClient {
     private static final String BASIC_URL = "user/";
     private static final String HISTORY_URL = "history/";
     private static final String HISTORY_DATES_URL = "history/dates/";
+    private static final String COUNTRY_URL = "country/getAll/";
 
     public UserServiceClient() {
         connectionManager = new ConnectionManager();
@@ -83,6 +85,8 @@ public class UserServiceClient {
         String lastName = object.get("lastName").getAsString();
         String phoneNumber = object.get("phoneNumber").getAsString();
         String avatar =  object.get("avatar").getAsString();
+        int userType = object.get("userType").getAsInt();
+        int customerId = object.get("customerId").getAsInt();
 
         //set user
         user.setId(id);
@@ -91,6 +95,8 @@ public class UserServiceClient {
         user.setLastName(lastName);
         user.setPhoneNumber(phoneNumber);
         user.setAvatar(avatar);
+        user.setUserType(userType);
+        user.setCustomerId(customerId);
 
         return user;
     }
@@ -202,5 +208,21 @@ public class UserServiceClient {
         headers.put("Authorization", oauthToken);
 
         connectionManager.sendMultiPartRequest(Request.Method.POST, url,encodeImage, headers, successHandler, failureHandler);
+    }
+
+    public void getPhoneCodes(Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        String url = COUNTRY_URL;
+        HashMap<String, String> headers = new HashMap<>();
+        final String basicAuth = "Basic " + Base64.encodeToString((CLIENT_ID + ":"+ SECRET_KEY).getBytes(), Base64.NO_WRAP);
+        headers.put("Authorization", basicAuth);
+        headers.put("Content-Type", CONTENT_TYPE);
+        connectionManager.sendCustomRequest(Request.Method.POST, url, null, headers, successHandler, failureHandler);
+    }
+
+    public List<PhoneCode> parsePhoneCode(JsonElement response) {
+        Gson gson = new Gson();
+        PhoneCode[] phoneCodeArray = gson.fromJson(response, PhoneCode[].class);
+        List<PhoneCode> phoneCodeList = Arrays.asList(phoneCodeArray);
+        return phoneCodeList;
     }
 }

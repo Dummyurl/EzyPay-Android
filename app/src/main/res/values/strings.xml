@@ -39,11 +39,10 @@
     <string name="prompt_lastName">Last Name</string>
     <string name="prompt_phone_number">Phone Number</string>
     <string name="prompt_card_number">Card Number</string>
-    <string name="prompt_cvv" translatable="false">cvv</string>
+    <string name="prompt_cvv" translatable="false">ccv</string>
     <string name="prompt_email" translatable="false">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="prompt_month" translatable="false">MM</string>
-    <string name="prompt_year" translatable="false">YY</string>
+    <string name="prompt_exp_date" translatable="false">MM/YY</string>
     <string name="prompt_code">Code</string>
 
 

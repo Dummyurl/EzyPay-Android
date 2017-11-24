@@ -3,8 +3,6 @@ package com.ezypayinc.ezypay.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment;
-
 import io.realm.RealmObject;
 
 public class Card extends RealmObject implements Parcelable{
@@ -12,9 +10,9 @@ public class Card extends RealmObject implements Parcelable{
     private int id;
     private int userId;
     private String cardNumber;
-    private int cvv;
+    private int ccv;
     private String expirationDate;
-    private boolean isFavorite;
+    private int isFavorite;
     private int cardVendor;
     private String token;
     private int serverId;
@@ -46,12 +44,12 @@ public class Card extends RealmObject implements Parcelable{
         this.cardNumber = cardNumber;
     }
 
-    public int getCvv() {
-        return cvv;
+    public int getCcv() {
+        return ccv;
     }
 
-    public void setCvv(int cvv) {
-        this.cvv = cvv;
+    public void setCcv(int ccv) {
+        this.ccv = ccv;
     }
 
     public String getExpirationDate() {
@@ -62,11 +60,11 @@ public class Card extends RealmObject implements Parcelable{
         this.expirationDate = expirationDate;
     }
 
-    public boolean isFavorite() {
+    public int isFavorite() {
         return isFavorite;
     }
 
-    public void setFavorite(boolean favorite) {
+    public void setFavorite(int favorite) {
         isFavorite = favorite;
     }
 
@@ -108,9 +106,9 @@ public class Card extends RealmObject implements Parcelable{
         parcel.writeInt(id);
         parcel.writeInt(userId);
         parcel.writeString(cardNumber);
-        parcel.writeInt(cvv);
+        parcel.writeInt(ccv);
         parcel.writeString(expirationDate);
-        parcel.writeInt(isFavorite ? 1 : 0);
+        parcel.writeInt(isFavorite);
         parcel.writeInt(cardVendor);
         parcel.writeString(token);
         parcel.writeInt(serverId);
@@ -120,9 +118,9 @@ public class Card extends RealmObject implements Parcelable{
         id = in.readInt();
         userId = in.readInt();
         cardNumber = in.readString();
-        cvv = in.readInt();
+        ccv = in.readInt();
         expirationDate = in.readString();
-        isFavorite = in.readInt() == 1;
+        isFavorite = in.readInt();
         cardVendor = in.readInt();
         token = in.readString();
         serverId = in.readInt();

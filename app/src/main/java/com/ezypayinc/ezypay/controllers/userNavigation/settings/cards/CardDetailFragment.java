@@ -1,12 +1,15 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.settings.cards;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,18 +17,24 @@ import android.widget.EditText;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
+import com.ezypayinc.ezypay.controllers.Helpers.CardValidatorTextWatcher;
+import com.ezypayinc.ezypay.controllers.Helpers.RightDrawableOnTouchListener;
+import com.ezypayinc.ezypay.controllers.userNavigation.settings.SettingsMainActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews.ICardDetailView;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.Card;
 import com.ezypayinc.ezypay.presenter.SettingsPresenters.CardsPresenters.CardDetailPresenter;
 import com.ezypayinc.ezypay.presenter.SettingsPresenters.CardsPresenters.ICardDetailPresenter;
 
+import io.card.payment.CardIOActivity;
+import io.card.payment.CreditCard;
+
 import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardDetailViewType.ADDCARD;
 import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardDetailViewType.EDITCARD;
 import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardDetailViewType.VIEWCARD;
 
 public class CardDetailFragment extends Fragment implements CardsMainActivity.OnBackPressedListener, View.OnClickListener, ICardDetailView {
-    private EditText edtCardNumber, edtMonth, edtYear, edtCvv;
+    private EditText edtCardNumber, edtExpDate, edtCvv;
     private Button btnSubmit;
     private int mCardDetailViewType, mCardId;
     private View mRootView;
@@ -33,6 +42,7 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
     private ProgressDialog mProgressDialog;
     private ICardDetailPresenter presenter;
 
+    public static final int SCAN_REQUEST_CODE = 200;
     public static final String CARD_ID = "CARDID";
     public static final String VIEW_TYPE = "VIEWTYPE";
 
@@ -87,8 +97,7 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
 
     public void initComponents() {
         edtCardNumber = (EditText) mRootView.findViewById(R.id.card_detail_card_number);
-        edtMonth = (EditText) mRootView.findViewById(R.id.card_detail_month);
-        edtYear = (EditText) mRootView.findViewById(R.id.card_detail_year);
+        edtExpDate = (EditText) mRootView.findViewById(R.id.card_detail_exp_date);
         edtCvv = (EditText) mRootView.findViewById(R.id.card_detail_cvv);
         btnSubmit = (Button) mRootView.findViewById(R.id.card_detail_action);
         btnSubmit.setOnClickListener(this);
@@ -107,6 +116,7 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
     }
 
     public void setupViewCardView() {
+        edtCardNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         setHasOptionsMenu(true);
         setupComponents(false);
     }
@@ -115,18 +125,27 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
         setHasOptionsMenu(false);
         btnSubmit.setText(R.string.action_card_detail_add_card);
         setupComponents(true);
+        edtCardNumber.addTextChangedListener(new CardValidatorTextWatcher());
+        edtCardNumber.setOnTouchListener(new RightDrawableOnTouchListener(edtCardNumber) {
+            @Override
+            public boolean onDrawableTouch(MotionEvent event) {
+                onScanPress();
+                return true;
+            }
+        });
     }
 
     public void setupEditCardView() {
+        edtCardNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         setHasOptionsMenu(false);
         btnSubmit.setText(R.string.action_card_detail_edit_card);
         setupComponents(true);
+        edtCardNumber.setEnabled(false);
     }
 
     public void setupComponents(boolean enable) {
         edtCardNumber.setEnabled(enable);
-        edtMonth.setEnabled(enable);
-        edtYear.setEnabled(enable);
+        edtExpDate.setEnabled(enable);
         edtCvv.setEnabled(enable);
         btnSubmit.setVisibility(enable? View.VISIBLE:View.GONE);
 
@@ -135,9 +154,31 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
     public void setComponentsWithCard() {
         if(mCard != null) {
             edtCardNumber.setText(mCard.getCardNumber());
-            /*edtMonth.setText(String.valueOf(mCard.getMonth()));
-            edtYear.setText(String.valueOf(mCard.getYear()));
-            edtCvv.setText(String.valueOf(mCard.getCvv()));*/
+            edtExpDate.setText(String.valueOf(mCard.getExpirationDate()));
+            edtCvv.setText(String.valueOf(mCard.getCcv()));
+        }
+    }
+
+    private void onScanPress() {
+        Intent scanIntent = new Intent(getActivity(), CardIOActivity.class);
+
+        // customize these values to suit your needs.
+        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, true);
+        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, true);
+        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_POSTAL_CODE, false);
+        startActivityForResult(scanIntent, SCAN_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SCAN_REQUEST_CODE) {
+            if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
+                CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
+                edtCardNumber.setText(scanResult.cardNumber);
+                edtExpDate.setText(scanResult.expiryMonth + "/" + scanResult.expiryYear);
+                edtCvv.setText(scanResult.cvv);
+            }
         }
     }
 
@@ -173,15 +214,13 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
     @Override
     public void onClick(View v) {
         String number = edtCardNumber.getText().toString().replaceAll("\\s+","");
-        String cvvString = edtCvv.getText().toString();
-        String monthString = edtMonth.getText().toString();
-        String yearString = edtYear.getText().toString();
-        if (presenter.validateFields(number, cvvString, monthString, yearString)) {
+        String ccvString = edtCvv.getText().toString();
+        String expDate = edtExpDate.getText().toString();
+        if (presenter.validateFields(number, ccvString, expDate)) {
             Card card = new Card();
             card.setCardNumber(number);
-            //card.setCvv(cvvString);
-           /* card.setMonth(Integer.valueOf(monthString));
-            card.setYear(Integer.valueOf(yearString));*/
+            card.setCcv(Integer.parseInt(ccvString));
+            card.setExpirationDate(expDate);
             if (mCardDetailViewType == ADDCARD.getType()) {
                 presenter.insertCard(card);
             } else if (mCardDetailViewType == EDITCARD.getType()) {

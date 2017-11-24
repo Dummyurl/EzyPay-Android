@@ -20,6 +20,8 @@ public class UserData {
         userRealm.setEmail(user.getEmail());
         userRealm.setToken(user.getToken());
         userRealm.setAvatar(user.getAvatar());
+        userRealm.setUserType(user.getUserType());
+        userRealm.setCustomerId(user.getCustomerId());
         realm.commitTransaction();
     }
 
@@ -62,5 +64,13 @@ public class UserData {
     public void updateUser(User user) {
         deleteUser();
         addUser(user);
+    }
+
+    public User updateUserPhone(User user, String phoneNumber) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        user.setPhoneNumber(phoneNumber);
+        realm.commitTransaction();
+        return user;
     }
 }

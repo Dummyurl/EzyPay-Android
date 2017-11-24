@@ -8,6 +8,7 @@ import com.ezypayinc.ezypay.database.UserData;
 import com.ezypayinc.ezypay.model.Card;
 import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.HistoryDate;
+import com.ezypayinc.ezypay.model.PhoneCode;
 import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.model.UserHistory;
 import com.google.gson.JsonElement;
@@ -47,6 +48,11 @@ public class UserManager {
     public void updateLocalUser(User user) {
         UserData userData = new UserData();
         userData.updateUser(user);
+    }
+
+    public User updateUserPhone(User user, String phoneNumber) {
+        UserData data = new UserData();
+        return data.updateUserPhone(user, phoneNumber);
     }
 
     /*web services methods*/
@@ -123,5 +129,15 @@ public class UserManager {
     public void uploadImge(byte[] encodeImage, User user, Response.Listener<NetworkResponse> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         UserServiceClient service = new UserServiceClient();
         service.uploadImge(encodeImage, user, successHandler, failureHandler);
+    }
+
+    public void getPhoneCodes(Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        UserServiceClient service = new UserServiceClient();
+        service.getPhoneCodes(successHandler, failureHandler);
+    }
+
+    public List<PhoneCode> parsePhoneCode(JsonElement response) {
+        UserServiceClient service = new UserServiceClient();
+        return service.parsePhoneCode(response);
     }
 }

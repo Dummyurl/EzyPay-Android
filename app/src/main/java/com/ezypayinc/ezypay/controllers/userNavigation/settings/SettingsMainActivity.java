@@ -12,13 +12,16 @@ import android.view.MenuItem;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.ezypayinc.ezypay.controllers.Helpers.OnChangeImageListener;
+import com.ezypayinc.ezypay.controllers.Helpers.OnPhoneCodeSelected;
+import com.ezypayinc.ezypay.model.PhoneCode;
 
 import java.io.File;
 import java.io.IOException;
 
-public class SettingsMainActivity extends AppCompatActivity {
+public class SettingsMainActivity extends AppCompatActivity implements OnPhoneCodeSelected {
 
     private OnChangeImageListener mImageListener;
+    private OnPhoneCodeSelected mPhoneSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,6 @@ public class SettingsMainActivity extends AppCompatActivity {
         ((EzyPayApplication)getApplication()).setCurrentActivity(this);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -46,6 +48,10 @@ public class SettingsMainActivity extends AppCompatActivity {
 
     public void setImageListener(OnChangeImageListener listener) {
         mImageListener = listener;
+    }
+
+    public void setPhoneSelectedListener(OnPhoneCodeSelected listener) {
+        mPhoneSelected = listener;
     }
 
     @Override
@@ -84,5 +90,10 @@ public class SettingsMainActivity extends AppCompatActivity {
             outputFileUri = Uri.fromFile(new File(getImage.getPath(), "profile.png"));
         }
         return outputFileUri;
+    }
+
+    @Override
+    public void phoneCodeSelected(PhoneCode phoneCode) {
+        mPhoneSelected.phoneCodeSelected(phoneCode);
     }
 }

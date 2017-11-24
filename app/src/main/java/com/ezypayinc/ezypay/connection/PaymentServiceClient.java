@@ -19,12 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.realm.RealmList;
-
-/**
- * Created by gustavoquesada on 10/22/17.
- */
-
 public class PaymentServiceClient {
 
     private ConnectionManager connectionManager;

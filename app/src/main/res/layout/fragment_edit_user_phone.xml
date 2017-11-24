@@ -48,6 +48,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/save_button_edit_user_phone_fragment"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

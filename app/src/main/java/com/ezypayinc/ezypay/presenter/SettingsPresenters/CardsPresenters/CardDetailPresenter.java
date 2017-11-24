@@ -21,7 +21,7 @@ public class CardDetailPresenter implements ICardDetailPresenter {
     }
 
     @Override
-    public boolean validateFields(String number, String cvv, String month, String year) {
+    public boolean validateFields(String number, String ccv, String expDate) {
         if (TextUtils.isEmpty(number)) {
             view.setError(R.id.card_detail_card_number, R.string.error_field_required);
             return false;
@@ -30,18 +30,13 @@ public class CardDetailPresenter implements ICardDetailPresenter {
             view.setError(R.id.card_detail_card_number, R.string.error_invalid_card_number);
             return false;
         }
-        if (TextUtils.isEmpty(cvv)) {
+        if (TextUtils.isEmpty(ccv)) {
             view.setError(R.id.card_detail_cvv, R.string.error_field_required);
             return false;
         }
 
-        if (TextUtils.isEmpty(month)) {
-            view.setError(R.id.card_detail_month, R.string.error_field_required);
-            return false;
-        }
-
-        if (TextUtils.isEmpty(year) || year.length() < 0) {
-            view.setError(R.id.card_detail_year, R.string.error_field_required);
+        if (TextUtils.isEmpty(expDate)) {
+            view.setError(R.id.card_detail_exp_date, R.string.error_field_required);
             return false;
         }
 
@@ -51,6 +46,7 @@ public class CardDetailPresenter implements ICardDetailPresenter {
     @Override
     public void insertCard(Card card) {
         view.showProgressDialog();
+        card.setCardVendor(1);
         final CardManager cardManager = new CardManager();
         try {
             cardManager.saveCardInServer(card, new Response.Listener<JsonElement>() {

@@ -25,7 +25,7 @@ public class EditUserPresenter implements IEditUserPresenter {
 
 
     @Override
-    public void updateUser(String name, String lastName, String email, String phoneNumber) {
+    public void updateUser(final byte[]encodedImage, String name, String lastName, String email, String phoneNumber) {
         if (validateFields(name, lastName, phoneNumber, email)) {
             final UserManager manager = new UserManager();
             final User user = new User();
@@ -38,9 +38,8 @@ public class EditUserPresenter implements IEditUserPresenter {
                 manager.updateUser(user, new Response.Listener<JsonElement>() {
                     @Override
                     public void onResponse(JsonElement response) {
-                        mView.hideProgressDialog();
                         updateLocalUser(user, manager);
-                        mView.navigateToSettingsView();
+                        uploadImage(encodedImage);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -56,19 +55,21 @@ public class EditUserPresenter implements IEditUserPresenter {
         }
     }
 
-    public void uploadImage(byte[] encodedImage) {
+    private void uploadImage(byte[] encodedImage) {
         User user  = UserSingleton.getInstance().getUser();
         UserManager manager = new UserManager();
         try {
             manager.uploadImge(encodedImage, user, new Response.Listener<NetworkResponse>() {
                 @Override
                 public void onResponse(NetworkResponse response) {
-                    Log.d("Response", response.toString());
+                    mView.hideProgressDialog();
+                    mView.navigateToSettingsView();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Log.e("Error Response", error.toString());
+                    mView.hideProgressDialog();
+                    mView.navigateToSettingsView();
                 }
             });
         } catch (JSONException e) {

@@ -1,43 +1,29 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.settings;
 
-import android.app.ProgressDialog;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
+import com.ezypayinc.ezypay.controllers.userNavigation.settings.interfaceViews.IEditUserView;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.IEditUserPresenter;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.EditUserPresenter;
+import com.ezypayinc.ezypay.controllers.Helpers.OnChangeImageListener;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+import com.ezypayinc.ezypay.connection.ErrorHelper;
+import com.ezypayinc.ezypay.helpers.CameraHelper;
+import com.ezypayinc.ezypay.base.UserSingleton;
 import android.support.v4.app.FragmentManager;
-import android.util.Base64;
+import android.support.v4.app.Fragment;
+import com.ezypayinc.ezypay.model.User;
+import com.squareup.picasso.Picasso;
 import android.view.LayoutInflater;
-import android.view.View;
+import android.app.ProgressDialog;
+import android.widget.ImageView;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.widget.EditText;
+import com.ezypayinc.ezypay.R;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-
-import com.ezypayinc.ezypay.R;
-import com.ezypayinc.ezypay.base.UserSingleton;
-import com.ezypayinc.ezypay.connection.ErrorHelper;
-import com.ezypayinc.ezypay.controllers.Helpers.OnChangeImageListener;
-import com.ezypayinc.ezypay.controllers.userNavigation.settings.interfaceViews.IEditUserView;
-import com.ezypayinc.ezypay.helpers.CameraHelper;
-import com.ezypayinc.ezypay.model.User;
-import com.ezypayinc.ezypay.presenter.SettingsPresenters.EditUserPresenter;
-import com.ezypayinc.ezypay.presenter.SettingsPresenters.IEditUserPresenter;
-import com.squareup.picasso.Picasso;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+import android.os.Bundle;
+import android.view.View;
+import android.net.Uri;
 
 public class EditUserFragment extends Fragment implements IEditUserView, View.OnClickListener, View.OnFocusChangeListener, OnChangeImageListener {
     private EditText mEdtName, mEdtLastName, mEdtEmail, mEdtPhoneNumber, mEdtPassword;
@@ -70,9 +56,14 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
         rootView = inflater.inflate(R.layout.fragment_edit_user, container, false);
         presenter = new EditUserPresenter(this);
         initUIComponents();
-        getUser();
         setupProgressDialog();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUser();
     }
 
     @Override
@@ -162,7 +153,6 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
         }
     }
 
-
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if(hasFocus) {
@@ -202,8 +192,7 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
         String lastName = mEdtLastName.getText().toString();
         String email = mEdtEmail.getText().toString();
         String phoneNumber = mEdtPhoneNumber.getText().toString();
-        //presenter.updateUser(name, lastName, email, phoneNumber);
-        presenter.uploadImage(CameraHelper.getImageEncoded(newUserImage));
+        presenter.updateUser(CameraHelper.getImageEncoded(newUserImage), name, lastName, email, phoneNumber);
     }
 
     @Override
@@ -212,6 +201,4 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
         Uri uri = CameraHelper.getImageUri(getContext(), bitmap);
         Picasso.with(getContext()).load(uri).transform(new CropCircleTransformation()).into(mProfileImage);
     }
-
-
 }

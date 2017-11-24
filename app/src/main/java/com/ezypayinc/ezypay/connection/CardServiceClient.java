@@ -5,6 +5,7 @@ import com.android.volley.Response;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.model.Card;
 import com.ezypayinc.ezypay.model.User;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,13 +34,17 @@ public class CardServiceClient {
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", oauthToken);
         headers.put("Content-Type", CONTENT_TYPE);
+        String cardHolderName = user.getName() + " " + user.getLastName();
         //set parameters
         JSONObject parameters = new JSONObject();
-        /*parameters.put("number", card.getNumber());
-        parameters.put("cvv", card.getCvv());
-        parameters.put("month", card.getMonth());
-        parameters.put("year", card.getYear());
-        parameters.put("userId", user.getId());*/
+        parameters.put("cardNumber", card.getCardNumber());
+        parameters.put("cardHolderName", cardHolderName);
+        parameters.put("customerId", user.getCustomerId());
+        parameters.put("isFavorite", card.isFavorite());
+        parameters.put("ccv", card.getCcv());
+        parameters.put("expirationDate", card.getExpirationDate());
+        parameters.put("userId", user.getId());
+        parameters.put("cardVendor", card.getCardVendor());
         int httpMethod = Request.Method.POST;
         connectionManager.sendCustomRequest(httpMethod,BASE_URL,parameters,headers,successHandler, errorListener);
     }
@@ -47,7 +53,7 @@ public class CardServiceClient {
         Card card = new Card();
         JsonObject object = response.getAsJsonObject();
         /*card.setNumber(object.get("number").getAsString());
-        card.setCvv(object.get("cvv").getAsInt());
+        card.setCcv(object.get("cvv").getAsInt());
         card.setMonth(object.get("month").getAsInt());
         card.setYear(object.get("year").getAsInt());*/
         return card;
@@ -69,18 +75,9 @@ public class CardServiceClient {
     }
 
     public List<Card> parseGetCardsResponse(JsonElement response) {
-        List<Card> cardList = new ArrayList<>();
-        JsonArray jsonArray = response.getAsJsonArray();
-        for(int n = 0; n < jsonArray.size(); n++) {
-            JsonObject object = jsonArray.get(n).getAsJsonObject();
-            Card card = new Card();
-            card.setId(object.get("id").getAsInt());
-            card.setUserId(object.get("userId").getAsInt());
-            card.setCvv(object.get("ccv").getAsInt());
-            card.setCardNumber(object.get("cardNumber").getAsString());
-            card.setCardVendor(object.get("cardVendor").getAsInt());
-            cardList.add(card);
-        }
+        Gson gson = new Gson();
+        Card[] cardArray = gson.fromJson(response,Card[].class);
+        List<Card> cardList = Arrays.asList(cardArray);
         return cardList;
     }
 
@@ -94,7 +91,7 @@ public class CardServiceClient {
         //set parameters
         JSONObject parameters = new JSONObject();
         /*parameters.put("number", card.getNumber());
-        parameters.put("cvv", card.getCvv());
+        parameters.put("cvv", card.getCcv());
         parameters.put("month", card.getMonth());
         parameters.put("year", card.getYear());
         parameters.put("userId", user.getId());*/

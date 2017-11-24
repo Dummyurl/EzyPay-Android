@@ -22,11 +22,11 @@
 
             <EditText
                 android:id="@+id/card_detail_card_number"
+                android:drawableRight="@drawable/ic_micro_camera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_card_number"
                 android:textColorHint="@color/greenEzypayColor"
-                android:inputType="number"
                 android:maxLines="1" />
 
         </android.support.design.widget.TextInputLayout>
@@ -39,37 +39,21 @@
         android:baselineAligned="false">
 
         <android.support.design.widget.TextInputLayout
-            android:layout_weight="0.3"
+            android:layout_weight="0.5"
             android:layout_height="72dp"
             android:layout_width="match_parent">
 
             <EditText
-                android:id="@+id/card_detail_month"
+                android:id="@+id/card_detail_exp_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/prompt_month"
-                android:inputType="number"
+                android:hint="@string/prompt_exp_date"
                 android:maxLines="1" />
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_weight="0.3"
-            android:layout_height="72dp"
-            android:layout_width="match_parent">
-
-            <EditText
-                android:id="@+id/card_detail_year"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_year"
-                android:inputType="number"
-                android:maxLines="1" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_weight="0.3"
+            android:layout_weight="0.5"
             android:layout_height="72dp"
             android:layout_width="match_parent">
 
@@ -88,6 +72,8 @@
     </LinearLayout>
     <Button
         android:layout_width="match_parent"
+        android:background="@color/greenEzypayColor"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:id="@+id/card_detail_action" />
 </LinearLayout>
