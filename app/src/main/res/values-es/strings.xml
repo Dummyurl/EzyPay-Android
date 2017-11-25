@@ -89,4 +89,19 @@
         <item>Yo</item>
         <item>Amigos</item>
     </string-array>
+
+    <string name="error_invalid_exp_date_number">Fecha de expiración invalida</string>
+    <string name="action_no">No</string>
+    <string name="action_sign_in_user_information_next">Siguiente</string>
+    <string name="action_yes">Yes</string>
+    <string name="delete_card_confirmation_message">¿Deseas elimar esta tarjeta?</string>
+    <string name="delete_card_title">Eliminar Tarjeta</string>
+    <string name="error_field_required">Este campo es requerido</string>
+    <string name="error_incorrect_password">Contraseña incorrecta</string>
+    <string name="error_invalid_card_number">Número de tarjeta inválido</string>
+    <string name="error_invalid_email">Email inválido</string>
+    <string name="error_invalid_password">Contraseña muy corta</string>
+    <string name="error_invalid_year">Año no válido</string>
+    <string name="error_delete_favorite_card">No puedes eliminar tu tarjeta favorita</string>
+    <string name="error_invalid_card_type">Tipo de Tarjeta no soportado</string>
 </resources>

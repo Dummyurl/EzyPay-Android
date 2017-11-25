@@ -30,6 +30,8 @@
     <string name="action_change">Change</string>
     <string name="action_payment">Payment</string>
     <string name="action_ok">OK</string>
+    <string name="action_yes">Yes</string>
+    <string name="action_no">No</string>
 
 
     <string name="title_activity_login" translatable="false">Log in</string>
@@ -86,7 +88,10 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="error_invalid_card_number">Invalid card number</string>
+    <string name="error_invalid_exp_date_number">Invalid expiration date</string>
     <string name="error_invalid_year">Invalid year</string>
+    <string name="error_delete_favorite_card">You cannot delete your favorite card</string>
+    <string name="error_invalid_card_type">Card Type is not supported</string>
 
     <!--Views titles-->
     <string name="scanner_view_title">Scanner</string>
@@ -96,14 +101,21 @@
     <string name="history_view_title">History</string>
     <string name="settings_view_title">Settings</string>
     <string name="edit_password_view_title">Edit Password</string>
+    
+    <!--Confirmation Titles-->
+    <string name="delete_card_title">Delete Card</string>
+    
+    <!--Confirmation messages-->
+    <string name="delete_card_confirmation_message">Do you want to delete this card?</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">
         <item>Me</item>
         <item>Others</item>
     </string-array>
+    <string name="tab_notification_fragment_notification">Notification</string>
+    <string name="tab_notification_fragment_history">History</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

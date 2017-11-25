@@ -49,16 +49,6 @@ public class CardServiceClient {
         connectionManager.sendCustomRequest(httpMethod,BASE_URL,parameters,headers,successHandler, errorListener);
     }
 
-    public Card parseSaveCardResponse(JsonElement response) {
-        Card card = new Card();
-        JsonObject object = response.getAsJsonObject();
-        /*card.setNumber(object.get("number").getAsString());
-        card.setCcv(object.get("cvv").getAsInt());
-        card.setMonth(object.get("month").getAsInt());
-        card.setYear(object.get("year").getAsInt());*/
-        return card;
-    }
-
     public void getCardsByUser(Response.Listener<JsonElement> successHandler, Response.ErrorListener errorListener) throws JSONException {
         User user = UserSingleton.getInstance().getUser();
         //set headers
@@ -90,13 +80,25 @@ public class CardServiceClient {
         headers.put("Content-Type", CONTENT_TYPE);
         //set parameters
         JSONObject parameters = new JSONObject();
-        /*parameters.put("number", card.getNumber());
-        parameters.put("cvv", card.getCcv());
-        parameters.put("month", card.getMonth());
-        parameters.put("year", card.getYear());
-        parameters.put("userId", user.getId());*/
-        int httpMethod = Request.Method.PUT;
+        parameters.put("cardNumber", card.getCardNumber());
+        parameters.put("ccv", card.getCcv());
+        parameters.put("expirationDate", card.getExpirationDate());
+        parameters.put("userId", user.getId());
+        parameters.put("serverId", card.getServerId());
+        parameters.put("customerId", user.getCustomerId());
+        parameters.put("isFavorite", card.isFavorite());
+        parameters.put("cardVendor", card.getCardVendor());
+
         String url = BASE_URL + card.getId();
-        connectionManager.sendCustomRequest(httpMethod,url,parameters,headers,successHandler, errorListener);
+        connectionManager.sendCustomRequest(Request.Method.PUT,url,parameters,headers,successHandler, errorListener);
+    }
+
+    public void deleteCard(Card card, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener errorListener) {
+        String oauthToken = "Bearer "+ user.getToken();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+        String url = BASE_URL + card.getServerId() + "/customer/" + user.getCustomerId();
+        connectionManager.sendCustomRequest(Request.Method.DELETE, url, null, headers, successHandler, errorListener);
     }
 }

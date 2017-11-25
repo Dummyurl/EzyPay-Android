@@ -3,6 +3,7 @@ package com.ezypayinc.ezypay.manager;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.connection.CardServiceClient;
 import com.ezypayinc.ezypay.model.Card;
+import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonElement;
 
 import org.json.JSONException;
@@ -15,11 +16,6 @@ public class CardManager {
     public void saveCardInServer(Card card, Response.Listener<JsonElement> successListener, Response.ErrorListener errorListener) throws JSONException {
         CardServiceClient service = new CardServiceClient();
         service.createCard(card, successListener, errorListener);
-    }
-
-    public Card parseSaveCardResponse(JsonElement response) {
-        CardServiceClient service = new CardServiceClient();
-        return service.parseSaveCardResponse(response);
     }
 
     public void getCardsByUser(Response.Listener<JsonElement> successListener, Response.ErrorListener errorListener) throws JSONException {
@@ -37,4 +33,8 @@ public class CardManager {
         service.updateCard(card, successListener, errorListener);
     }
 
+    public void deleteCard(Card card, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener errorListener) {
+        CardServiceClient service = new CardServiceClient();
+        service.deleteCard(card, user, successHandler, errorListener);
+    }
 }

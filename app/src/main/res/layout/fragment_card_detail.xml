@@ -47,6 +47,8 @@
                 android:id="@+id/card_detail_exp_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="5"
+                android:inputType="phone"
                 android:hint="@string/prompt_exp_date"
                 android:maxLines="1" />
 
@@ -62,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_cvv"
+                android:maxLength="3"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="number"

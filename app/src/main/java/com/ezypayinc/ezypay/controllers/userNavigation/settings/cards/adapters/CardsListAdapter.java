@@ -17,6 +17,7 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.Card
 
     public interface OnItemClickListener {
         void onClickListener(Card card);
+        void onLongClickListener(Card card);
     }
 
     private Context mContext;
@@ -47,6 +48,13 @@ public class CardsListAdapter extends RecyclerView.Adapter<CardsListAdapter.Card
             @Override
             public void onClick(View v) {
                 mListener.onClickListener(card);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mListener.onLongClickListener(card);
+                return false;
             }
         });
     }

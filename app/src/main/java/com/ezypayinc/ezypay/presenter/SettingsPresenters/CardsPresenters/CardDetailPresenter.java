@@ -5,12 +5,16 @@ import android.text.TextUtils;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.controllers.Helpers.CreditCardValidator;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews.ICardDetailView;
 import com.ezypayinc.ezypay.manager.CardManager;
 import com.ezypayinc.ezypay.model.Card;
 import com.google.gson.JsonElement;
 
 import org.json.JSONException;
+
+import io.card.payment.CardType;
+import io.card.payment.CreditCard;
 
 
 public class CardDetailPresenter implements ICardDetailPresenter {
@@ -21,32 +25,56 @@ public class CardDetailPresenter implements ICardDetailPresenter {
     }
 
     @Override
-    public boolean validateFields(String number, String ccv, String expDate) {
+    public boolean validateFields(String number, String ccv, String expDate, CardType cardType) {
+        CreditCardValidator validator = new CreditCardValidator();
         if (TextUtils.isEmpty(number)) {
             view.setError(R.id.card_detail_card_number, R.string.error_field_required);
             return false;
         }
-        if (number.length() < 16) {
-            view.setError(R.id.card_detail_card_number, R.string.error_invalid_card_number);
+        if (TextUtils.isEmpty(expDate)) {
+            view.setError(R.id.card_detail_exp_date, R.string.error_field_required);
             return false;
         }
         if (TextUtils.isEmpty(ccv)) {
             view.setError(R.id.card_detail_cvv, R.string.error_field_required);
             return false;
         }
-
-        if (TextUtils.isEmpty(expDate)) {
-            view.setError(R.id.card_detail_exp_date, R.string.error_field_required);
+        if (!validator.isCreditCardValid(number)) {
+            view.setError(R.id.card_detail_card_number, R.string.error_invalid_card_number);
+            return false;
+        }
+        if (!validator.isExpDateValid(expDate)) {
+            view.setError(R.id.card_detail_exp_date, R.string.error_invalid_exp_date_number);
+            return false;
+        }
+        if(validator.getCardType(cardType) == 0) {
+            view.setError(R.id.card_detail_card_number, R.string.error_invalid_card_type);
             return false;
         }
 
         return true;
     }
 
+    public boolean validateFields(String ccv, String expDate) {
+        CreditCardValidator validator = new CreditCardValidator();
+        if (TextUtils.isEmpty(expDate)) {
+            view.setError(R.id.card_detail_exp_date, R.string.error_field_required);
+            return false;
+        }
+        if (TextUtils.isEmpty(ccv)) {
+            view.setError(R.id.card_detail_cvv, R.string.error_field_required);
+            return false;
+        }
+        if (!validator.isExpDateValid(expDate)) {
+            view.setError(R.id.card_detail_exp_date, R.string.error_invalid_exp_date_number);
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public void insertCard(Card card) {
         view.showProgressDialog();
-        card.setCardVendor(1);
         final CardManager cardManager = new CardManager();
         try {
             cardManager.saveCardInServer(card, new Response.Listener<JsonElement>() {

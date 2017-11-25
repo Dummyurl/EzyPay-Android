@@ -123,9 +123,6 @@ public class SignInPaymentInformationPresenter implements ISignInPaymentInformat
             cardManager.saveCardInServer(user.getCards().get(0),  new Response.Listener<JsonElement>() {
                 @Override
                 public void onResponse(JsonElement response) {
-                    Card card = cardManager.parseSaveCardResponse(response);
-                    user.getCards().clear();
-                    user.getCards().add(card);
                     UserSingleton.getInstance().setUser(user);
                     userManager.addUser(user);
                     view.navigateToHome();

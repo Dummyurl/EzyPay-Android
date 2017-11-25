@@ -1,6 +1,7 @@
 package com.ezypayinc.ezypay.controllers.userNavigation.settings.cards;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
+import com.ezypayinc.ezypay.controllers.Dialogs.DialogBuilder;
+import com.ezypayinc.ezypay.controllers.Helpers.SectionOrRow;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.adapters.CardsListAdapter;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews.ICardListView;
 import com.ezypayinc.ezypay.model.Card;
@@ -101,6 +104,38 @@ public class CardsFragment extends Fragment implements CardsListAdapter.OnItemCl
                 replace(R.id.cards_main_container, fragment).
                 addToBackStack(null).
                 commit();
+    }
+
+    @Override
+    public void onLongClickListener(final Card card) {
+        String title = getString(R.string.delete_card_title);
+        String message = getString(R.string.delete_card_confirmation_message);
+        final DialogBuilder builder = new DialogBuilder(getContext(),title, message, false);
+        builder.buildAlertDialog();
+        builder.setPositiveButton(R.string.action_yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(card.isFavorite() != 1) {
+                    presenter.deleteCard(card);
+                } else {
+                    builder.dismissAlertDialog();
+                    showErrorDeleteFavoriteCard();
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.action_no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.showAlertDialog();
+    }
+
+    private void showErrorDeleteFavoriteCard() {
+        String message = getString(R.string.error_delete_favorite_card);
+        DialogBuilder builder = new DialogBuilder(getContext());
+        builder.defaultAlertDialog(message);
     }
 
     private void setupProgressDialog(){

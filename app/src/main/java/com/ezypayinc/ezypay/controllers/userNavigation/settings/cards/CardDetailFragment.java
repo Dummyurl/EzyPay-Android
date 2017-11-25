@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +19,8 @@ import android.widget.EditText;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.Helpers.CardValidatorTextWatcher;
+import com.ezypayinc.ezypay.controllers.Helpers.CreditCardValidator;
+import com.ezypayinc.ezypay.controllers.Helpers.ExpDateValidatorTextWatcher;
 import com.ezypayinc.ezypay.controllers.Helpers.RightDrawableOnTouchListener;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.SettingsMainActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.interfaceViews.ICardDetailView;
@@ -28,6 +31,7 @@ import com.ezypayinc.ezypay.presenter.SettingsPresenters.CardsPresenters.ICardDe
 
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
+import io.realm.Realm;
 
 import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardDetailViewType.ADDCARD;
 import static com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardDetailViewType.EDITCARD;
@@ -101,6 +105,7 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
         edtCvv = (EditText) mRootView.findViewById(R.id.card_detail_cvv);
         btnSubmit = (Button) mRootView.findViewById(R.id.card_detail_action);
         btnSubmit.setOnClickListener(this);
+        edtExpDate.addTextChangedListener(new ExpDateValidatorTextWatcher(edtExpDate));
     }
 
     public void setupView() {
@@ -153,8 +158,11 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
 
     public void setComponentsWithCard() {
         if(mCard != null) {
+            String month = mCard.getExpirationDate().substring(0,3);
+            String year = mCard.getExpirationDate().substring(5,7);
+            String expDate = month + year;
             edtCardNumber.setText(mCard.getCardNumber());
-            edtExpDate.setText(String.valueOf(mCard.getExpirationDate()));
+            edtExpDate.setText(expDate);
             edtCvv.setText(String.valueOf(mCard.getCcv()));
         }
     }
@@ -176,7 +184,8 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
             if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
                 CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
                 edtCardNumber.setText(scanResult.cardNumber);
-                edtExpDate.setText(scanResult.expiryMonth + "/" + scanResult.expiryYear);
+                int year = scanResult.expiryYear % 2000;
+                edtExpDate.setText(scanResult.expiryMonth + "/" + year);
                 edtCvv.setText(scanResult.cvv);
             }
         }
@@ -216,17 +225,37 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
         String number = edtCardNumber.getText().toString().replaceAll("\\s+","");
         String ccvString = edtCvv.getText().toString();
         String expDate = edtExpDate.getText().toString();
-        if (presenter.validateFields(number, ccvString, expDate)) {
+        expDate = expDate.substring(0,3) + "20" + expDate.substring(3,5);
+
+        if(mCardDetailViewType == ADDCARD.getType()) {
+            insertCard(number,ccvString,expDate);
+        } else {
+            updateCard(ccvString, expDate);
+        }
+    }
+
+    public void insertCard(String number, String ccvString, String expDate) {
+        CreditCard creditCard = new CreditCard();
+        creditCard.cardNumber = number;
+        if (presenter.validateFields(number, ccvString, expDate, creditCard.getCardType())) {
+            CreditCardValidator validator = new CreditCardValidator();
             Card card = new Card();
             card.setCardNumber(number);
             card.setCcv(Integer.parseInt(ccvString));
             card.setExpirationDate(expDate);
-            if (mCardDetailViewType == ADDCARD.getType()) {
-                presenter.insertCard(card);
-            } else if (mCardDetailViewType == EDITCARD.getType()) {
-                card.setId(mCardId);
-                presenter.updateCard(card);
-            }
+            card.setCardVendor(validator.getCardType(creditCard.getCardType()));
+            presenter.insertCard(card);
+        }
+    }
+
+    public void updateCard(String cvv, String expDate) {
+        if(presenter.validateFields(cvv, expDate)) {
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            mCard.setCcv(Integer.parseInt(cvv));
+            mCard.setExpirationDate(expDate);
+            realm.commitTransaction();
+            presenter.updateCard(mCard);
         }
     }
 
