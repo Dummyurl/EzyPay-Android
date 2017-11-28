@@ -18,6 +18,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         app:bb_tabXmlResource="@xml/bottombar_tabs"
-        app:bb_showShadow="false"/>
+        app:bb_activeTabColor="@color/greenEzypayColor"
+        app:bb_showShadow="true"/>
 
 </RelativeLayout>

@@ -8,7 +8,7 @@
     tools:context="com.ezypayinc.ezypay.controllers.SplashScreen.SplashScreenActivity">
 
     <ImageView
-        android:src="@drawable/ezypay_logo_letters"
+        android:src="@drawable/ugwo_white_logo"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:layout_height="250dp"

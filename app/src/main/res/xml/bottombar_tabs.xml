@@ -2,14 +2,14 @@
 <tabs>
     <tab
         id="@+id/scanner_item"
-        icon="@drawable/ic_scan"
+        icon="@drawable/ic_nav_camera"
         title="@string/navigation_bar_scanner_item" />
     <tab
         id="@+id/notifications_item"
-        icon="@drawable/ic_history"
+        icon="@drawable/ic_nav_payment"
         title="@string/navigation_bar_history_item" />
     <tab
         id="@+id/settings_item"
-        icon="@drawable/ic_settings"
+        icon="@drawable/ic_nav_settings"
         title="@string/navigation_bar_settings_item" />
 </tabs>

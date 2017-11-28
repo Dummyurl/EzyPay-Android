@@ -17,6 +17,12 @@
         android:visibility="gone"
         android:id="@+id/userLogIn">
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_ugwo_logo" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -120,19 +126,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <Button
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/btn_facebook_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/action_facebook"
-                    android:background="#3A5799"
-                    android:layout_marginBottom="10dp"
-                    android:textColor="#FFFFFF"/>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/action_google"
-                    android:background="#D64630"
-                    android:textColor="#FFFFFF"/>
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:layout_marginBottom="10dp" />
             </LinearLayout>
 
             <TextView
@@ -152,6 +152,14 @@
         android:visibility="visible"
         android:id="@+id/commerceLogin"
         android:orientation="vertical">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="200dp"
+            android:layout_height="125dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_ugwo_commerce_logo" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

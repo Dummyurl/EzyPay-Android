@@ -104,4 +104,6 @@
     <string name="error_invalid_year">Año no válido</string>
     <string name="error_delete_favorite_card">No puedes eliminar tu tarjeta favorita</string>
     <string name="error_invalid_card_type">Tipo de Tarjeta no soportado</string>
+    <string name="facebook_login_cancel_message">Facebook Login fue cancelado</string>
+    <string name="facebook_login_error_message">Facebook Login error</string>
 </resources>
