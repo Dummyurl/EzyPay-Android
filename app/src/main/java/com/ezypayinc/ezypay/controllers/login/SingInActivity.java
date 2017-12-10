@@ -9,11 +9,15 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.controllers.Helpers.OnPhoneCodeSelected;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
+import com.ezypayinc.ezypay.model.PhoneCode;
 
 
 public class SingInActivity extends AppCompatActivity implements SignInUserInformationFragment.OnChangeViewListener,
-    SignInPaymentInformationFragment.OnFinishWizard {
+    SignInPaymentInformationFragment.OnFinishWizard , OnPhoneCodeSelected {
+
+    private OnPhoneCodeSelected mPhoneSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,10 @@ public class SingInActivity extends AppCompatActivity implements SignInUserInfor
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+
+    public void setPhoneSelectedListener(OnPhoneCodeSelected listener) {
+        mPhoneSelected = listener;
     }
 
     @Override
@@ -63,5 +71,10 @@ public class SingInActivity extends AppCompatActivity implements SignInUserInfor
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void phoneCodeSelected(PhoneCode phoneCode) {
+        mPhoneSelected.phoneCodeSelected(phoneCode);
     }
 }

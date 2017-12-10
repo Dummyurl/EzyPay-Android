@@ -69,7 +69,7 @@ public class PhoneCodeListFragment extends Fragment implements IEditPhoneView, O
         if (mPresenter == null) {
             mPresenter = new EditUserPhonePresenter(this);
         }
-        mPhoneCodeSelected = ((SettingsMainActivity)context);
+        mPhoneCodeSelected = ((OnPhoneCodeSelected)context);
         mPresenter.getPhoneCodeList();
     }
 

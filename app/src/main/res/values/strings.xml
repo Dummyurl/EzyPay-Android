@@ -93,6 +93,7 @@
     <string name="error_invalid_year">Invalid year</string>
     <string name="error_delete_favorite_card">You cannot delete your favorite card</string>
     <string name="error_invalid_card_type">Card Type is not supported</string>
+    <string name="error_email_already_assigned">This email has already been assigned to another user</string>
 
     <!--Views titles-->
     <string name="scanner_view_title">Scanner</string>

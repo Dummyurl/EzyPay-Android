@@ -1,9 +1,13 @@
 package com.ezypayinc.ezypay.controllers.login;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,24 +17,28 @@ import android.widget.Spinner;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
+import com.ezypayinc.ezypay.controllers.Helpers.CardValidatorTextWatcher;
+import com.ezypayinc.ezypay.controllers.Helpers.CreditCardValidator;
+import com.ezypayinc.ezypay.controllers.Helpers.ExpDateValidatorTextWatcher;
+import com.ezypayinc.ezypay.controllers.Helpers.RightDrawableOnTouchListener;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.SignInPaymentInformationView;
+import com.ezypayinc.ezypay.model.Card;
 import com.ezypayinc.ezypay.presenter.LoginPresenters.ISignInPaymentInformationPresenter;
 import com.ezypayinc.ezypay.presenter.LoginPresenters.SignInPaymentInformationPresenter;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SignInPaymentInformationFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import io.card.payment.CardIOActivity;
+import io.card.payment.CreditCard;
+
 public class SignInPaymentInformationFragment extends Fragment implements View.OnClickListener, SignInPaymentInformationView{
 
-    private EditText edtCardNumber, edtCvv;
-    private Spinner spnMonth, spnYear;
+    private EditText edtCardNumber, edtExpDate, edtCvv;
     private View mRootView;
     private OnFinishWizard listener;
     private ISignInPaymentInformationPresenter presenter;
+    private static final int SCAN_REQUEST_CODE = 200;
+    private ProgressDialog mProgressDialog;
 
     public SignInPaymentInformationFragment() {
         // Required empty public constructor
@@ -55,7 +63,6 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
         View rootView = inflater.inflate(R.layout.fragment_sign_in_payment_information, container, false);
         initComponents(rootView);
         presenter = new SignInPaymentInformationPresenter(this);
-        presenter.populateSpinners();
         return rootView;
     }
 
@@ -66,6 +73,12 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        setupProgressDialog();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         this.listener = null;
@@ -73,25 +86,82 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
         this.presenter = null;
     }
 
+    private void setupProgressDialog(){
+        mProgressDialog = new ProgressDialog(this.getContext());
+        mProgressDialog.setCancelable(false);
+    }
+
     public void initComponents(View rootView) {
         mRootView = rootView;
         edtCardNumber = (EditText)rootView.findViewById(R.id.sign_in_card_number);
+        edtExpDate = (EditText) rootView.findViewById(R.id.sign_in_exp_date);
         edtCvv = (EditText)rootView.findViewById(R.id.sign_in_cvv);
-        spnMonth = (Spinner) rootView.findViewById(R.id.sign_in_spn_month);
-        spnYear = (Spinner) rootView.findViewById(R.id.sign_in_spn_year);
+        edtExpDate.addTextChangedListener(new ExpDateValidatorTextWatcher(edtExpDate));
+        edtCardNumber.addTextChangedListener(new CardValidatorTextWatcher());
+
         Button btnSaveCard = (Button) rootView.findViewById(R.id.sign_in_save_card);
         btnSaveCard.setOnClickListener(this);
+        edtCardNumber.setOnTouchListener(new RightDrawableOnTouchListener(edtCardNumber) {
+            @Override
+            public boolean onDrawableTouch(MotionEvent event) {
+                onScanPress();
+                return true;
+            }
+        });
+    }
+
+    private void onScanPress() {
+        Intent scanIntent = new Intent(getActivity(), CardIOActivity.class);
+
+        // customize these values to suit your needs.
+        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, true);
+        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, true);
+        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_POSTAL_CODE, false);
+        startActivityForResult(scanIntent, SCAN_REQUEST_CODE);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SCAN_REQUEST_CODE) {
+            if (data != null && data.hasExtra(CardIOActivity.EXTRA_SCAN_RESULT)) {
+                CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
+                edtCardNumber.setText(scanResult.cardNumber);
+                int year = scanResult.expiryYear % 2000;
+                edtExpDate.setText(scanResult.expiryMonth + "/" + year);
+                edtCvv.setText(scanResult.cvv);
+            }
+        }
     }
 
     @Override
     public void onClick(View view) {
         String cardNumber = edtCardNumber.getText().toString();
         String cvvString = edtCvv.getText().toString();
-        int month = spnMonth.getSelectedItemPosition() + 1;
-        int year = Integer.valueOf(spnYear.getSelectedItem().toString());
-        if(presenter.validateFields(cardNumber, cvvString)) {
-            presenter.registerRecord(cardNumber, Integer.valueOf(cvvString), month, year);
+        String expDate = edtExpDate.getText().toString();
+        CreditCard creditCard = new CreditCard();
+        creditCard.cardNumber = cardNumber;
+        if(presenter.validateFields(cardNumber, cvvString, expDate, creditCard.getCardType())) {
+            CreditCardValidator validator = new CreditCardValidator();
+            Card card = new Card();
+            card.setCardNumber(cardNumber);
+            card.setCcv(Integer.parseInt(cvvString));
+            card.setExpirationDate(expDate);
+            card.setCardVendor(validator.getCardType(creditCard.getCardType()));
+            card.setFavorite(1);
+            presenter.registerRecord(card);
         }
+    }
+
+    @Override
+    public void showProgressDialog() {
+        mProgressDialog.show();
+        mProgressDialog.setContentView(R.layout.custom_progress_dialog);
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        mProgressDialog.dismiss();
     }
 
     @Override
@@ -104,20 +174,6 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
     @Override
     public void onNetworkError(Object error) {
         ErrorHelper.handleError(error, getActivity());
-    }
-
-    @Override
-    public void populateYearSpinner(ArrayList<String> years) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, years);
-        spnYear.setAdapter(adapter);
-    }
-
-    @Override
-    public void populateMonthSpinner(int months) {
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.months, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnMonth.setAdapter(adapter);
     }
 
     @Override

@@ -1,17 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.ezypayinc.ezypay.controllers.login.SignInPaymentInformationFragment">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:text="@string/label_payment_information_from_title"
-        android:gravity="center"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,22 +14,46 @@
         <android.support.design.widget.TextInputLayout
             android:layout_weight="1.10"
             android:layout_height="72dp"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
+            tools:ignore="InefficientWeight">
 
             <EditText
                 android:id="@+id/sign_in_card_number"
+                android:drawableRight="@drawable/ic_micro_camera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_card_number"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
-                android:inputType="number"
+                android:textColorHint="@color/greenEzypayColor"
+                android:maxLines="1" />
+
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:baselineAligned="false">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_weight="0.5"
+            android:layout_height="72dp"
+            android:layout_width="match_parent">
+
+            <EditText
+                android:id="@+id/sign_in_exp_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="5"
+                android:inputType="phone"
+                android:hint="@string/prompt_exp_date"
                 android:maxLines="1" />
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:layout_weight="1.90"
+            android:layout_weight="0.5"
             android:layout_height="72dp"
             android:layout_width="match_parent">
 
@@ -45,45 +62,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_cvv"
+                android:maxLength="3"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
                 android:inputType="number"
                 android:maxLines="1" />
 
         </android.support.design.widget.TextInputLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
+    </LinearLayout>
+    <Button
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@drawable/button_green_background"
+        android:textColor="@color/white"
+        android:id="@+id/sign_in_save_card"
+        android:text="@string/action_sign_in"
+        android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
 
-            <Spinner
-                android:id="@+id/sign_in_spn_month"
-                android:layout_weight="1"
-                android:layout_height="72dp"
-                android:layout_width="match_parent"/>
-
-            <Spinner
-                android:id="@+id/sign_in_spn_year"
-                android:layout_weight="1"
-                android:layout_height="72dp"
-                android:layout_width="match_parent"/>
-
-        </LinearLayout>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sign_in_save_card"
-            android:text="@string/action_sign_in" />
-    </LinearLayout>
 
 </LinearLayout>

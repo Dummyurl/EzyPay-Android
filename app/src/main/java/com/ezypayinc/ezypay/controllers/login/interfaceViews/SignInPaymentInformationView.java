@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public interface SignInPaymentInformationView {
 
+    void showProgressDialog();
+    void hideProgressDialog();
     void setErrorMessage(int component, int error);
     void onNetworkError(Object error);
-    void populateYearSpinner(ArrayList<String> years);
-    void populateMonthSpinner(int months);
     void navigateToHome();
 }

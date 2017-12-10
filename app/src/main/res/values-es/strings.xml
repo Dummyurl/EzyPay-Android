@@ -91,6 +91,7 @@
     </string-array>
 
     <string name="error_invalid_exp_date_number">Fecha de expiración invalida</string>
+    <string name="error_email_already_assigned">Este correo ya ha sido asignado a otro usuario</string>
     <string name="action_no">No</string>
     <string name="action_sign_in_user_information_next">Siguiente</string>
     <string name="action_yes">Yes</string>

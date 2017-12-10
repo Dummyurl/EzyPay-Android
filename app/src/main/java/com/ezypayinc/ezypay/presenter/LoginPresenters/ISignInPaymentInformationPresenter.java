@@ -1,9 +1,11 @@
 package com.ezypayinc.ezypay.presenter.LoginPresenters;
 
+import com.ezypayinc.ezypay.model.Card;
+import io.card.payment.CardType;
+
 public interface ISignInPaymentInformationPresenter {
 
-    void populateSpinners();
-    boolean validateFields(String cardNumber, String cvv);
-    void registerRecord(String cardNumber, int cvv, int moth, int year);
+    boolean validateFields(String number, String ccv, String expDate, CardType cardType);
+    void registerRecord(Card card);
     void onDestroy();
 }

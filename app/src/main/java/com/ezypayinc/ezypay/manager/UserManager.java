@@ -140,4 +140,9 @@ public class UserManager {
         UserServiceClient service = new UserServiceClient();
         return service.parsePhoneCode(response);
     }
+
+    public void  validateUserEmail(String email, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        UserServiceClient service = new UserServiceClient();
+        service.validateUserEmail(email, successHandler, failureHandler);
+    }
 }
