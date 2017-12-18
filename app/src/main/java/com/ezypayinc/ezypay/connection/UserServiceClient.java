@@ -52,13 +52,18 @@ public class UserServiceClient {
         parameters.put("phoneNumber", user.getPhoneNumber());
         parameters.put("email", user.getEmail());
         parameters.put("password", user.getPassword());
+        parameters.put("userType", user.getUserType());
 
         int httpMethod = Request.Method.POST;
         connectionManager.sendCustomRequest(httpMethod, BASIC_URL, parameters, headers, successHandler, failureHandler);
     }
 
-    public int parseRegisterUser(JsonElement response) {
-        return  response.getAsJsonObject().get("userId").getAsInt();
+    public User parseRegisterUser(JsonElement response, User user) {
+        int userId = response.getAsJsonObject().get("id").getAsInt();
+        int customerId = response.getAsJsonObject().get("customerId").getAsInt();
+        user.setId(userId);
+        user.setCustomerId(customerId);
+        return user;
     }
 
 

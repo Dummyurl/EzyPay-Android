@@ -81,9 +81,9 @@ public class UserManager {
         service.registerUser(user, successListener, errorListener);
     }
 
-    public int parseRegisterUser(JsonElement response) {
+    public User parseRegisterUser(JsonElement response, User user)  {
         UserServiceClient service = new UserServiceClient();
-        return service.parseRegisterUser(response);
+        return service.parseRegisterUser(response, user);
     }
 
     public void validatePhoneNumbers(JSONArray phoneNumbers, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {

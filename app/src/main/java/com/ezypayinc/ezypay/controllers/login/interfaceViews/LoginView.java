@@ -13,4 +13,6 @@ public interface LoginView {
     void hideProgressDialog();
 
     void navigateToHome();
+
+    void navigateToCommerceHome();
 }

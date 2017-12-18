@@ -136,9 +136,10 @@ public class SignInPaymentInformationFragment extends Fragment implements View.O
 
     @Override
     public void onClick(View view) {
-        String cardNumber = edtCardNumber.getText().toString();
+        String cardNumber = edtCardNumber.getText().toString().replaceAll("\\s+","");
         String cvvString = edtCvv.getText().toString();
         String expDate = edtExpDate.getText().toString();
+        expDate = expDate.substring(0,3) + "20" + expDate.substring(3,5);
         CreditCard creditCard = new CreditCard();
         creditCard.cardNumber = cardNumber;
         if(presenter.validateFields(cardNumber, cvvString, expDate, creditCard.getCardType())) {

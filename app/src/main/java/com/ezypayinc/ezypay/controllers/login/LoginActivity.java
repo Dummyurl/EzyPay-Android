@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.navigation.MainCommerceActivity;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.LoginView;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
 import com.ezypayinc.ezypay.presenter.LoginPresenters.ILoginPresenter;
@@ -177,6 +178,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
     @Override
     public void navigateToHome() {
         Intent intent = new Intent(LoginActivity.this, MainUserActivity.class);
+        startActivity(intent);
+    }
+
+    public void navigateToCommerceHome() {
+        Intent intent = new Intent(LoginActivity.this, MainCommerceActivity.class);
         startActivity(intent);
     }
 

@@ -106,7 +106,11 @@ public class LoginPresenter  implements ILoginPresenter {
                     userSingleton.setUser(userFromServer);
                     manager.addUser(userFromServer);
                     loginView.hideProgressDialog();
-                    loginView.navigateToHome();
+                    if(user.getUserType() == 1) {
+                        loginView.navigateToHome();
+                    } else {
+                        loginView.navigateToCommerceHome();
+                    }
                     registerLocalToken();
                 }
             }, new Response.ErrorListener() {
@@ -125,7 +129,7 @@ public class LoginPresenter  implements ILoginPresenter {
     private void registerLocalToken() {
         final DeviceTokenManager manager = new DeviceTokenManager();
         LocalToken tokenSaved = new LocalToken(manager.getLocalToken());
-        if (tokenSaved != null && !tokenSaved.isSaved()) {
+        if (tokenSaved.getDeviceToken() != null && !tokenSaved.isSaved()) {
             final LocalToken localToken = new LocalToken(tokenSaved);
             localToken.setUserId(UserSingleton.getInstance().getUser().getId());
             try {

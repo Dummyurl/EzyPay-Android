@@ -60,6 +60,7 @@ public class SignInUserInformationPresenter implements ISignInUserInformationPre
             user.setPhoneNumber(code + phoneNumber);
             user.setEmail(email);
             user.setPassword(password);
+            user.setUserType(1);
             validateUserEmail(user);
         }
     }

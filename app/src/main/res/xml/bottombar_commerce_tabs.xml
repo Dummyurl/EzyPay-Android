@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/commerce_home_item"
+        icon="@drawable/ic_home"
+        title="@string/navigation_bar_commerce_home_item" />
+    <tab
+        id="@+id/notifications_item"
+        icon="@drawable/ic_nav_payment"
+        title="@string/navigation_bar_history_item" />
+    <tab
+        id="@+id/settings_item"
+        icon="@drawable/ic_nav_settings"
+        title="@string/navigation_bar_settings_item" />
+</tabs>

@@ -22,11 +22,13 @@ public class LocalToken extends RealmObject {
     }
 
     public LocalToken(LocalToken localToken) {
-        deviceId = localToken.getDeviceId();
-        deviceToken = localToken.getDeviceToken();
-        devicePlatform = localToken.getDevicePlatform();
-        isSaved = localToken.isSaved();
-        userId = localToken.getUserId();
+        if(localToken != null) {
+            deviceId = localToken.getDeviceId();
+            deviceToken = localToken.getDeviceToken();
+            devicePlatform = localToken.getDevicePlatform();
+            isSaved = localToken.isSaved();
+            userId = localToken.getUserId();
+        }
     }
 
     public String getDeviceId() {

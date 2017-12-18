@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.SplashScreen.SplashScreenActivity;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.navigation.MainCommerceActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.User;
@@ -49,12 +50,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(user != null && user.getToken() != null) {
             UserSingleton userSingleton = UserSingleton.getInstance();
             userSingleton.setUser(user);
-            navigateToHomeActivity();
+            if(user.getUserType() == 1) {
+                navigateToHomeActivity();
+            } else {
+                navigateToCommerceHomeActivity();
+            }
         }
     }
 
     void navigateToHomeActivity() {
         Intent intent = new Intent(MainActivity.this, MainUserActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    void navigateToCommerceHomeActivity() {
+        Intent intent = new Intent(MainActivity.this, MainCommerceActivity.class);
         startActivity(intent);
         finish();
     }
