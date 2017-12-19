@@ -14,6 +14,7 @@ import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.LocalToken;
 import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 
@@ -59,10 +60,10 @@ public class LoginPresenter  implements ILoginPresenter {
             return false;
         }
 
-        if(!email.contains("@")) {
+        /*if(!email.contains("@")) {
             loginView.setUsernameError(R.string.error_invalid_email);
             return false;
-        }
+        }*/
         return true;
     }
 
@@ -101,10 +102,48 @@ public class LoginPresenter  implements ILoginPresenter {
             manager.getUserByIdFromServer(user.getId(), new Response.Listener<JsonElement>() {
                 @Override
                 public void onResponse(JsonElement response) {
+                    JsonObject object = response.getAsJsonObject();
+                    int boss = object.get("boss").getAsInt();
                     User userFromServer = manager.parseUserFromServer(response);
                     userFromServer.setToken(user.getToken());
                     userSingleton.setUser(userFromServer);
-                    manager.addUser(userFromServer);
+                    if(boss > 0) {
+                        getUserCommerce(userFromServer, boss);
+                    } else {
+                        manager.addUser(userFromServer);
+                        loginView.hideProgressDialog();
+                        if (user.getUserType() == 1) {
+                            loginView.navigateToHome();
+                        } else {
+                            loginView.navigateToCommerceHome();
+                        }
+                        registerLocalToken();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    loginView.hideProgressDialog();
+                    loginView.onNetworkError(error);
+                }
+            });
+        } catch (JSONException e) {
+            loginView.hideProgressDialog();
+            e.printStackTrace();
+        }
+    }
+
+    private void getUserCommerce(final User user, int boss) {
+        final UserManager manager = new UserManager();
+        final UserSingleton userSingleton = UserSingleton.getInstance();
+        try {
+            manager.getUserByIdFromServer(boss, new Response.Listener<JsonElement>() {
+                @Override
+                public void onResponse(JsonElement response) {
+                    User commerce = manager.parseUserFromServer(response);
+                    user.setBoss(commerce);
+                    userSingleton.setUser(user);
+                    manager.addUser(user);
                     loginView.hideProgressDialog();
                     if(user.getUserType() == 1) {
                         loginView.navigateToHome();
@@ -116,12 +155,10 @@ public class LoginPresenter  implements ILoginPresenter {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    loginView.hideProgressDialog();
-                    loginView.onNetworkError(error);
+
                 }
             });
         } catch (JSONException e) {
-            loginView.hideProgressDialog();
             e.printStackTrace();
         }
     }

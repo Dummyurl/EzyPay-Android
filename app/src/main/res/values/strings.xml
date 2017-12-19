@@ -34,6 +34,7 @@
     <string name="action_ok">OK</string>
     <string name="action_yes">Yes</string>
     <string name="action_no">No</string>
+    <string name="action_generate_qr_code">Generate QR code</string>
 
 
     <string name="title_activity_login" translatable="false">Log in</string>
@@ -59,6 +60,8 @@
     <string name="label_payment_option">How would you like to pay the check?</string>
     <string name="label_split_shortage">Shortage</string>
     <string name="label_split_total">Total</string>
+    <string name="label_currently_signed_in">Currently signed in:</string>
+    <string name="label_change_employee"><u>change employee</u></string>
 
     <!--Spinners items-->
     <string-array name="months">

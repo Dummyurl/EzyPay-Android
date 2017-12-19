@@ -27,6 +27,7 @@
     <string name="action_change">Cambiar</string>
     <string name="action_payment">Pago</string>
     <string name="action_ok">OK</string>
+    <string name="action_generate_qr_code">Generar Código QR</string>
 
     <!--Prompt-->
     <string name="prompt_name">Nombre</string>
@@ -45,6 +46,8 @@
     <string name="label_payment_option">¿Cómo deseas pagar la cuenta?</string>
     <string name="label_split_shortage">Faltante</string>
     <string name="label_split_total">Total</string>
+    <string name="label_currently_signed_in">Usuario logueado:</string>
+    <string name="label_change_employee"><u>cambiar de empleado</u></string>
 
 
     <!--Spinners items-->

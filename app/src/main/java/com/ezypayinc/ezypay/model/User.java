@@ -18,6 +18,7 @@ public class User extends RealmObject implements Parcelable {
     private int userType;
     private int customerId;
     private String avatar;
+    private User boss;
     private RealmList<Card> cards;
 
     public User() {
@@ -113,6 +114,15 @@ public class User extends RealmObject implements Parcelable {
         this.avatar = avatar;
     }
 
+    public User getBoss() {
+        return boss;
+    }
+
+    public void setBoss(User boss) {
+        this.boss = boss;
+    }
+
+
     public boolean equals(Object x) {
         User user = (User) x;
         String fullName = user.getName() + " " + user.getLastName();
@@ -140,6 +150,7 @@ public class User extends RealmObject implements Parcelable {
         parcel.writeString(email);
         parcel.writeString(password);
         parcel.writeString(token);
+        parcel.writeParcelable(boss, i);
         parcel.writeTypedList(cards);
     }
 
@@ -151,6 +162,7 @@ public class User extends RealmObject implements Parcelable {
         email = in.readString();
         password = in.readString();
         token = in.readString();
+        boss = in.readParcelable(User.class.getClassLoader());
         if (cards != null ) {
             in.readTypedList(cards, Card.CREATOR);
         }
