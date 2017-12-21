@@ -35,6 +35,9 @@
     <string name="action_yes">Yes</string>
     <string name="action_no">No</string>
     <string name="action_generate_qr_code">Generate QR code</string>
+    <string name="action_sync_qr_type">Sync</string>
+    <string name="action_quickPay_qr_type">Quickpay</string>
+    <string name="action_send">Send</string>
 
 
     <string name="title_activity_login" translatable="false">Log in</string>
@@ -62,6 +65,8 @@
     <string name="label_split_total">Total</string>
     <string name="label_currently_signed_in">Currently signed in:</string>
     <string name="label_change_employee"><u>change employee</u></string>
+    <string name="label_choose_qr_type">Choose QR Type</string>
+    <string name="label_total_cost">Total cost</string>
 
     <!--Spinners items-->
     <string-array name="months">
@@ -127,6 +132,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main_commerce">MainCommerceActivity</string>
+    <string name="title_activity_payment_commerce_main">PaymentCommerceMainActivity</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

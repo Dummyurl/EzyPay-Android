@@ -1,22 +1,19 @@
 package com.ezypayinc.ezypay.model;
 
-/**
- * Created by gustavoquesada on 10/22/17.
- */
 
 public class Table {
 
-    private boolean isActive;
+    private int isActive;
     private int tableId;
     private int tableNumber;
 
     public Table() {}
 
-    public boolean isActive() {
+    public int isActive() {
         return isActive;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(int active) {
         isActive = active;
     }
 

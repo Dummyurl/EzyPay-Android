@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ezypayinc.ezypay.controllers.commerceNavigation.payment.PaymentTypeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            android:text="@string/label_choose_qr_type"/>
+
+        <Button
+            android:id="@+id/payment_type_sync_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@color/greenEzypayColor"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+            android:text="@string/action_sync_qr_type"/>
+        <Button
+            android:id="@+id/payment_type_quickPay_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/greenEzypayColor"
+            android:textColor="@color/white"
+            android:text="@string/action_quickPay_qr_type"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

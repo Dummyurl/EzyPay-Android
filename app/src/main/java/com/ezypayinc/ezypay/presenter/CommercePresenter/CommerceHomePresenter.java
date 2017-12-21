@@ -34,6 +34,9 @@ public class CommerceHomePresenter implements ICommerceHomePresenter {
 
     @Override
     public void generateQrCode() {
-
+        User currentUser = UserSingleton.getInstance().getUser();
+        if(currentUser.getUserType() == 4 && currentUser.getBoss().getUserType() == 2) {
+            mView.displayCommerceTableListView();
+        }
     }
 }

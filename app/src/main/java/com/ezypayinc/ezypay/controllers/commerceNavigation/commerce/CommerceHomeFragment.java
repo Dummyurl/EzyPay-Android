@@ -3,6 +3,7 @@ package com.ezypayinc.ezypay.controllers.commerceNavigation.commerce;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.commerce.interfaceViews.ICommerceHomeView;
+import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.presenter.CommercePresenter.CommerceHomePresenter;
+import com.ezypayinc.ezypay.presenter.CommercePresenter.CommerceTableListPresenter;
 import com.ezypayinc.ezypay.presenter.CommercePresenter.ICommerceHomePresenter;
 import com.squareup.picasso.Picasso;
 
@@ -81,7 +84,10 @@ public class CommerceHomeFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.commerce_home_generate_qr :
+                mPresenter.generateQrCode();
+        }
     }
 
     @Override
@@ -100,5 +106,14 @@ public class CommerceHomeFragment extends Fragment implements View.OnClickListen
         userLoggedTextView.setText(username);
         this.getActivity().setTitle(viewTitle);
         Picasso.with(getContext()).load(avatar).transform(new CropCircleTransformation()).into(commerceImageView);
+    }
+
+    public void displayCommerceTableListView() {
+        Fragment fragment = CommerceTablesListFragment.newInstance();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().
+                replace(R.id.container_activity_main_commerce, fragment).
+                addToBackStack(null).
+                commit();
     }
 }

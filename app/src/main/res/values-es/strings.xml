@@ -28,6 +28,9 @@
     <string name="action_payment">Pago</string>
     <string name="action_ok">OK</string>
     <string name="action_generate_qr_code">Generar Código QR</string>
+    <string name="action_sync_qr_type">Sincronizado</string>
+    <string name="action_quickPay_qr_type">Pago Rápido</string>
+    <string name="action_send">Enviar</string>
 
     <!--Prompt-->
     <string name="prompt_name">Nombre</string>
@@ -48,6 +51,8 @@
     <string name="label_split_total">Total</string>
     <string name="label_currently_signed_in">Usuario logueado:</string>
     <string name="label_change_employee"><u>cambiar de empleado</u></string>
+    <string name="label_choose_qr_type">Escoge tipo de QR</string>
+    <string name="label_total_cost">Costo Total</string>
 
 
     <!--Spinners items-->
