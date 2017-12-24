@@ -121,6 +121,9 @@ public class CommerceTablesListFragment extends Fragment implements ICommerceTab
     @Override
     public void OnItemClickListener(Table table) {
         Intent intent = new Intent(getActivity(), PaymentCommerceMainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(PaymentCommerceMainActivity.TABLE_NUMBER_KEY, table.getTableNumber());
+        intent.putExtras(bundle);
         getActivity().startActivity(intent);
     }
 }

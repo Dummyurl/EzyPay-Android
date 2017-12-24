@@ -22,7 +22,6 @@ public class User extends RealmObject implements Parcelable {
     private RealmList<Card> cards;
 
     public User() {
-        cards = new RealmList<>();
     }
 
 

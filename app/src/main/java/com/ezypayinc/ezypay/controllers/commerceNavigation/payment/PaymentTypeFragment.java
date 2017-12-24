@@ -11,23 +11,31 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.model.Payment;
 
 public class PaymentTypeFragment extends Fragment implements  View.OnClickListener {
 
     private Button mSyncButton, mQuickPayButton;
+    private int mTableNumber;
 
     public PaymentTypeFragment() {
         // Required empty public constructor
     }
 
-    public static PaymentTypeFragment newInstance() {
+    public static PaymentTypeFragment newInstance(int tableNumber) {
         PaymentTypeFragment fragment = new PaymentTypeFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(PaymentCommerceMainActivity.TABLE_NUMBER_KEY, tableNumber);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getArguments() != null) {
+            mTableNumber = getArguments().getInt(PaymentCommerceMainActivity.TABLE_NUMBER_KEY, 0);
+        }
     }
 
     @Override
@@ -57,7 +65,8 @@ public class PaymentTypeFragment extends Fragment implements  View.OnClickListen
     }
 
     private void quickPayAction() {
-        Fragment fragment =QRCodeGeneratorFragment.newInstance();
+        //Todo change this implementation to a real payment
+        Fragment fragment =QRCodeGeneratorFragment.newInstance(new Payment());
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().
                 replace(R.id.payment_commerce_main_container, fragment).
@@ -66,7 +75,7 @@ public class PaymentTypeFragment extends Fragment implements  View.OnClickListen
     }
 
     private void syncPayAction() {
-        Fragment fragment = PaymentDetailFragment.newInstance();
+        Fragment fragment = PaymentDetailFragment.newInstance(mTableNumber);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().
                 replace(R.id.payment_commerce_main_container, fragment).

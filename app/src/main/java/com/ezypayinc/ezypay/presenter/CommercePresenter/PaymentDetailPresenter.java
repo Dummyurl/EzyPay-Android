@@ -6,6 +6,7 @@ import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.payment.interfaceViews.IPaymentDetailView;
 import com.ezypayinc.ezypay.manager.CurrencyManager;
 import com.ezypayinc.ezypay.model.Currency;
+import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonElement;
 
@@ -41,8 +42,21 @@ public class PaymentDetailPresenter implements IPaymentDetailPresenter {
     }
 
     @Override
-    public void savePaymentCost() {
-
+    public void savePaymentCost(float cost, int tableNumber, int currencyIndex, boolean shouldSendNotification) {
+        User user = UserSingleton.getInstance().getUser();
+        Currency currency = mCurrencyList.get(currencyIndex);
+        Payment payment = new Payment();
+        payment.setTableNumber(tableNumber);
+        payment.setCurrency(currency);
+        payment.setCost(cost);
+        if(user.getUserType() == 4) {
+            payment.setEmployeeId(user.getId());
+        } else  {
+            payment.setEmployeeId(0);
+        }
+        if(!shouldSendNotification) {
+            mView.navigateToQRFragment(payment);
+        }
     }
 
     private void populateCurrency() {

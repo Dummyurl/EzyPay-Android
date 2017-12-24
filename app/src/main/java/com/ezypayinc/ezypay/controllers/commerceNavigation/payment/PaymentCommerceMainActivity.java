@@ -8,6 +8,8 @@ import com.ezypayinc.ezypay.base.EzyPayApplication;
 
 public class PaymentCommerceMainActivity extends AppCompatActivity {
 
+    public static final String TABLE_NUMBER_KEY  = "TABLE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,8 +18,9 @@ public class PaymentCommerceMainActivity extends AppCompatActivity {
         if(savedInstanceState == null) {
             Bundle bundle = getIntent().getExtras();
             if(bundle != null) {
+                int tableNumber = bundle.getInt(TABLE_NUMBER_KEY, 0);
                 getSupportFragmentManager().beginTransaction().
-                        add(R.id.payment_commerce_main_container, PaymentTypeFragment.newInstance())
+                        add(R.id.payment_commerce_main_container, PaymentTypeFragment.newInstance(tableNumber))
                         .commit();
 
             }

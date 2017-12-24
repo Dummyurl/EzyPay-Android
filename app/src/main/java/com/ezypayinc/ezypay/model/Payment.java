@@ -36,9 +36,9 @@ public class Payment extends RealmObject implements Parcelable {
     private RealmList<Friend> friends;
 
     public Payment(){
-        friends = new RealmList<>();
+       /* friends = new RealmList<>();
         commerce = new User();
-        currency = new Currency();
+        currency = new Currency();*/
     }
 
     public int getId() {

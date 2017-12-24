@@ -12,27 +12,40 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.payment.interfaceViews.IQRCodeGeneratorView;
+import com.ezypayinc.ezypay.model.Payment;
+import com.ezypayinc.ezypay.presenter.CommercePresenter.IQRCodeGeneratorPresenter;
+import com.ezypayinc.ezypay.presenter.CommercePresenter.QRCodeGeneratorPresenter;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-public class QRCodeGeneratorFragment extends Fragment {
+public class QRCodeGeneratorFragment extends Fragment implements IQRCodeGeneratorView {
 
     private ImageView mQRImageView;
+    private Payment mPayment;
+    private static final String PAYMENT_KEY = "PAYMENT";
+    private IQRCodeGeneratorPresenter mPresenter;
 
     public QRCodeGeneratorFragment() {
         // Required empty public constructor
     }
 
-    public static QRCodeGeneratorFragment newInstance() {
+    public static QRCodeGeneratorFragment newInstance(Payment payment) {
         QRCodeGeneratorFragment fragment = new QRCodeGeneratorFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(PAYMENT_KEY, payment);
+        fragment.setArguments(bundle);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mPayment = getArguments().getParcelable(PAYMENT_KEY);
+        }
     }
 
     @Override
@@ -40,28 +53,15 @@ public class QRCodeGeneratorFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_qrcode_generator, container, false);
+        mPresenter = new QRCodeGeneratorPresenter(this);
         mQRImageView = rootView.findViewById(R.id.qr_code_generator_image_view);
-        generateQRCode();
+        mPresenter.generateQrCode(mPayment);
         return rootView;
     }
 
-    private void generateQRCode() {
-        String content = "Testing QR code writer on android";
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        try {
-            BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, 300, 300);
-            int width = bitMatrix.getWidth();
-            int height = bitMatrix.getHeight();
-            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
-                }
-            }
-            mQRImageView.setImageBitmap(bmp);
 
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
+    @Override
+    public void showQRImage(Bitmap bitmap) {
+        mQRImageView.setImageBitmap(bitmap);
     }
 }
