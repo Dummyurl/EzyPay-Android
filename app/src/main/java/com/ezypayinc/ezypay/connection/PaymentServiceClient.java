@@ -52,7 +52,7 @@ public class PaymentServiceClient {
             payment.setCanceled(!(jsonObject.get("isCanceled").isJsonNull() ? false : !jsonObject.get("isCanceled").getAsBoolean()));
             payment.setTableNumber(jsonObject.get("tableNumber") == null ? 0 : jsonObject.get("tableNumber").getAsInt());
             payment.setCommerce(getCommerce(jsonObject.get("Commerce").getAsJsonObject()));
-            payment.setCurrency(jsonObject.get("Currency").isJsonNull() ? null : getCurrency(jsonObject.get("Currency").getAsJsonObject()));
+            if(jsonObject.get("Currency") != null) { payment.setCurrency(jsonObject.get("Currency").isJsonNull() ? null : getCurrency(jsonObject.get("Currency").getAsJsonObject())); }
             List<Friend> friends = getFriends(!jsonObject.has("Friends") ? null :
                     (jsonObject.get("Friends").isJsonNull() ? null : jsonObject.get("Friends").getAsJsonArray()));
             if(friends != null) {

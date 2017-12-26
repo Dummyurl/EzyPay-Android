@@ -49,6 +49,12 @@ public class QRCodeGeneratorFragment extends Fragment implements IQRCodeGenerato
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getActivity().setTitle(R.string.qr_code_generator_title);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment

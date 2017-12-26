@@ -91,6 +91,9 @@
     <string name="history_view_title">Historial</string>
     <string name="settings_view_title">Configuración</string>
     <string name="edit_password_view_title">Editar Contraseña</string>
+    <string name="payment_type_title">Tipo de Pago</string>
+    <string name="payment_detail_title">Detalle de Pago</string>
+    <string name="qr_code_generator_title">Generar QR</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">

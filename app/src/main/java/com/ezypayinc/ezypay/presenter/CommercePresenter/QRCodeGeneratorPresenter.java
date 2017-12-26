@@ -52,9 +52,11 @@ public class QRCodeGeneratorPresenter implements IQRCodeGeneratorPresenter {
 
     private String getPaymentJsonString(Payment payment) throws JSONException {
         JSONObject jsonObject = payment.toJSON();
-        JSONObject currency = jsonObject.getJSONObject("currency");
-        jsonObject.remove("currency");
-        jsonObject.put("Currency", currency);
+        if(jsonObject.has("currency")) {
+            JSONObject currency = jsonObject.getJSONObject("currency");
+            jsonObject.remove("currency");
+            jsonObject.put("Currency", currency);
+        }
         User user = UserSingleton.getInstance().getUser();
         if (user.getUserType() == 4) {
             JSONObject commerce = getCommerceJSON(user.getBoss());

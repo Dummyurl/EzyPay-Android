@@ -1,6 +1,7 @@
 package com.ezypayinc.ezypay.controllers.commerceNavigation.payment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -46,6 +47,12 @@ public class PaymentDetailFragment extends Fragment implements IPaymentDetailVie
         if(getArguments() != null) {
             mTableNumber = getArguments().getInt(PaymentCommerceMainActivity.TABLE_NUMBER_KEY, 0);
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getActivity().setTitle(R.string.payment_detail_title);
     }
 
     @Override

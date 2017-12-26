@@ -1,7 +1,6 @@
 package com.ezypayinc.ezypay.controllers.commerceNavigation.payment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,12 +10,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.payment.interfaceViews.IPaymentTypeView;
 import com.ezypayinc.ezypay.model.Payment;
+import com.ezypayinc.ezypay.presenter.CommercePresenter.IPaymentTypePresenter;
+import com.ezypayinc.ezypay.presenter.CommercePresenter.PaymentTypePresenter;
 
-public class PaymentTypeFragment extends Fragment implements  View.OnClickListener {
+public class PaymentTypeFragment extends Fragment implements  View.OnClickListener, IPaymentTypeView {
 
     private Button mSyncButton, mQuickPayButton;
     private int mTableNumber;
+    private IPaymentTypePresenter mPresenter;
 
     public PaymentTypeFragment() {
         // Required empty public constructor
@@ -47,7 +50,14 @@ public class PaymentTypeFragment extends Fragment implements  View.OnClickListen
         mQuickPayButton = rootView.findViewById(R.id.payment_type_quickPay_button);
         mSyncButton.setOnClickListener(this);
         mQuickPayButton.setOnClickListener(this);
+        mPresenter = new PaymentTypePresenter(this);
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getActivity().setTitle(R.string.payment_type_title);
     }
 
     @Override
@@ -64,9 +74,12 @@ public class PaymentTypeFragment extends Fragment implements  View.OnClickListen
         }
     }
 
+    private void syncPayAction() {
+        mPresenter.setupSyncPayAction(mTableNumber);
+    }
+
     private void quickPayAction() {
-        //Todo change this implementation to a real payment
-        Fragment fragment =QRCodeGeneratorFragment.newInstance(new Payment());
+        Fragment fragment = PaymentDetailFragment.newInstance(mTableNumber);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().
                 replace(R.id.payment_commerce_main_container, fragment).
@@ -74,8 +87,9 @@ public class PaymentTypeFragment extends Fragment implements  View.OnClickListen
                 commit();
     }
 
-    private void syncPayAction() {
-        Fragment fragment = PaymentDetailFragment.newInstance(mTableNumber);
+    @Override
+    public void goToSyncPayAction(Payment payment) {
+        Fragment fragment =QRCodeGeneratorFragment.newInstance(payment);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().
                 replace(R.id.payment_commerce_main_container, fragment).

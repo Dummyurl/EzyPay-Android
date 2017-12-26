@@ -112,6 +112,9 @@
     <string name="history_view_title">History</string>
     <string name="settings_view_title">Settings</string>
     <string name="edit_password_view_title">Edit Password</string>
+    <string name="payment_type_title">Payment Type</string>
+    <string name="payment_detail_title">Payment Detail</string>
+    <string name="qr_code_generator_title">Generate QR</string>
 
     <!--Confirmation Titles-->
     <string name="delete_card_title">Delete Card</string>
