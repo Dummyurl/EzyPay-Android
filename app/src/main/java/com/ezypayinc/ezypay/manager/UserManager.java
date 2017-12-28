@@ -6,6 +6,7 @@ import com.ezypayinc.ezypay.connection.SessionServiceClient;
 import com.ezypayinc.ezypay.connection.UserServiceClient;
 import com.ezypayinc.ezypay.database.UserData;
 import com.ezypayinc.ezypay.model.Card;
+import com.ezypayinc.ezypay.model.CommerceHistory;
 import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.HistoryDate;
 import com.ezypayinc.ezypay.model.PhoneCode;
@@ -144,5 +145,20 @@ public class UserManager {
     public void  validateUserEmail(String email, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         UserServiceClient service = new UserServiceClient();
         service.validateUserEmail(email, successHandler, failureHandler);
+    }
+
+    public void getCommerceHistory(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        UserServiceClient service = new UserServiceClient();
+        service.getCommerceHistory(user, successHandler, failureHandler);
+    }
+
+    public List<CommerceHistory> parseCommerceHistory(JsonElement response) {
+        UserServiceClient service = new UserServiceClient();
+        return service.parseCommerceHistory(response);
+    }
+
+    public void getCommerceHistoryDates(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        UserServiceClient service = new UserServiceClient();
+        service.getCommerceHistoryDates(user, successHandler, failureHandler);
     }
 }

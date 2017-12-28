@@ -1,10 +1,7 @@
-package com.ezypayinc.ezypay.controllers.userNavigation.settings;
+package com.ezypayinc.ezypay.controllers.commerceNavigation.settings;
 
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,22 +20,18 @@ import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-public class SettingsFragment extends Fragment {
-
-    private EditText mName, mLastName, mEmail, mPhoneNumber;
+public class CommerceSettingsFragment extends Fragment {
+    private EditText mName, mEmail, mPhoneNumber;
     private ImageView mProfileImage;
 
-    public SettingsFragment() {
-        // Required empty public constructor
+
+    public CommerceSettingsFragment() {
     }
 
-    public static SettingsFragment newInstance() {
-        SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+    public static CommerceSettingsFragment newInstance() {
+        CommerceSettingsFragment fragment = new CommerceSettingsFragment();
         return fragment;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,37 +42,20 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_commerce_settings, container, false);
+        mProfileImage = rootView.findViewById(R.id.commerce_settings_image_profile_view);
+        mName = rootView.findViewById(R.id.commerce_settings_view_name);
+        mEmail = rootView.findViewById(R.id.commerce_settings_view_email);
+        mPhoneNumber = rootView.findViewById(R.id.commerce_settings_view_phone_number);
         setHasOptionsMenu(true);
-        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
-        initUIComponents(rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         getUser();
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        getActivity().setTitle(R.string.settings_view_title);
-    }
-
-    private void initUIComponents(View rootView) {
-        mName = rootView.findViewById(R.id.settings_view_name);
-        mLastName = rootView.findViewById(R.id.settings_view_lastName);
-        mEmail = rootView.findViewById(R.id.settings_view_email);
-        mPhoneNumber = rootView.findViewById(R.id.settings_view_phone_number);
-        mProfileImage = rootView.findViewById(R.id.image_profile_view);
+        return rootView;
     }
 
     private void getUser() {
         User user = UserSingleton.getInstance().getUser();
         if(user != null) {
             mName.setText(user.getName());
-            mLastName.setText(user.getLastName());
             mEmail.setText(user.getEmail());
             mPhoneNumber.setText(user.getPhoneNumber());
             getImage(user);
@@ -97,7 +73,6 @@ public class SettingsFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -107,7 +82,7 @@ public class SettingsFragment extends Fragment {
                 getActivity().startActivity(intent);
                 break;
             case R.id.edit_user_item:
-                intent = new Intent(getActivity(), SettingsMainActivity.class);
+                intent = new Intent(getActivity(), MainCommerceSettingsActivity.class);
                 getActivity().startActivity(intent);
                 break;
         }

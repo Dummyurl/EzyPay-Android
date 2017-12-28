@@ -38,6 +38,7 @@
     <string name="action_sync_qr_type">Sync</string>
     <string name="action_quickPay_qr_type">Quickpay</string>
     <string name="action_send">Send</string>
+    <string name="action_employees">Employees</string>
 
 
     <string name="title_activity_login" translatable="false">Log in</string>
@@ -136,6 +137,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_main_commerce">MainCommerceActivity</string>
     <string name="title_activity_payment_commerce_main">PaymentCommerceMainActivity</string>
+    <string name="title_activity_main_commerce_settings">MainCommerceSettingsActivity</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

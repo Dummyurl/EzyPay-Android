@@ -6,6 +6,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.base.UserSingleton;
+import com.ezypayinc.ezypay.model.CommerceHistory;
 import com.ezypayinc.ezypay.model.Friend;
 import com.ezypayinc.ezypay.model.HistoryDate;
 import com.ezypayinc.ezypay.model.PhoneCode;
@@ -243,4 +244,30 @@ public class UserServiceClient {
         connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
     }
 
+    public void getCommerceHistory(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        String url = BASIC_URL + "commerce/history/" + user.getId();
+        HashMap<String, String> headers = new HashMap<>();
+        String oauthToken = "Bearer "+ user.getToken();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.GET, url, null, headers, successHandler, failureHandler);
+    }
+
+    public List<CommerceHistory> parseCommerceHistory(JsonElement response) {
+        Gson gson = new Gson();
+        CommerceHistory[] historyArray = gson.fromJson(response,CommerceHistory[].class);
+        List<CommerceHistory> commerceHistoryList = Arrays.asList(historyArray);
+        return commerceHistoryList;
+    }
+
+    public void getCommerceHistoryDates(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) {
+        String url = BASIC_URL + "commerce/history/dates/" + user.getId();
+        HashMap<String, String> headers = new HashMap<>();
+        String oauthToken = "Bearer "+ user.getToken();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.GET, url, null, headers, successHandler, failureHandler);
+    }
 }

@@ -1,6 +1,5 @@
-package com.ezypayinc.ezypay.controllers.userNavigation.history;
+package com.ezypayinc.ezypay.controllers.commerceNavigation.history;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,28 +13,28 @@ import android.view.ViewGroup;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
-import com.ezypayinc.ezypay.controllers.userNavigation.history.adapters.HistoryListAdapter;
-import com.ezypayinc.ezypay.controllers.userNavigation.history.interfaceViews.IHistoryView;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.history.adapters.CommerceHistoryAdapter;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.history.interfaceViews.ICommerceHistoryView;
+import com.ezypayinc.ezypay.model.CommerceHistory;
 import com.ezypayinc.ezypay.model.HistoryDate;
-import com.ezypayinc.ezypay.model.UserHistory;
-import com.ezypayinc.ezypay.presenter.HistoryPresenters.IUserHistoryPresenter;
-import com.ezypayinc.ezypay.presenter.HistoryPresenters.UserHistoryPresenter;
-import com.ezypayinc.ezypay.presenter.PaymentPresenters.ScannerPresenter;
+import com.ezypayinc.ezypay.presenter.CommerceHistoryPresenters.CommerceHistoryPresenter;
+import com.ezypayinc.ezypay.presenter.CommerceHistoryPresenters.ICommerceHistoryPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class HistoryFragment extends Fragment implements IHistoryView {
 
-    private IUserHistoryPresenter mPresenter;
+public class CommerceHistoryFragment extends Fragment implements ICommerceHistoryView {
+
     private RecyclerView mRecyclerView;
     private ProgressDialog mProgressDialog;
+    private ICommerceHistoryPresenter mPresenter;
 
-    public HistoryFragment() {
+    public CommerceHistoryFragment() {
         // Required empty public constructor
     }
-
-    public static HistoryFragment newInstance() {
-        HistoryFragment fragment = new HistoryFragment();
+    public static CommerceHistoryFragment newInstance() {
+        CommerceHistoryFragment fragment = new CommerceHistoryFragment();
         return fragment;
     }
 
@@ -48,12 +47,14 @@ public class HistoryFragment extends Fragment implements IHistoryView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_user_history, container, false);
-        mRecyclerView = rootView.findViewById(R.id.user_history_fragment_recycler_view);
+        View rootView = inflater.inflate(R.layout.fragment_commerce_history, container, false);
+        mRecyclerView = rootView.findViewById(R.id.commerce_history_fragment_recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        return rootView;
+        mPresenter = new CommerceHistoryPresenter(this);
+        mPresenter.getCommerceHistory();
+        return  rootView;
     }
 
     @Override
@@ -61,10 +62,6 @@ public class HistoryFragment extends Fragment implements IHistoryView {
         super.onAttach(context);
         getActivity().setTitle(R.string.history_view_title);
         setupProgressDialog();
-        if(mPresenter == null) {
-            mPresenter = new UserHistoryPresenter(this);
-            mPresenter.getUserHistory();
-        }
     }
 
     private void setupProgressDialog(){
@@ -73,8 +70,8 @@ public class HistoryFragment extends Fragment implements IHistoryView {
     }
 
     @Override
-    public void showHistoryRecords(List<UserHistory> userHistory, List<HistoryDate> datesList) {
-        mRecyclerView.setAdapter(new HistoryListAdapter(userHistory, datesList, getContext()));
+    public void showHistoryRecords(List<CommerceHistory> commerceHistory, List<HistoryDate> datesList) {
+        mRecyclerView.setAdapter(new CommerceHistoryAdapter(commerceHistory, datesList));
     }
 
     @Override

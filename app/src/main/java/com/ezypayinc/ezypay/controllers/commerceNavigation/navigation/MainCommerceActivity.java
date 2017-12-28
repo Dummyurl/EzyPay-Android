@@ -8,8 +8,8 @@ import android.util.Log;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.commerce.CommerceHomeFragment;
-import com.ezypayinc.ezypay.controllers.userNavigation.history.HistoryFragment;
-import com.ezypayinc.ezypay.controllers.userNavigation.settings.SettingsFragment;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.history.CommerceHistoryFragment;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.settings.CommerceSettingsFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -30,7 +30,7 @@ public class MainCommerceActivity extends AppCompatActivity {
     }
 
     public void setupNavigationBar() {
-        bottomBar = (BottomBar) findViewById(R.id.commerce_bottomBar);
+        bottomBar = findViewById(R.id.commerce_bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
@@ -40,10 +40,10 @@ public class MainCommerceActivity extends AppCompatActivity {
                         newFragment = CommerceHomeFragment.newInstance();
                         break;
                     case R.id.notifications_item:
-                        newFragment = HistoryFragment.newInstance();
+                        newFragment = CommerceHistoryFragment.newInstance();
                         break;
                     case R.id.settings_item:
-                        newFragment = SettingsFragment.newInstance();
+                        newFragment = CommerceSettingsFragment.newInstance();
                         break;
                 }
                 getSupportFragmentManager().beginTransaction()

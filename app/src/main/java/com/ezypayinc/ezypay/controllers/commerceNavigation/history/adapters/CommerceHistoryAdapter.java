@@ -1,52 +1,46 @@
-package com.ezypayinc.ezypay.controllers.userNavigation.history.adapters;
+package com.ezypayinc.ezypay.controllers.commerceNavigation.history.adapters;
 
-import android.content.Context;
+
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.controllers.Helpers.SectionOrRow;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.Adapters.HeaderViewHolder;
+import com.ezypayinc.ezypay.model.CommerceHistory;
 import com.ezypayinc.ezypay.model.HistoryDate;
-import com.ezypayinc.ezypay.model.UserHistory;
-import com.squareup.picasso.Picasso;
 
-import android.text.format.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+public class CommerceHistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-public class HistoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private Context mContext;
-    private List<UserHistory> mUserHistory;
-    private List<HistoryDate> mDatesList;
+    private List<CommerceHistory> mCommerceHistoryList;
+    private List<HistoryDate> mDateList;
     private List<SectionOrRow> mSourceList;
-    private static final String IMAGE_ENDPOINT = "https://storage.googleapis.com/ugwo-contact-pictures/";
     private static final String DATE_FORMAT_STRING = "yyyy-MM-dd";
 
-    public HistoryListAdapter(List<UserHistory> userHistory, List<HistoryDate> datesList, Context context) {
-        mUserHistory = userHistory;
-        mContext = context;
-        mDatesList = datesList;
+    public CommerceHistoryAdapter(List<CommerceHistory> commerceHistoryList, List<HistoryDate> datesList) {
+        mCommerceHistoryList = commerceHistoryList;
+        mDateList = datesList;
         mSourceList = new ArrayList<>();
         parseData();
     }
 
     private void parseData() {
-        List<UserHistory> copy = new ArrayList<>(mUserHistory);
-        for (HistoryDate historyDate : mDatesList) {
+        List<CommerceHistory> copy = new ArrayList<>(mCommerceHistoryList);
+        for (HistoryDate historyDate : mDateList) {
             Date date = getDateFromString(historyDate.getPaymentDate());
             mSourceList.add(SectionOrRow.createHeader(getDateName(date)));
-            List<UserHistory> iterativeList = new ArrayList<>(copy);
-            for (UserHistory history: iterativeList) {
+            List<CommerceHistory> iterativeList = new ArrayList<>(copy);
+            for (CommerceHistory history: iterativeList) {
                 if(history.getPaymentDate().equalsIgnoreCase(historyDate.getPaymentDate())) {
                     mSourceList.add(SectionOrRow.createRow(history));
                     copy.remove(history);
@@ -70,9 +64,9 @@ public class HistoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             return new HeaderViewHolder(itemView);
         } else {
             View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cell_user_history_list, parent, false);
+                    .inflate(R.layout.cell_commerce_history, parent, false);
 
-            return new HistoryViewHolder(itemView);
+            return new CommerceHistoryViewHolder(itemView);
         }
     }
 
@@ -80,11 +74,17 @@ public class HistoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         SectionOrRow sectionOrRow = mSourceList.get(position);
         if(sectionOrRow.isRow()) {
-            UserHistory userHistory = (UserHistory) sectionOrRow.getRow();
-            HistoryViewHolder historyHolder = (HistoryViewHolder) holder;
-            historyHolder.commerceName.setText(userHistory.getName());
-            historyHolder.paymentCost.setText(getCurrencySymbol(userHistory.getCode()) + " " + userHistory.getCost());
-            getImage(historyHolder.commerceImage, userHistory.getAvatar());
+            CommerceHistory commerceHistory = (CommerceHistory) sectionOrRow.getRow();
+            CommerceHistoryViewHolder historyHolder = (CommerceHistoryViewHolder) holder;
+            historyHolder.mUserNameTextView.setText(commerceHistory.getCustomerFullName());
+            historyHolder.mPaymentCostTextView.setText(getCurrencySymbol(commerceHistory.getCode()) + " " + commerceHistory.getCost());
+            if(commerceHistory.getEmployeeFullName() != null) {
+                historyHolder.mEmployeeTextView.setVisibility(View.VISIBLE);
+                historyHolder.mEmployeeTextView.setText(commerceHistory.getEmployeeFullName());
+            } else {
+                historyHolder.mEmployeeTextView.setVisibility(View.GONE);
+            }
+
         } else {
             HeaderViewHolder header = (HeaderViewHolder) holder;
             header.headerTitleTextView.setText(sectionOrRow.getHeader());
@@ -95,7 +95,6 @@ public class HistoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public int getItemCount() {
         return mSourceList.size();
     }
-
 
     private Date getDateFromString(String stringDate) {
         SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT_STRING);
@@ -125,24 +124,16 @@ public class HistoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return currency.getSymbol();
     }
 
-    private void getImage(ImageView imageView, String avatar) {
-        if(avatar != null) {
-            String url = IMAGE_ENDPOINT + avatar;
-            Picasso.with(mContext).load(url).into(imageView);
+    class CommerceHistoryViewHolder extends RecyclerView.ViewHolder {
+        TextView mUserNameTextView;
+        TextView mPaymentCostTextView;
+        TextView mEmployeeTextView;
+
+        CommerceHistoryViewHolder(View view) {
+            super(view);
+            mUserNameTextView = view.findViewById(R.id.cell_commerce_history_userName);
+            mPaymentCostTextView = view.findViewById(R.id.cell_commerce_history_cost);
+            mEmployeeTextView = view.findViewById(R.id.cell_commerce_history_employee);
         }
     }
-
-    class HistoryViewHolder extends RecyclerView.ViewHolder {
-        private ImageView commerceImage;
-        private TextView commerceName;
-        private  TextView paymentCost;
-
-        HistoryViewHolder(View itemView) {
-            super(itemView);
-            commerceImage = itemView.findViewById(R.id.cell_user_history_commerce_image);
-            commerceName =  itemView.findViewById(R.id.cell_user_history_commerce_name);
-            paymentCost = itemView.findViewById(R.id.cell_user_history_payment_cost);
-        }
-    }
-
 }

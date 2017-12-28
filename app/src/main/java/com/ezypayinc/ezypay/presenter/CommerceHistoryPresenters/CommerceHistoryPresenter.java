@@ -1,34 +1,36 @@
-package com.ezypayinc.ezypay.presenter.HistoryPresenters;
+package com.ezypayinc.ezypay.presenter.CommerceHistoryPresenters;
 
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.base.UserSingleton;
-import com.ezypayinc.ezypay.controllers.userNavigation.history.interfaceViews.IHistoryView;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.history.interfaceViews.ICommerceHistoryView;
 import com.ezypayinc.ezypay.manager.UserManager;
+import com.ezypayinc.ezypay.model.CommerceHistory;
 import com.ezypayinc.ezypay.model.HistoryDate;
-import com.ezypayinc.ezypay.model.UserHistory;
+import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonElement;
 
 import java.util.List;
 
-public class UserHistoryPresenter implements IUserHistoryPresenter {
+public class CommerceHistoryPresenter implements ICommerceHistoryPresenter {
 
-    private IHistoryView mView;
+    private ICommerceHistoryView mView;
 
-    public UserHistoryPresenter(IHistoryView view) {
+
+    public CommerceHistoryPresenter(ICommerceHistoryView view) {
         mView = view;
     }
 
-
     @Override
-    public void getUserHistory() {
+    public void getCommerceHistory() {
+
         mView.showProgressDialog();
         final UserManager manager = new UserManager();
-        manager.getUserHistory(UserSingleton.getInstance().getUser(), new Response.Listener<JsonElement>() {
+        manager.getCommerceHistory(UserSingleton.getInstance().getUser(), new Response.Listener<JsonElement>() {
             @Override
             public void onResponse(JsonElement response) {
-                List<UserHistory> userHistoryList = manager.parseUserHistory(response);
+                List<CommerceHistory> userHistoryList = manager.parseCommerceHistory(response);
                 getHistoryDates(userHistoryList);
             }
         }, new Response.ErrorListener() {
@@ -38,16 +40,15 @@ public class UserHistoryPresenter implements IUserHistoryPresenter {
                 mView.onNetworkError(error);
             }
         });
-
     }
 
-    private void getHistoryDates(final List<UserHistory> userHistoryList) {
+    private void getHistoryDates(final List<CommerceHistory> commerceHistoryList) {
         final UserManager manager = new UserManager();
-        manager.getUserHistoryDates(UserSingleton.getInstance().getUser(), new Response.Listener<JsonElement>() {
+        manager.getCommerceHistoryDates(UserSingleton.getInstance().getUser(), new Response.Listener<JsonElement>() {
             @Override
             public void onResponse(JsonElement response) {
                 List<HistoryDate> dates = manager.parseUserHistoryDates(response);
-                mView.showHistoryRecords(userHistoryList, dates);
+                mView.showHistoryRecords(commerceHistoryList, dates);
                 mView.dismissProgressDialog();
             }
         }, new Response.ErrorListener() {
@@ -61,6 +62,6 @@ public class UserHistoryPresenter implements IUserHistoryPresenter {
 
     @Override
     public void onDestroy() {
-        mView = null;
+
     }
 }
