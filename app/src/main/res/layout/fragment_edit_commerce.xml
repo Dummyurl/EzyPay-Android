@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@color/white"
-        android:id="@+id/image_profile_view_edit_user_fragment"
+        android:id="@+id/image_profile_view_edit_commerce_fragment"
         tools:ignore="ContentDescription" />
 
     <LinearLayout
@@ -18,7 +18,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="20dp"
-        android:layout_below="@+id/image_profile_view_edit_user_fragment"
+        android:layout_below="@+id/image_profile_view_edit_commerce_fragment"
         android:background="#fff">
 
         <android.support.design.widget.TextInputLayout
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/name_editText_edit_user_fragment"
+                android:id="@+id/name_editText_edit_commerce_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_name"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/email_editText_edit_user_fragment"
+                android:id="@+id/email_editText_edit_commerce_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -55,7 +55,7 @@
             android:layout_marginTop="10dp">
 
             <EditText
-                android:id="@+id/phoneNumber_editText_edit_user_fragment"
+                android:id="@+id/phoneNumber_editText_edit_commerce_fragment"
                 android:layout_width="match_parent"
                 android:inputType="phone"
                 android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:layout_marginTop="10dp">
 
             <EditText
-                android:id="@+id/password_editText_edit_user_fragment"
+                android:id="@+id/password_editText_edit_commerce_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
@@ -85,7 +85,7 @@
             android:layout_height="50dp"
             android:background="@color/greenEzypayColor"
             android:textColor="@color/white"
-            android:id="@+id/save_button_edit_user_fragment"
+            android:id="@+id/save_button_edit_commerce_fragment"
             android:text="@string/action_edit_user_save"/>
 
     </LinearLayout>

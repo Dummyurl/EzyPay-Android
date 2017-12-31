@@ -13,12 +13,13 @@ import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.ezypayinc.ezypay.controllers.Helpers.OnChangeImageListener;
 import com.ezypayinc.ezypay.controllers.Helpers.OnPhoneCodeSelected;
+import com.ezypayinc.ezypay.helpers.ISettingsActivity;
 import com.ezypayinc.ezypay.model.PhoneCode;
 
 import java.io.File;
 import java.io.IOException;
 
-public class SettingsMainActivity extends AppCompatActivity implements OnPhoneCodeSelected {
+public class SettingsMainActivity extends AppCompatActivity implements OnPhoneCodeSelected, ISettingsActivity {
 
     private OnChangeImageListener mImageListener;
     private OnPhoneCodeSelected mPhoneSelected;

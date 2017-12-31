@@ -14,6 +14,7 @@ import android.widget.EditText;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.Helpers.OnPhoneCodeSelected;
+import com.ezypayinc.ezypay.helpers.ISettingsActivity;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.PhoneCode;
 import com.ezypayinc.ezypay.model.User;
@@ -24,13 +25,19 @@ public class EditUserPhoneFragment extends Fragment implements OnPhoneCodeSelect
     private EditText mEdtPhoneCode, mEdtPhoneNumber;
     private PhoneCode mPhoneCode;
     private Button mSaveButton;
+    private int mContainerId;
+
+    private static final String CONTAINER_KEY = "CONTAINER";
 
     public EditUserPhoneFragment() {
         // Required empty public constructor
     }
 
-    public static EditUserPhoneFragment newInstance() {
+    public static EditUserPhoneFragment newInstance(int containerId) {
         EditUserPhoneFragment fragment = new EditUserPhoneFragment();
+        Bundle args = new Bundle();
+        args.putInt(CONTAINER_KEY, containerId);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -38,16 +45,19 @@ public class EditUserPhoneFragment extends Fragment implements OnPhoneCodeSelect
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getArguments() != null) {
+            mContainerId = getArguments().getInt(CONTAINER_KEY);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_edit_user_phone, container, false);
-        mEdtPhoneCode = (EditText) rootView.findViewById(R.id.code_editText_edit_user_phone_fragment);
-        mEdtPhoneNumber = (EditText) rootView.findViewById(R.id.phone_editText_edit_user_phone_fragment);
-        mSaveButton = (Button) rootView.findViewById(R.id.save_button_edit_user_phone_fragment);
+        mEdtPhoneCode = rootView.findViewById(R.id.code_editText_edit_user_phone_fragment);
+        mEdtPhoneNumber = rootView.findViewById(R.id.phone_editText_edit_user_phone_fragment);
+        mSaveButton = rootView.findViewById(R.id.save_button_edit_user_phone_fragment);
         mEdtPhoneCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
             @Override
@@ -56,7 +66,7 @@ public class EditUserPhoneFragment extends Fragment implements OnPhoneCodeSelect
                     PhoneCodeListFragment fragment = PhoneCodeListFragment.newInstance();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     fragmentManager.beginTransaction().
-                            replace(R.id.settings_main_container, fragment).
+                            replace(mContainerId, fragment).
                             addToBackStack(null).
                             commit();
                 }
@@ -77,7 +87,7 @@ public class EditUserPhoneFragment extends Fragment implements OnPhoneCodeSelect
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        ((SettingsMainActivity) context).setPhoneSelectedListener(this);
+        ((ISettingsActivity) context).setPhoneSelectedListener(this);
     }
 
     @Override

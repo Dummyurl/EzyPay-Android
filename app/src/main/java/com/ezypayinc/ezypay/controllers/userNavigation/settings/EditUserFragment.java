@@ -80,13 +80,13 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
     }
 
     private void initUIComponents() {
-        mEdtName = (EditText) rootView.findViewById(R.id.name_editText_edit_user_fragment);
-        mEdtLastName = (EditText) rootView.findViewById(R.id.lastName_editText_edit_user_fragment);
-        mEdtEmail = (EditText) rootView.findViewById(R.id.email_editText_edit_user_fragment);
-        mEdtPhoneNumber = (EditText) rootView.findViewById(R.id.phoneNumber_editText_edit_user_fragment);
-        mEdtPassword = (EditText) rootView.findViewById(R.id.password_editText_edit_user_fragment);
-        mProfileImage = (ImageView) rootView.findViewById(R.id.image_profile_view_edit_user_fragment);
-        Button mBtnSave = (Button) rootView.findViewById(R.id.save_button_edit_user_fragment);
+        mEdtName = rootView.findViewById(R.id.name_editText_edit_user_fragment);
+        mEdtLastName = rootView.findViewById(R.id.lastName_editText_edit_user_fragment);
+        mEdtEmail = rootView.findViewById(R.id.email_editText_edit_user_fragment);
+        mEdtPhoneNumber = rootView.findViewById(R.id.phoneNumber_editText_edit_user_fragment);
+        mEdtPassword = rootView.findViewById(R.id.password_editText_edit_user_fragment);
+        mProfileImage = rootView.findViewById(R.id.image_profile_view_edit_user_fragment);
+        Button mBtnSave = rootView.findViewById(R.id.save_button_edit_user_fragment);
         mBtnSave.setOnClickListener(this);
         mProfileImage.setOnClickListener(this);
         mEdtPassword.setOnFocusChangeListener(this);
@@ -170,7 +170,7 @@ public class EditUserFragment extends Fragment implements IEditUserView, View.On
     }
 
     private void goToPhoneFragment() {
-        Fragment fragment = EditUserPhoneFragment.newInstance();
+        Fragment fragment = EditUserPhoneFragment.newInstance(R.id.settings_main_container);
         goToFragment(fragment);
     }
 
