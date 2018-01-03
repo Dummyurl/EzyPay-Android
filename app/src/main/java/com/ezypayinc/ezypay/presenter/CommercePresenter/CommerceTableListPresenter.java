@@ -24,7 +24,7 @@ public class CommerceTableListPresenter implements ICommerceTableListPresenter {
         mView.showProgressDialog();
         final TableManager manager = new TableManager();
         User currentUser = UserSingleton.getInstance().getUser();
-        int restaurantId = currentUser.getUserType() == 4 ? currentUser.getBoss().getId() : currentUser.getId();
+        int restaurantId = currentUser.getUserType() == 4 ? currentUser.getEmployeeBoss().getId() : currentUser.getId();
         manager.getTablesByRestaurant(restaurantId, currentUser.getToken(), new Response.Listener<JsonElement>() {
             @Override
             public void onResponse(JsonElement response) {

@@ -3,7 +3,6 @@ package com.ezypayinc.ezypay.presenter.CommercePresenter;
 
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.commerce.interfaceViews.ICommerceHomeView;
-import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.User;
 
 public class CommerceHomePresenter implements ICommerceHomePresenter {
@@ -20,7 +19,7 @@ public class CommerceHomePresenter implements ICommerceHomePresenter {
         User user = UserSingleton.getInstance().getUser();
         if(user.getUserType() == 4) {
             String name = String.format("%s %s", user.getName(), user.getLastName());
-            mView.displayUserInformation(user.getBoss().getAvatar(), name, user.getBoss().getName());
+            mView.displayUserInformation(user.getEmployeeBoss().getAvatar(), name, user.getEmployeeBoss().getName());
         } else {
             mView.displayUserInformation(user.getAvatar(), user.getName(), user.getName());
         }
@@ -35,7 +34,7 @@ public class CommerceHomePresenter implements ICommerceHomePresenter {
     @Override
     public void generateQrCode() {
         User currentUser = UserSingleton.getInstance().getUser();
-        if(currentUser.getUserType() == 4 && currentUser.getBoss().getUserType() == 2) {
+        if(currentUser.getUserType() == 4 && currentUser.getEmployeeBoss().getUserType() == 2) {
             mView.displayCommerceTableListView();
         }
     }

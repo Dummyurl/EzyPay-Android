@@ -161,4 +161,14 @@ public class UserManager {
         UserServiceClient service = new UserServiceClient();
         service.getCommerceHistoryDates(user, successHandler, failureHandler);
     }
+
+    public void getEmployees(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        UserServiceClient service = new UserServiceClient();
+        service.getEmployees(user, successHandler, failureHandler);
+    }
+
+    public List<User> parseUserList(JsonElement response) {
+        UserServiceClient service = new UserServiceClient();
+        return service.parseUserList(response);
+    }
 }

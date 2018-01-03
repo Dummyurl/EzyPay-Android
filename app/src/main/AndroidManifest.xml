@@ -87,7 +87,10 @@
             android:label="@string/title_activity_payment_commerce_main" />
         <activity
             android:name=".controllers.commerceNavigation.settings.MainCommerceSettingsActivity"
-            android:label="@string/title_activity_main_commerce_settings"></activity>
+            android:label="@string/title_activity_main_commerce_settings" />
+        <activity
+            android:name=".controllers.commerceNavigation.settings.employees.EmployeeMainActivity"
+            android:label="@string/title_activity_employee_main"></activity>
     </application>
 
 </manifest>

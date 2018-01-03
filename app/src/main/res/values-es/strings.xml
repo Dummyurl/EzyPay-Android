@@ -40,6 +40,7 @@
     <string name="prompt_card_number">Número de Tarjeta</string>
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_code">Código</string>
+    <string name="prompt_username">Username</string>
 
     <!--Labels-->
     <string name="label_user_information_from_title">Información Personal</string>
@@ -95,6 +96,10 @@
     <string name="payment_type_title">Tipo de Pago</string>
     <string name="payment_detail_title">Detalle de Pago</string>
     <string name="qr_code_generator_title">Generar QR</string>
+    <string name="title_employee_fragment">Employees</string>
+    <string name="title_view_employee_fragment">Empleado</string>
+    <string name="title_edit_employee_fragment">Editar Empleado</string>
+    <string name="title_add_employee_fragment">Agregar Empleado</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">

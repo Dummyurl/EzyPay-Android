@@ -8,7 +8,6 @@ import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.LoginView;
-import com.ezypayinc.ezypay.database.DeviceTokenData;
 import com.ezypayinc.ezypay.manager.DeviceTokenManager;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.LocalToken;
@@ -141,7 +140,7 @@ public class LoginPresenter  implements ILoginPresenter {
                 @Override
                 public void onResponse(JsonElement response) {
                     User commerce = manager.parseUserFromServer(response);
-                    user.setBoss(commerce);
+                    user.setEmployeeBoss(commerce);
                     userSingleton.setUser(user);
                     manager.addUser(user);
                     loginView.hideProgressDialog();

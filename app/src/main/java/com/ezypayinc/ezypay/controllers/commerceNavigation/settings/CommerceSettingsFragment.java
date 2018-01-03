@@ -9,20 +9,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.settings.employees.EmployeeMainActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardsMainActivity;
 import com.ezypayinc.ezypay.model.User;
 import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-public class CommerceSettingsFragment extends Fragment {
+public class CommerceSettingsFragment extends Fragment implements View.OnClickListener {
     private EditText mName, mEmail, mPhoneNumber;
     private ImageView mProfileImage;
+    private Button mEmployeeButton;
 
 
     public CommerceSettingsFragment() {
@@ -47,6 +50,8 @@ public class CommerceSettingsFragment extends Fragment {
         mName = rootView.findViewById(R.id.commerce_settings_view_name);
         mEmail = rootView.findViewById(R.id.commerce_settings_view_email);
         mPhoneNumber = rootView.findViewById(R.id.commerce_settings_view_phone_number);
+        mEmployeeButton = rootView.findViewById(R.id.commerce_settings_employee_button);
+        mEmployeeButton.setOnClickListener(this);
         setHasOptionsMenu(true);
         getUser();
         return rootView;
@@ -87,5 +92,11 @@ public class CommerceSettingsFragment extends Fragment {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent(getActivity(), EmployeeMainActivity.class);
+        getActivity().startActivity(intent);
     }
 }

@@ -18,8 +18,9 @@ public class User extends RealmObject implements Parcelable {
     private int userType;
     private int customerId;
     private String avatar;
-    private User boss;
+    private User employeeBoss;
     private RealmList<Card> cards;
+    private static final String EMPTY_STRING = " ";
 
     public User() {
     }
@@ -113,19 +114,30 @@ public class User extends RealmObject implements Parcelable {
         this.avatar = avatar;
     }
 
-    public User getBoss() {
-        return boss;
+    public User getEmployeeBoss() {
+        return employeeBoss;
     }
 
-    public void setBoss(User boss) {
-        this.boss = boss;
+    public void setEmployeeBoss(User employeeBoss) {
+        this.employeeBoss = employeeBoss;
+    }
+
+    public String getFullName() {
+        if(name != null || lastName != null) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(name).
+                    append(EMPTY_STRING).
+                    append(lastName);
+            return builder.toString();
+        }
+        return null;
     }
 
 
     public boolean equals(Object x) {
         User user = (User) x;
-        String fullName = user.getName() + " " + user.getLastName();
-        if(fullName.equalsIgnoreCase(name + " " + lastName)) {
+        String fullName = user.getName() + EMPTY_STRING + user.getLastName();
+        if(fullName.equalsIgnoreCase(name + EMPTY_STRING + lastName)) {
             return true;
         }
         return false;
@@ -149,7 +161,7 @@ public class User extends RealmObject implements Parcelable {
         parcel.writeString(email);
         parcel.writeString(password);
         parcel.writeString(token);
-        parcel.writeParcelable(boss, i);
+        parcel.writeParcelable(employeeBoss, i);
         parcel.writeTypedList(cards);
     }
 
@@ -161,7 +173,7 @@ public class User extends RealmObject implements Parcelable {
         email = in.readString();
         password = in.readString();
         token = in.readString();
-        boss = in.readParcelable(User.class.getClassLoader());
+        employeeBoss = in.readParcelable(User.class.getClassLoader());
         if (cards != null ) {
             in.readTypedList(cards, Card.CREATOR);
         }

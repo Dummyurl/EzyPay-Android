@@ -8,8 +8,6 @@ import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.payment.interfaceViews.IQRCodeGeneratorView;
 import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.model.User;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -59,7 +57,7 @@ public class QRCodeGeneratorPresenter implements IQRCodeGeneratorPresenter {
         }
         User user = UserSingleton.getInstance().getUser();
         if (user.getUserType() == 4) {
-            JSONObject commerce = getCommerceJSON(user.getBoss());
+            JSONObject commerce = getCommerceJSON(user.getEmployeeBoss());
             jsonObject.put("Commerce", commerce);
         } else {
             JSONObject commerce = getCommerceJSON(user);

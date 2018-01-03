@@ -270,4 +270,25 @@ public class UserServiceClient {
 
         connectionManager.sendCustomRequest(Request.Method.GET, url, null, headers, successHandler, failureHandler);
     }
+
+    public void getEmployees(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = BASIC_URL + "getAll";
+        HashMap<String, String> headers = new HashMap<>();
+        String oauthToken = "Bearer "+ user.getToken();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        JSONObject parameters = new JSONObject();
+        parameters.put("boss", user.getId());
+
+        connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
+
+    }
+
+    public List<User> parseUserList(JsonElement response) {
+        Gson gson = new Gson();
+        User[] userArray = gson.fromJson(response,User[].class);
+        List<User> userList = Arrays.asList(userArray);
+        return userList;
+    }
 }

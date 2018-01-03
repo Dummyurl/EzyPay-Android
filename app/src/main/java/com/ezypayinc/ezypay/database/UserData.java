@@ -22,9 +22,9 @@ public class UserData {
         userRealm.setAvatar(user.getAvatar());
         userRealm.setUserType(user.getUserType());
         userRealm.setCustomerId(user.getCustomerId());
-        if(user.getBoss() != null) {
-            User userBoss = realm.copyToRealm(user.getBoss());
-            userRealm.setBoss(userBoss);
+        if(user.getEmployeeBoss() != null) {
+            User userBoss = realm.copyToRealm(user.getEmployeeBoss());
+            userRealm.setEmployeeBoss(userBoss);
         }
         realm.commitTransaction();
     }
