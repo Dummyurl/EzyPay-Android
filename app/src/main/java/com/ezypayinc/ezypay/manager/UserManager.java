@@ -171,4 +171,14 @@ public class UserManager {
         UserServiceClient service = new UserServiceClient();
         return service.parseUserList(response);
     }
+
+    public void registerEmployee(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        UserServiceClient service = new UserServiceClient();
+        service.registerEmployee(user, successHandler, failureHandler);
+    }
+
+    public void updateEmployee(User user, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        UserServiceClient service = new UserServiceClient();
+        service.updateEmployee(user, token, successHandler, failureHandler);
+    }
 }

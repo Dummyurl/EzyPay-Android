@@ -5,5 +5,6 @@ import com.ezypayinc.ezypay.model.User;
 
 public interface IEmployeeDetailPresenter {
     void getEmployeeDetail(int employeeId);
-    void saveEmployee(User user);
+    void insertEmployee(User user);
+    void updateEmployee(User user);
 }

@@ -9,4 +9,9 @@ public interface IEmployeeDetailView {
     void setupEmployee(User user);
     void goToEmployeeList();
     void onNetworkError(Object error);
+    void errorNameRequired();
+    void errorLastNameRequired();
+    void errorUserNameRequired();
+    void errorPasswordRequired();
+
 }

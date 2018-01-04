@@ -84,6 +84,7 @@
     <string name="menu_item_settings_fragment_edit_item">Editar Usuario</string>
     <string name="menu_item_scanner_fragment_delete_ticket_item">Eliminar Ticket</string>
     <string name="menu_item_settings_fragment_sign_out_item">Cerrar Sesión</string>
+    <string name="menu_item_employee_detail_fragment_edit_employee_item">Editar Empleado</string>
 
     <!--Views titles-->
     <string name="scanner_view_title">Escanér</string>

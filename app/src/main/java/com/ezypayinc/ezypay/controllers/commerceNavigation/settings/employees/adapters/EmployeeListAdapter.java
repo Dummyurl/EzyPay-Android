@@ -15,9 +15,11 @@ import java.util.List;
 public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapter.EmployeeCellViewHolder> {
 
     private List<User> mEmployeeList;
+    private OnItemClickListener mListener;
 
-    public EmployeeListAdapter(List<User> employeeList) {
+    public EmployeeListAdapter(List<User> employeeList, OnItemClickListener listener) {
         mEmployeeList = employeeList;
+        mListener = listener;
     }
 
     @Override
@@ -29,8 +31,14 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
 
     @Override
     public void onBindViewHolder(EmployeeCellViewHolder holder, int position) {
-        User user = mEmployeeList.get(position);
+        final User user = mEmployeeList.get(position);
         holder.employeeNameTextView.setText(user.getFullName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClickListener(user);
+            }
+        });
     }
 
     @Override
@@ -56,5 +64,9 @@ public class EmployeeListAdapter extends RecyclerView.Adapter<EmployeeListAdapte
             super(view);
             employeeNameTextView = view.findViewById(R.id.cell_employee_list_employee_name);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onClickListener(User employee);
     }
 }

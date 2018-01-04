@@ -291,4 +291,42 @@ public class UserServiceClient {
         List<User> userList = Arrays.asList(userArray);
         return userList;
     }
+
+
+    /*register employee*/
+    public void registerEmployee(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        final String basicAuth = "Basic " + Base64.encodeToString((CLIENT_ID + ":"+ SECRET_KEY).getBytes(), Base64.NO_WRAP);
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", basicAuth);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        JSONObject parameters = new JSONObject();
+        parameters.put("name", user.getName());
+        parameters.put("lastName", user.getLastName());
+        parameters.put("email", user.getEmail());
+        parameters.put("password", user.getPassword());
+        parameters.put("userType", user.getUserType());
+        parameters.put("boss", user.getEmployeeBoss().getId());
+
+        int httpMethod = Request.Method.POST;
+        connectionManager.sendCustomRequest(httpMethod, BASIC_URL, parameters, headers, successHandler, failureHandler);
+    }
+
+    /*update employee*/
+    public void updateEmployee(User user, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        JSONObject parameters = new JSONObject();
+        parameters.put("name", user.getName());
+        parameters.put("lastName", user.getLastName());
+        parameters.put("email", user.getEmail());
+        parameters.put("password", user.getPassword());
+
+        HashMap<String, String> headers = new HashMap<>();
+        String oauthToken = "Bearer "+token;
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        String url = BASIC_URL + String.valueOf(user.getId());
+
+        connectionManager.sendCustomRequest(Request.Method.PUT, url, parameters, headers, successHandler, failureHandler);
+    }
 }

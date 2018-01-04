@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EmployeeListFragment extends Fragment implements IEmployeeListView {
+public class EmployeeListFragment extends Fragment implements IEmployeeListView, EmployeeListAdapter.OnItemClickListener {
 
     private ProgressDialog mProgressDialog;
     private RecyclerView mRecyclerView;
@@ -52,16 +52,22 @@ public class EmployeeListFragment extends Fragment implements IEmployeeListView 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_employee_list, container, false);
         mRecyclerView = rootView.findViewById(R.id.employee_list_fragment_recycler_view);
-        mAdapter = new EmployeeListAdapter(new ArrayList<User>());
+        mAdapter = new EmployeeListAdapter(new ArrayList<User>(), this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setAdapter(mAdapter);
         mPresenter = new EmployeeListPresenter(this);
-        mPresenter.getEmployeeList();
         setHasOptionsMenu(true);
         getActivity().setTitle(R.string.title_employee_fragment);
         return rootView;
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.getEmployeeList();
     }
 
     private void setupProgressDialog(){
@@ -114,5 +120,17 @@ public class EmployeeListFragment extends Fragment implements IEmployeeListView 
                     commit();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClickListener(User employee) {
+        if(employee != null) {
+            Fragment fragment = EmployeeDetailFragment.newInstance(employee.getId(), EmployeeDetailViewType.VIEW_EMPLOYEE.getType());
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            fragmentManager.beginTransaction().
+                    replace(R.id.container_activity_main_employee, fragment).
+                    addToBackStack(null).
+                    commit();
+        }
     }
 }

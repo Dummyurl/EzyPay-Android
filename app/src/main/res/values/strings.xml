@@ -97,6 +97,8 @@
     <string name="menu_item_settings_fragment_edit_item">Edit User</string>
     <string name="menu_item_scanner_fragment_delete_ticket_item">Delete Ticket</string>
     <string name="menu_item_settings_fragment_sign_out_item">Sign Out</string>
+    <string name="menu_item_employee_detail_fragment_edit_employee_item">Edit Employee</string>
+
 
     <!-- Error Messages -->
     <string name="error_invalid_email">This email address is invalid</string>
