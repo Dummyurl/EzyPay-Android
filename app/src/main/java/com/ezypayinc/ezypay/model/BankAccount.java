@@ -1,8 +1,10 @@
 package com.ezypayinc.ezypay.model;
 
-/**
- * Created by gustavoquesada on 10/22/17.
- */
+
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class BankAccount {
 
@@ -43,5 +45,11 @@ public class BankAccount {
 
     public void setUserIdentification(String userIdentification) {
         this.userIdentification = userIdentification;
+    }
+
+    public JSONObject toJSON() throws JSONException {
+        Gson gson = new Gson();
+        String json = gson.toJson(this);
+        return new JSONObject(json);
     }
 }

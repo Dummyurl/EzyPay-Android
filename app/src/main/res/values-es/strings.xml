@@ -41,6 +41,11 @@
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_code">Código</string>
     <string name="prompt_username">Username</string>
+    <string name="prompt_commerce_id">Cédula</string>
+    <string name="prompt_account_number">Número de cuenta</string>
+    <string name="prompt_commerce_account_name">Propietario</string>
+    <string name="prompt_commerce_bank_name">Banco</string>
+
 
     <!--Labels-->
     <string name="label_user_information_from_title">Información Personal</string>

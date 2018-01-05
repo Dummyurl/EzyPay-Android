@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.settings.bankAccount.BankAccountMainActivity;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.settings.employees.EmployeeMainActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardsMainActivity;
 import com.ezypayinc.ezypay.model.User;
@@ -83,7 +84,7 @@ public class CommerceSettingsFragment extends Fragment implements View.OnClickLi
         Intent intent;
         switch (item.getItemId()) {
             case R.id.credit_cards_item:
-                intent = new Intent(getActivity(), CardsMainActivity.class);
+                intent = new Intent(getActivity(), BankAccountMainActivity.class);
                 getActivity().startActivity(intent);
                 break;
             case R.id.edit_user_item:
