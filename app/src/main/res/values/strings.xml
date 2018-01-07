@@ -46,6 +46,7 @@
     <string name="title_view_employee_fragment">Employee</string>
     <string name="title_edit_employee_fragment">Edit Employee</string>
     <string name="title_add_employee_fragment">Add Employee</string>
+    <string name="title_bank_account_fragment">Bank Account</string>
 
     <!--Prompt-->
     <string name="prompt_name">Name</string>
@@ -151,6 +152,7 @@
     <string name="title_activity_main_commerce_settings">MainCommerceSettingsActivity</string>
     <string name="title_activity_employee_main">EmployeeMainActivity</string>
     <string name="title_activity_bank_account_main">BankAccountMainActivity</string>
+    <string name="title_activity_sign_in_commerce_main">SignInCommerceMainActivity</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

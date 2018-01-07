@@ -1,8 +1,10 @@
 package com.ezypayinc.ezypay.controllers.commerceNavigation.settings.bankAccount;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ public class BankAccountFragment extends Fragment implements View.OnClickListene
     private Button mSaveButton;
     private ProgressDialog mProgressDialog;
     private IBankAccountPresenter mPresenter;
+    private BankAccount mBankAccount;
 
     public BankAccountFragment() {
         // Required empty public constructor
@@ -55,6 +58,12 @@ public class BankAccountFragment extends Fragment implements View.OnClickListene
         return rootView;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getActivity().setTitle(R.string.title_bank_account_fragment);
+    }
+
     private void setupProgressDialog() {
         mProgressDialog = new ProgressDialog(this.getActivity());
         mProgressDialog.setCancelable(false);
@@ -68,11 +77,16 @@ public class BankAccountFragment extends Fragment implements View.OnClickListene
         bankAccount.setAccountNumber(mAccountNumberEditText.getText().toString());
         bankAccount.setUserAccount(mAccountNameEditText.getText().toString());
         bankAccount.setBank(mBankEditText.getText().toString());
-        mPresenter.saveBankAccount(bankAccount);
+        if(mBankAccount != null) {
+            mPresenter.updateBankAccount(bankAccount);
+        } else {
+            mPresenter.insertBankAccount(bankAccount);
+        }
     }
 
     @Override
     public void populateAccount(BankAccount bankAccount) {
+        mBankAccount = bankAccount;
         if(bankAccount != null) {
             mCommerceIdEditText.setText(bankAccount.getUserIdentification());
             mAccountNumberEditText.setText(bankAccount.getAccountNumber());
@@ -103,6 +117,11 @@ public class BankAccountFragment extends Fragment implements View.OnClickListene
     }
 
     @Override
+    public void goToSettingsView() {
+        getActivity().onBackPressed();
+    }
+
+    @Override
     public void commerceIdRequiredError() {
         mCommerceIdEditText.setError(getString(R.string.error_field_required));
     }
@@ -122,4 +141,5 @@ public class BankAccountFragment extends Fragment implements View.OnClickListene
     public void bankRequiredError() {
         mBankEditText.setError(getString(R.string.error_field_required));
     }
+
 }

@@ -8,10 +8,10 @@
     tools:context="com.ezypayinc.ezypay.controllers.commerceNavigation.settings.bankAccount.BankAccountFragment">
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin"
         android:background="#fff">
 
         <android.support.design.widget.TextInputLayout

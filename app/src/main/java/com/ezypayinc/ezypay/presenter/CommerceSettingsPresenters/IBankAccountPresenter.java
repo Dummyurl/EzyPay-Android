@@ -5,5 +5,6 @@ import com.ezypayinc.ezypay.model.BankAccount;
 
 public interface IBankAccountPresenter {
     void getBankAccount();
-    void saveBankAccount(BankAccount bankAccount);
+    void insertBankAccount(BankAccount bankAccount);
+    void updateBankAccount(BankAccount bankAccount);
 }

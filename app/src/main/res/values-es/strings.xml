@@ -106,6 +106,7 @@
     <string name="title_view_employee_fragment">Empleado</string>
     <string name="title_edit_employee_fragment">Editar Empleado</string>
     <string name="title_add_employee_fragment">Agregar Empleado</string>
+    <string name="title_bank_account_fragment">Cuenta Bancaria</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">

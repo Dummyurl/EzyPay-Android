@@ -93,7 +93,10 @@
             android:label="@string/title_activity_employee_main" />
         <activity
             android:name=".controllers.commerceNavigation.settings.bankAccount.BankAccountMainActivity"
-            android:label="@string/title_activity_bank_account_main"></activity>
+            android:label="@string/title_activity_bank_account_main" />
+        <activity
+            android:name=".controllers.login.commerce.SignInCommerceMainActivity"
+            android:label="@string/title_activity_sign_in_commerce_main"></activity>
     </application>
 
 </manifest>

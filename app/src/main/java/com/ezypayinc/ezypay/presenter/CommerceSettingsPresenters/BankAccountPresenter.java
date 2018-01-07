@@ -1,6 +1,8 @@
 package com.ezypayinc.ezypay.presenter.CommerceSettingsPresenters;
 
 
+import android.text.TextUtils;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.ezypayinc.ezypay.base.UserSingleton;
@@ -48,7 +50,85 @@ public class BankAccountPresenter implements IBankAccountPresenter {
     }
 
     @Override
-    public void saveBankAccount(BankAccount bankAccount) {
+    public void insertBankAccount(BankAccount bankAccount) {
+        if(validateFields(bankAccount)) {
+            mView.showProgressDialog();
+            User currentUser = UserSingleton.getInstance().getUser();
+            BankAccountManager manager = new BankAccountManager();
+            try {
+                manager.registerAccount(bankAccount, currentUser, new Response.Listener<JsonElement>() {
+                    @Override
+                    public void onResponse(JsonElement response) {
+                        mView.dismissProgressDialog();
+                        mView.goToSettingsView();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        mView.dismissProgressDialog();
+                        mView.onNetworkError(error);
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+                mView.dismissProgressDialog();
+            }
+        }
 
     }
+
+    @Override
+    public void updateBankAccount(BankAccount bankAccount) {
+        if(validateFields(bankAccount)) {
+            mView.showProgressDialog();
+            User currentUser = UserSingleton.getInstance().getUser();
+            BankAccountManager manager = new BankAccountManager();
+            try {
+                manager.updateAccount(bankAccount, currentUser, new Response.Listener<JsonElement>() {
+                    @Override
+                    public void onResponse(JsonElement response) {
+                        mView.dismissProgressDialog();
+                        mView.goToSettingsView();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        mView.dismissProgressDialog();
+                        mView.onNetworkError(error);
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+                mView.dismissProgressDialog();
+            }
+        }
+    }
+
+    private boolean validateFields(BankAccount bankAccount) {
+        if(bankAccount != null) {
+            if (TextUtils.isEmpty(bankAccount.getUserIdentification())) {
+                mView.commerceIdRequiredError();
+                return false;
+            }
+
+            if (TextUtils.isEmpty(bankAccount.getAccountNumber())) {
+                mView.accountNumberRequiredError();
+                return false;
+            }
+
+            if (TextUtils.isEmpty(bankAccount.getUserAccount())) {
+                mView.accountNameRequiredError();
+                return false;
+            }
+
+            if (TextUtils.isEmpty(bankAccount.getBank())) {
+                mView.bankRequiredError();
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+
 }

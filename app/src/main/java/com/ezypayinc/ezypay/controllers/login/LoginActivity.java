@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.navigation.MainCommerceActivity;
+import com.ezypayinc.ezypay.controllers.login.commerce.SignInCommerceMainActivity;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.LoginView;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
 import com.ezypayinc.ezypay.presenter.LoginPresenters.ILoginPresenter;
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
 
     // UI references.
     private EditText mPasswordView, mEmailView;
-    private Button mLogInButton;
+    private Button mLogInButton, mCommerceRegisterButton;
     private ProgressDialog mProgressDialog;
     private ILoginPresenter loginPresenter;
     private LinearLayout mUserLoginContainer, mCommerceLoginContainer;
@@ -78,21 +79,23 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
     private void initUIComponents() {
         // Set up the login form.
         if(userType == 1) {
-            mEmailView = (EditText) findViewById(R.id.email);
-            mPasswordView = (EditText) findViewById(R.id.password);
-            mLogInButton = (Button) findViewById(R.id.log_in_button);
-            mBtnFacebookLogin = (LoginButton) findViewById(R.id.btn_facebook_login);
-            mCreateAccountLabel = (TextView) findViewById(R.id.sign_in_textView);
+            mEmailView = findViewById(R.id.email);
+            mPasswordView = findViewById(R.id.password);
+            mLogInButton = findViewById(R.id.log_in_button);
+            mBtnFacebookLogin = findViewById(R.id.btn_facebook_login);
+            mCreateAccountLabel = findViewById(R.id.sign_in_textView);
             mCreateAccountLabel.setOnClickListener(this);
             setFacebookLoginButton();
         } else {
-            mEmailView = (EditText) findViewById(R.id.commerce_email);
-            mPasswordView = (EditText) findViewById(R.id.commerce_password);
-            mLogInButton = (Button) findViewById(R.id.log_in_commerce_button);
+            mEmailView = findViewById(R.id.commerce_email);
+            mPasswordView = findViewById(R.id.commerce_password);
+            mLogInButton =  findViewById(R.id.log_in_commerce_button);
+            mCommerceRegisterButton = findViewById(R.id.register_commerce_button);
+            mCommerceRegisterButton.setOnClickListener(this);
         }
 
-        mUserLoginContainer = (LinearLayout) findViewById((R.id.userLogIn));
-        mCommerceLoginContainer = (LinearLayout) findViewById((R.id.commerceLogin));
+        mUserLoginContainer = findViewById((R.id.userLogIn));
+        mCommerceLoginContainer = findViewById((R.id.commerceLogin));
 
         if(userType == 1) {
             mUserLoginContainer.setVisibility(View.VISIBLE);
@@ -191,12 +194,19 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
         startActivity(intent);
     }
 
+    public void navigateToSignCommerce() {
+        Intent intent = new Intent(LoginActivity.this, SignInCommerceMainActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View view) {
         if(view.equals(mLogInButton)) {
             attemptLogin();
         } else if(view.equals(mCreateAccountLabel)) {
             navigateToSignUser();
+        } else if (view.equals(mCommerceRegisterButton)) {
+            navigateToSignCommerce();
         }
     }
 }

@@ -8,6 +8,7 @@ public interface IBankAccountView {
     void showProgressDialog();
     void dismissProgressDialog();
     void onNetworkError(Object error);
+    void goToSettingsView();
     void commerceIdRequiredError();
     void accountNumberRequiredError();
     void accountNameRequiredError();

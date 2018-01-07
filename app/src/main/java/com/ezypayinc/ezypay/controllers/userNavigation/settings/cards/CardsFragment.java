@@ -56,7 +56,7 @@ public class CardsFragment extends Fragment implements CardsListAdapter.OnItemCl
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_cards, container, false);
-        cardListRecyclerView = (RecyclerView) rootView.findViewById(R.id.cards_list_recycler_view);
+        cardListRecyclerView = rootView.findViewById(R.id.cards_list_recycler_view);
         setupProgressDialog();
         presenter = new CardListPresenter(this);
         setHasOptionsMenu(true);
