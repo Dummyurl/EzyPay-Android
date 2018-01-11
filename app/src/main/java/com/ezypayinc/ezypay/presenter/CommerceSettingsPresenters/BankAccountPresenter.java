@@ -74,7 +74,6 @@ public class BankAccountPresenter implements IBankAccountPresenter {
                 mView.dismissProgressDialog();
             }
         }
-
     }
 
     @Override
@@ -129,6 +128,4 @@ public class BankAccountPresenter implements IBankAccountPresenter {
         }
         return false;
     }
-
-
 }

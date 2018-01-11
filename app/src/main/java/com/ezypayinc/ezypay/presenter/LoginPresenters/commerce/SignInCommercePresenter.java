@@ -25,7 +25,7 @@ public class SignInCommercePresenter implements ISignInCommercePresenter {
     @Override
     public void registerCommerce(User user, String code) {
         if(validateFields(user, code)) {
-
+            validateUserEmail(user);
         }
     }
 
@@ -101,10 +101,7 @@ public class SignInCommercePresenter implements ISignInCommercePresenter {
     }
 
     private void addUser(final User user) {
-        UserManager manager = new UserManager();
         UserSingleton.getInstance().setUser(user);
-        manager.deleteUser();
-        manager.addUser(user);
         mView.goToNextView();
     }
 }

@@ -60,6 +60,7 @@
     <string name="label_change_employee"><u>cambiar de empleado</u></string>
     <string name="label_choose_qr_type">Escoge tipo de QR</string>
     <string name="label_total_cost">Costo Total</string>
+    <string name="label_tables_warning_message">Sí no agregas mesas, el menu de mesas no apracerá</string>
 
 
     <!--Spinners items-->
@@ -129,6 +130,8 @@
     <string name="error_invalid_year">Año no válido</string>
     <string name="error_delete_favorite_card">No puedes eliminar tu tarjeta favorita</string>
     <string name="error_invalid_card_type">Tipo de Tarjeta no soportado</string>
+    <string name="error_photo_field_required">La imagen es requerida</string>
+
     <string name="facebook_login_cancel_message">Facebook Login fue cancelado</string>
     <string name="facebook_login_error_message">Facebook Login error</string>
 </resources>

@@ -78,6 +78,7 @@
     <string name="label_change_employee"><u>change employee</u></string>
     <string name="label_choose_qr_type">Choose QR Type</string>
     <string name="label_total_cost">Total cost</string>
+    <string name="label_tables_warning_message">If you put 0, the table menu will not appear</string>
 
     <!--Spinners items-->
     <string-array name="months">
@@ -116,6 +117,7 @@
     <string name="error_delete_favorite_card">You cannot delete your favorite card</string>
     <string name="error_invalid_card_type">Card Type is not supported</string>
     <string name="error_email_already_assigned">This email has already been assigned to another user</string>
+    <string name="error_photo_field_required">The image is required</string>
 
     <!--Views titles-->
     <string name="scanner_view_title">Scanner</string>
