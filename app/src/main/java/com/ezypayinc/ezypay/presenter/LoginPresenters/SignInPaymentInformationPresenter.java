@@ -78,7 +78,7 @@ public class SignInPaymentInformationPresenter implements ISignInPaymentInformat
     private void saveUser(final User user, final Card card) {
         final UserManager userManager = new UserManager();
         try {
-            userManager.saveUserInServer(user, new Response.Listener<JsonElement>() {
+            userManager.saveUserInServer(user, 0, new Response.Listener<JsonElement>() {
                 @Override
                 public void onResponse(JsonElement response) {
                     User newUser = userManager.parseRegisterUser(response, user);

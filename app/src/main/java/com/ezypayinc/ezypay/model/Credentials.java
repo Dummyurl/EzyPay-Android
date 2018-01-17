@@ -1,10 +1,8 @@
 package com.ezypayinc.ezypay.model;
 
-/**
- * Created by gustavoquesada on 10/22/17.
- */
+import io.realm.RealmObject;
 
-public class Credentials {
+public class Credentials extends RealmObject {
     private String credential;
     private String platform;
     private String platformToken;

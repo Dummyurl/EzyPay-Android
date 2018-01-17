@@ -21,6 +21,7 @@ public class User extends RealmObject implements Parcelable {
     private String avatar;
     private User employeeBoss;
     private RealmList<Card> cards;
+    private Credentials credentials;
     private static final String EMPTY_STRING = " ";
 
     public User() {
@@ -121,6 +122,14 @@ public class User extends RealmObject implements Parcelable {
 
     public void setEmployeeBoss(User employeeBoss) {
         this.employeeBoss = employeeBoss;
+    }
+
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
     }
 
     public String getFullName() {

@@ -77,9 +77,9 @@ public class UserManager {
          return  service.parseUserFromServer(response);
     }
 
-    public void saveUserInServer(User user, Response.Listener<JsonElement> successListener, Response.ErrorListener errorListener) throws JSONException {
+    public void saveUserInServer(User user, int tablesQuantity, Response.Listener<JsonElement> successListener, Response.ErrorListener errorListener) throws JSONException {
         UserServiceClient service = new UserServiceClient();
-        service.registerUser(user, successListener, errorListener);
+        service.registerUser(user, tablesQuantity, successListener, errorListener);
     }
 
     public User parseRegisterUser(JsonElement response, User user)  {

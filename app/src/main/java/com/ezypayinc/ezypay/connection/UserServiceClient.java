@@ -41,7 +41,7 @@ public class UserServiceClient {
     }
 
     /*register user*/
-    public void registerUser(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+    public void registerUser(User user, int tablesQuantity, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         final String basicAuth = "Basic " + Base64.encodeToString((CLIENT_ID + ":"+ SECRET_KEY).getBytes(), Base64.NO_WRAP);
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", basicAuth);
@@ -55,15 +55,28 @@ public class UserServiceClient {
         parameters.put("password", user.getPassword());
         parameters.put("userType", user.getUserType());
 
+        if(user.getCredentials() != null) {
+            JSONObject credentials = new JSONObject();
+            credentials.put("credential", user.getCredentials().getCredential());
+            credentials.put("platform", user.getCredentials().getPlatform());
+            parameters.put("credentials", credentials);
+        }
+
+        if(tablesQuantity > 0) {
+            parameters.put("tablesQuantity", tablesQuantity);
+        }
+
         int httpMethod = Request.Method.POST;
         connectionManager.sendCustomRequest(httpMethod, BASIC_URL, parameters, headers, successHandler, failureHandler);
     }
 
     public User parseRegisterUser(JsonElement response, User user) {
         int userId = response.getAsJsonObject().get("id").getAsInt();
-        int customerId = response.getAsJsonObject().get("customerId").getAsInt();
         user.setId(userId);
-        user.setCustomerId(customerId);
+        if (response.getAsJsonObject().has("customerId")) {
+            int customerId = response.getAsJsonObject().get("customerId").getAsInt();
+            user.setCustomerId(customerId);
+        }
         return user;
     }
 

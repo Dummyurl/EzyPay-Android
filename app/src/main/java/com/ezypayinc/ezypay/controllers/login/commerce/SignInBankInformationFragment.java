@@ -17,12 +17,16 @@ import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.navigation.MainCommerceActivity;
 import com.ezypayinc.ezypay.controllers.login.commerce.interfaceViews.ISignInBankInformationView;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
+import com.ezypayinc.ezypay.model.BankAccount;
+import com.ezypayinc.ezypay.presenter.LoginPresenters.commerce.ISignInBankInformationPresenter;
+import com.ezypayinc.ezypay.presenter.LoginPresenters.commerce.SignInBankInformationPresenter;
 
 public class SignInBankInformationFragment extends Fragment implements View.OnClickListener, ISignInBankInformationView {
 
     private EditText mIdEditText, mAccountNumberEditText, mAccountNameEditText, mBankEditText;
     private Button mSaveButton;
     private ProgressDialog mProgressDialog;
+    private ISignInBankInformationPresenter mPresenter;
 
     public SignInBankInformationFragment() {
         // Required empty public constructor
@@ -49,6 +53,9 @@ public class SignInBankInformationFragment extends Fragment implements View.OnCl
         mBankEditText = rootView.findViewById(R.id.commerce_bank_name_editText_sig_in_commerce_bank_account_fragment);
         mSaveButton = rootView.findViewById(R.id.save_button_sig_in_commerce_bank_account_fragment);
         setupProgressDialog();
+        mSaveButton.setOnClickListener(this);
+        mPresenter = new SignInBankInformationPresenter(this);
+
 
         return rootView;
     }
@@ -67,7 +74,12 @@ public class SignInBankInformationFragment extends Fragment implements View.OnCl
 
     @Override
     public void onClick(View v) {
-
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.setUserIdentification(mIdEditText.getText().toString());
+        bankAccount.setAccountNumber(mAccountNumberEditText.getText().toString());
+        bankAccount.setUserAccount(mAccountNameEditText.getText().toString());
+        bankAccount.setBank(mBankEditText.getText().toString());
+        mPresenter.saveUserInformation(bankAccount);
     }
 
     @Override
