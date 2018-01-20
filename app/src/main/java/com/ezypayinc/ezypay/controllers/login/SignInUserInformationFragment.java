@@ -40,8 +40,6 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
 
     public static SignInUserInformationFragment newInstance() {
         SignInUserInformationFragment fragment = new SignInUserInformationFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -57,13 +55,13 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_sign_in_user_information, container, false);
         initUIComponents(rootView);
+        mPresenter.validateUser();
         return rootView;
     }
 
     public void onStart() {
         super.onStart();
         listener = (OnChangeViewListener) getActivity();
-
     }
 
     @Override
@@ -96,13 +94,13 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
 
     public void initUIComponents(View rootView) {
         mRootView = rootView;
-        edtName = (EditText)rootView.findViewById(R.id.sign_in_name);
-        edtLastName = (EditText)rootView.findViewById(R.id.sign_in_lastname);
-        edtPhoneNumber = (EditText)rootView.findViewById(R.id.sign_in_phone_number);
-        edtEmail = (EditText)rootView.findViewById(R.id.sign_in_email);
-        edtPassword = (EditText)rootView.findViewById(R.id.sign_in_password);
-        edtPhoneCode = (EditText)rootView.findViewById(R.id.sign_in_code_phone_number);
-        Button btnSaveUser = (Button)rootView.findViewById(R.id.sign_in_save_user_information);
+        edtName = rootView.findViewById(R.id.sign_in_name);
+        edtLastName = rootView.findViewById(R.id.sign_in_lastname);
+        edtPhoneNumber = rootView.findViewById(R.id.sign_in_phone_number);
+        edtEmail = rootView.findViewById(R.id.sign_in_email);
+        edtPassword = rootView.findViewById(R.id.sign_in_password);
+        edtPhoneCode = rootView.findViewById(R.id.sign_in_code_phone_number);
+        Button btnSaveUser = rootView.findViewById(R.id.sign_in_save_user_information);
         btnSaveUser.setOnClickListener(this);
         edtPhoneCode.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -128,6 +126,19 @@ public class SignInUserInformationFragment extends Fragment implements View.OnCl
     @Override
     public void hideProgressDialog() {
         mProgressDialog.dismiss();
+    }
+
+    @Override
+    public void setupView(User user) {
+        if(user != null) {
+            edtName.setText(user.getName());
+            edtLastName.setText(user.getLastName());
+            edtEmail.setText(user.getEmail());
+            edtName.setEnabled(false);
+            edtLastName.setEnabled(false);
+            edtEmail.setEnabled(false);
+            edtPassword.setVisibility(View.GONE);
+        }
     }
 
     @Override

@@ -72,7 +72,8 @@ public class LoginPresenter  implements ILoginPresenter {
         loginView.showProgressDialog();
 
         try {
-            manager.loginMethod(email, password, new Response.Listener<JsonElement>() {
+            //TODO: change scope and platformToken values
+            manager.loginMethod(email, password, null, null, new Response.Listener<JsonElement>() {
                 @Override
                 public void onResponse(JsonElement response) {
                     User user = manager.parseLoginResponse(response);
@@ -93,6 +94,35 @@ public class LoginPresenter  implements ILoginPresenter {
         }
     }
 
+    @Override
+    public void validateFacebookLogin(final User user) {
+        loginView.showProgressDialog();
+        final UserManager manager = new UserManager();
+        try {
+            manager.validateCredentials(user, new Response.Listener<JsonElement>() {
+                @Override
+                public void onResponse(JsonElement response) {
+                    loginView.hideProgressDialog();
+                    User userFromLogin = manager.parseFacebookLogin(response);
+                    if(userFromLogin != null) {
+                        getUserFromServer(userFromLogin);
+                    } else {
+                        loginView.navigateToSignUser();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    loginView.hideProgressDialog();
+                    loginView.onNetworkError(error);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void getUserFromServer(final User user) {
         final UserSingleton userSingleton = UserSingleton.getInstance();
         userSingleton.setUser(user);
@@ -109,6 +139,7 @@ public class LoginPresenter  implements ILoginPresenter {
                     if(boss > 0) {
                         getUserCommerce(userFromServer, boss);
                     } else {
+                        manager.deleteUser();
                         manager.addUser(userFromServer);
                         loginView.hideProgressDialog();
                         if (user.getUserType() == 1) {
@@ -142,6 +173,7 @@ public class LoginPresenter  implements ILoginPresenter {
                     User commerce = manager.parseUserFromServer(response);
                     user.setEmployeeBoss(commerce);
                     userSingleton.setUser(user);
+                    manager.deleteUser();
                     manager.addUser(user);
                     loginView.hideProgressDialog();
                     if(user.getUserType() == 1) {

@@ -47,6 +47,13 @@ public class UserServiceClient {
         headers.put("Authorization", basicAuth);
         headers.put("Content-Type", CONTENT_TYPE);
 
+        JSONObject parameters = serializeUser(user, tablesQuantity);
+        int httpMethod = Request.Method.POST;
+        connectionManager.sendCustomRequest(httpMethod, BASIC_URL, parameters, headers, successHandler, failureHandler);
+    }
+
+    private JSONObject serializeUser(User user, int tablesQuantity) throws JSONException {
+        if(user == null) { return null; }
         JSONObject parameters = new JSONObject();
         parameters.put("name", user.getName());
         parameters.put("lastName", user.getLastName());
@@ -65,9 +72,7 @@ public class UserServiceClient {
         if(tablesQuantity > 0) {
             parameters.put("tablesQuantity", tablesQuantity);
         }
-
-        int httpMethod = Request.Method.POST;
-        connectionManager.sendCustomRequest(httpMethod, BASIC_URL, parameters, headers, successHandler, failureHandler);
+        return parameters;
     }
 
     public User parseRegisterUser(JsonElement response, User user) {
@@ -341,5 +346,15 @@ public class UserServiceClient {
         String url = BASIC_URL + String.valueOf(user.getId());
 
         connectionManager.sendCustomRequest(Request.Method.PUT, url, parameters, headers, successHandler, failureHandler);
+    }
+
+    public void validateCredentials(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = "auth/credential";
+        final String basicAuth = "Basic " + Base64.encodeToString((CLIENT_ID + ":"+ SECRET_KEY).getBytes(), Base64.NO_WRAP);
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", basicAuth);
+        headers.put("Content-Type", CONTENT_TYPE);
+        JSONObject parameters = serializeUser(user, 0);
+        connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
     }
 }

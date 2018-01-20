@@ -98,9 +98,12 @@ public class SignInPaymentInformationPresenter implements ISignInPaymentInformat
     }
 
     private void login(final User user, final Card card) {
+        String scope = user.getCredentials() != null ? user.getCredentials().getPlatform() : null;
+        String platformToken = user.getCredentials() != null ? user.getCredentials().getPlatformToken() : null;
+        String password = user.getCredentials() != null ? user.getCredentials().getCredential() : user.getPassword();
         final UserManager userManager = new UserManager();
         try {
-            userManager.loginMethod(user.getEmail(), user.getPassword(), new Response.Listener<JsonElement>() {
+            userManager.loginMethod(user.getEmail(), password, scope, platformToken, new Response.Listener<JsonElement>() {
                 @Override
                 public void onResponse(JsonElement response) {
                     User userFromLogin = userManager.parseLoginResponse(response);
@@ -129,6 +132,7 @@ public class SignInPaymentInformationPresenter implements ISignInPaymentInformat
                 @Override
                 public void onResponse(JsonElement response) {
                     UserSingleton.getInstance().setUser(user);
+                    userManager.deleteUser();
                     userManager.addUser(user);
                     view.hideProgressDialog();
                     view.navigateToHome();

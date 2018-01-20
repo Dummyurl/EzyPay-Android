@@ -10,6 +10,7 @@ import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.SignInUserInformationView;
 import com.ezypayinc.ezypay.manager.UserManager;
 import com.ezypayinc.ezypay.model.User;
+import com.facebook.login.LoginResult;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -21,6 +22,13 @@ public class SignInUserInformationPresenter implements ISignInUserInformationPre
 
     public SignInUserInformationPresenter(SignInUserInformationView view) {
         this.view = view;
+    }
+
+    @Override
+    public void validateUser() {
+        if (UserSingleton.getInstance().getUser() != null) {
+            view.setupView(UserSingleton.getInstance().getUser());
+        }
     }
 
     public void validateUserEmail(final User user) {
@@ -54,7 +62,7 @@ public class SignInUserInformationPresenter implements ISignInUserInformationPre
     @Override
     public void registerUser(String username, String lastName, String phoneNumber, String email, String password, String code) {
         if(validateFields(username, lastName, phoneNumber, email, password, code)) {
-            final User user = new User();
+            final User user = UserSingleton.getInstance().getUser() != null ? UserSingleton.getInstance().getUser() : new User();
             user.setName(username);
             user.setLastName(lastName);
             user.setPhoneNumber(code + phoneNumber);
@@ -101,12 +109,12 @@ public class SignInUserInformationPresenter implements ISignInUserInformationPre
             return false;
         }
 
-        if (TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password) && UserSingleton.getInstance().getUser() == null) {
             view.setErrorMessage(R.id.sign_in_password, R.string.error_field_required);
             return false;
         }
 
-        if (password.length() < 4) {
+        if (password.length() < 4 && UserSingleton.getInstance().getUser() == null) {
             view.setErrorMessage(R.id.sign_in_password, R.string.error_invalid_password);
             return false;
         }

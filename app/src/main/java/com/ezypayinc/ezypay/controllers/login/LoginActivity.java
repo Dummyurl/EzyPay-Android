@@ -13,19 +13,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.connection.ErrorHelper;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.navigation.MainCommerceActivity;
 import com.ezypayinc.ezypay.controllers.login.commerce.SignInCommerceMainActivity;
 import com.ezypayinc.ezypay.controllers.login.interfaceViews.LoginView;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
+import com.ezypayinc.ezypay.model.Credentials;
+import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.presenter.LoginPresenters.ILoginPresenter;
 import com.ezypayinc.ezypay.presenter.LoginPresenters.LoginPresenter;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -130,12 +138,20 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
         mBtnFacebookLogin.setReadPermissions(Arrays.asList("email"));
         mBtnFacebookLogin.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                Profile profile = Profile.getCurrentProfile();
-                if (profile == null) {
-                    Profile.fetchProfileForCurrentAccessToken();
-                }
-                Toast.makeText(getApplicationContext(), "Facebook Success " + profile.getName(), Toast.LENGTH_SHORT).show();
+            public void onSuccess(final LoginResult loginResult) {
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        parseFacebookLogin(object, loginResult);
+                        if(UserSingleton.getInstance().getUser() != null) {
+                            loginPresenter.validateFacebookLogin(UserSingleton.getInstance().getUser());
+                        }
+                    }
+                });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id, email, first_name, last_name,  picture.type(large)");
+                request.setParameters(parameters);
+                request.executeAsync();
             }
 
             @Override
@@ -148,6 +164,24 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
                 Toast.makeText(getApplicationContext(), R.string.facebook_login_error_message, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void parseFacebookLogin(JSONObject response, LoginResult loginResult) {
+        if (response != null) {
+            User user = new User();
+            try {
+                user.setEmail(response.getString("email"));
+                user.setName(response.getString("first_name"));
+                user.setLastName(response.getString("last_name"));
+                user.setCredentials(new Credentials());
+                user.getCredentials().setCredential(response.getString("id"));
+                user.getCredentials().setPlatform("Facebook");
+                user.getCredentials().setPlatformToken(loginResult.getAccessToken().getToken());
+                UserSingleton.getInstance().setUser(user);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -194,7 +228,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
         startActivity(intent);
     }
 
-    public void navigateToSignCommerce() {
+    private void navigateToSignCommerce() {
         Intent intent = new Intent(LoginActivity.this, SignInCommerceMainActivity.class);
         startActivity(intent);
     }

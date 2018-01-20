@@ -15,4 +15,6 @@ public interface LoginView {
     void navigateToHome();
 
     void navigateToCommerceHome();
+
+    void navigateToSignUser();
 }

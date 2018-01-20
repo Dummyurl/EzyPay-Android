@@ -90,7 +90,7 @@ public class SignInBankInformationPresenter implements ISignInBankInformationPre
     private void login(final User user, final BankAccount bankAccount) {
         final UserManager userManager = new UserManager();
         try {
-            userManager.loginMethod(user.getEmail(), user.getPassword(), new Response.Listener<JsonElement>() {
+            userManager.loginMethod(user.getEmail(), user.getPassword(), null, null, new Response.Listener<JsonElement>() {
                 @Override
                 public void onResponse(JsonElement response) {
                     User userFromLogin = userManager.parseLoginResponse(response);

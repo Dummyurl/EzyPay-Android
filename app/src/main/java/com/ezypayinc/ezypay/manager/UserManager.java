@@ -57,14 +57,19 @@ public class UserManager {
     }
 
     /*web services methods*/
-    public void loginMethod(String email, String password, Response.Listener<JsonElement>  successListener, Response.ErrorListener errorListener) throws JSONException {
+    public void loginMethod(String email, String password, String scope, String platformToken, Response.Listener<JsonElement>  successListener, Response.ErrorListener errorListener) throws JSONException {
         SessionServiceClient service = new SessionServiceClient();
-        service.loginMethod(email, password,successListener, errorListener);
+        service.loginMethod(email, password, scope, platformToken, successListener, errorListener);
     }
 
     public User parseLoginResponse(JsonElement response) {
         SessionServiceClient service = new SessionServiceClient();
         return service.parseLoginMethod(response);
+    }
+
+    public User parseFacebookLogin(JsonElement response) {
+        SessionServiceClient service = new SessionServiceClient();
+        return service.parseFacebookLogin(response);
     }
 
     public void getUserByIdFromServer(int userId, Response.Listener<JsonElement>  successListener, Response.ErrorListener errorListener) throws JSONException {
@@ -180,5 +185,10 @@ public class UserManager {
     public void updateEmployee(User user, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         UserServiceClient service = new UserServiceClient();
         service.updateEmployee(user, token, successHandler, failureHandler);
+    }
+
+    public void validateCredentials(User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        UserServiceClient service = new UserServiceClient();
+        service.validateCredentials(user, successHandler, failureHandler);
     }
 }
