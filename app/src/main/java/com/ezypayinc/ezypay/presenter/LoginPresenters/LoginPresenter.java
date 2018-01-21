@@ -72,7 +72,6 @@ public class LoginPresenter  implements ILoginPresenter {
         loginView.showProgressDialog();
 
         try {
-            //TODO: change scope and platformToken values
             manager.loginMethod(email, password, null, null, new Response.Listener<JsonElement>() {
                 @Override
                 public void onResponse(JsonElement response) {
@@ -142,7 +141,7 @@ public class LoginPresenter  implements ILoginPresenter {
                         manager.deleteUser();
                         manager.addUser(userFromServer);
                         loginView.hideProgressDialog();
-                        if (user.getUserType() == 1) {
+                        if (userFromServer.getUserType() == 1) {
                             loginView.navigateToHome();
                         } else {
                             loginView.navigateToCommerceHome();

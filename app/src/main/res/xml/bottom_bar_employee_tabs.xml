@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/employee_home_item"
+        icon="@drawable/ic_home"
+        title="@string/navigation_bar_commerce_home_item" />
+</tabs>

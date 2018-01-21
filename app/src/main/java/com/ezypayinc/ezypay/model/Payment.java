@@ -165,7 +165,9 @@ public class Payment extends RealmObject implements Parcelable {
         commerce = payment.getCommerce();
         currency = payment.getCurrency();
         friends = new RealmList<>();
-        friends.addAll(payment.getFriends());
+        if(payment.getFriends() != null) {
+            friends.addAll(payment.getFriends());
+        }
     }
 
     public static Parcelable.Creator<Payment> CREATOR = new Parcelable.Creator<Payment>(){

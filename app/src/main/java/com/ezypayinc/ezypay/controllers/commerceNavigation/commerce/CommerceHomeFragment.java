@@ -2,6 +2,7 @@ package com.ezypayinc.ezypay.controllers.commerceNavigation.commerce;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.commerce.interfaceViews.ICommerceHomeView;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.payment.PaymentCommerceMainActivity;
+import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.presenter.CommercePresenter.CommerceHomePresenter;
 import com.ezypayinc.ezypay.presenter.CommercePresenter.CommerceTableListPresenter;
@@ -57,6 +60,7 @@ public class CommerceHomeFragment extends Fragment implements View.OnClickListen
     }
 
     private void initUI(View rootView) {
+        setupProgressDialog();
         mPresenter = new CommerceHomePresenter(this);
         commerceImageView = rootView.findViewById(R.id.commerce_home_imageView);
         userLoggedTextView = rootView.findViewById(R.id.commerce_home_user_logged_in);
@@ -115,5 +119,14 @@ public class CommerceHomeFragment extends Fragment implements View.OnClickListen
                 replace(R.id.container_activity_main_commerce, fragment).
                 addToBackStack(null).
                 commit();
+    }
+
+    @Override
+    public void generateQRCode(Payment payment) {
+        Intent intent = new Intent(getActivity(), PaymentCommerceMainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(PaymentCommerceMainActivity.PAYMENT_KEY, payment);
+        intent.putExtras(bundle);
+        getActivity().startActivity(intent);
     }
 }

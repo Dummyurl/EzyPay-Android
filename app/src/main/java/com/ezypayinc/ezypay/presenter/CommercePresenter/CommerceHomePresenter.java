@@ -3,6 +3,7 @@ package com.ezypayinc.ezypay.presenter.CommercePresenter;
 
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.commerce.interfaceViews.ICommerceHomeView;
+import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.model.User;
 
 public class CommerceHomePresenter implements ICommerceHomePresenter {
@@ -15,7 +16,7 @@ public class CommerceHomePresenter implements ICommerceHomePresenter {
 
     @Override
     public void setupView() {
-       // mView.showProgressDialog();
+        mView.showProgressDialog();
         User user = UserSingleton.getInstance().getUser();
         if(user.getUserType() == 4) {
             String name = String.format("%s %s", user.getName(), user.getLastName());
@@ -23,7 +24,7 @@ public class CommerceHomePresenter implements ICommerceHomePresenter {
         } else {
             mView.displayUserInformation(user.getAvatar(), user.getName(), user.getName());
         }
-        //mView.hideProgressDialog();
+        mView.hideProgressDialog();
     }
 
     @Override
@@ -36,6 +37,15 @@ public class CommerceHomePresenter implements ICommerceHomePresenter {
         User currentUser = UserSingleton.getInstance().getUser();
         if(currentUser.getUserType() == 4 && currentUser.getEmployeeBoss().getUserType() == 2) {
             mView.displayCommerceTableListView();
+        } else {
+            Payment payment = new Payment();
+            User user = UserSingleton.getInstance().getUser();
+            if(user.getUserType() == 4) {
+                payment.setEmployeeId(user.getId());
+            } else {
+                payment.setEmployeeId(0);
+            }
+            mView.generateQRCode(payment);
         }
     }
 }
