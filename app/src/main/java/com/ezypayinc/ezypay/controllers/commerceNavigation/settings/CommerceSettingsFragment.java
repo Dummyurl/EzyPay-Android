@@ -17,17 +17,21 @@ import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.settings.bankAccount.BankAccountMainActivity;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.settings.employees.EmployeeMainActivity;
+import com.ezypayinc.ezypay.controllers.login.MainActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardsMainActivity;
+import com.ezypayinc.ezypay.controllers.userNavigation.settings.interfaceViews.ISettingsView;
 import com.ezypayinc.ezypay.model.User;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.ISettingsPresenter;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.SettingsPresenter;
 import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-public class CommerceSettingsFragment extends Fragment implements View.OnClickListener {
+public class CommerceSettingsFragment extends Fragment implements View.OnClickListener, ISettingsView {
     private EditText mName, mEmail, mPhoneNumber;
     private ImageView mProfileImage;
     private Button mEmployeeButton;
-
+    private ISettingsPresenter mPresenter;
 
     public CommerceSettingsFragment() {
     }
@@ -53,6 +57,7 @@ public class CommerceSettingsFragment extends Fragment implements View.OnClickLi
         mPhoneNumber = rootView.findViewById(R.id.commerce_settings_view_phone_number);
         mEmployeeButton = rootView.findViewById(R.id.commerce_settings_employee_button);
         mEmployeeButton.setOnClickListener(this);
+        mPresenter = new SettingsPresenter(this);
         setHasOptionsMenu(true);
         getUser();
         return rootView;
@@ -91,6 +96,9 @@ public class CommerceSettingsFragment extends Fragment implements View.OnClickLi
                 intent = new Intent(getActivity(), MainCommerceSettingsActivity.class);
                 getActivity().startActivity(intent);
                 break;
+            case R.id.sign_out_item:
+                mPresenter.logOutAction();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -99,5 +107,13 @@ public class CommerceSettingsFragment extends Fragment implements View.OnClickLi
     public void onClick(View v) {
         Intent intent = new Intent(getActivity(), EmployeeMainActivity.class);
         getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void logOutAction() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        getActivity().startActivity(intent);
+        getActivity().finish();
     }
 }

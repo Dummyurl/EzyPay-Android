@@ -17,16 +17,21 @@ import android.widget.ImageView;
 
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
+import com.ezypayinc.ezypay.controllers.login.MainActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.cards.CardsMainActivity;
+import com.ezypayinc.ezypay.controllers.userNavigation.settings.interfaceViews.ISettingsView;
 import com.ezypayinc.ezypay.model.User;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.ISettingsPresenter;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.SettingsPresenter;
 import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements ISettingsView {
 
     private EditText mName, mLastName, mEmail, mPhoneNumber;
     private ImageView mProfileImage;
+    private ISettingsPresenter mPresenter;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -52,6 +57,7 @@ public class SettingsFragment extends Fragment {
         setHasOptionsMenu(true);
         View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
         initUIComponents(rootView);
+        mPresenter = new SettingsPresenter(this);
         return rootView;
     }
 
@@ -110,7 +116,18 @@ public class SettingsFragment extends Fragment {
                 intent = new Intent(getActivity(), SettingsMainActivity.class);
                 getActivity().startActivity(intent);
                 break;
+            case R.id.sign_out_item:
+                mPresenter.logOutAction();
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void logOutAction() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        getActivity().startActivity(intent);
+        getActivity().finish();
     }
 }

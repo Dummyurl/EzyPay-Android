@@ -17,22 +17,26 @@ import android.widget.TextView;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.commerce.interfaceViews.ICommerceHomeView;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.payment.PaymentCommerceMainActivity;
+import com.ezypayinc.ezypay.controllers.login.MainActivity;
+import com.ezypayinc.ezypay.controllers.userNavigation.settings.interfaceViews.ISettingsView;
 import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.model.User;
 import com.ezypayinc.ezypay.presenter.CommercePresenter.CommerceHomePresenter;
 import com.ezypayinc.ezypay.presenter.CommercePresenter.CommerceTableListPresenter;
 import com.ezypayinc.ezypay.presenter.CommercePresenter.ICommerceHomePresenter;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.ISettingsPresenter;
+import com.ezypayinc.ezypay.presenter.SettingsPresenters.SettingsPresenter;
 import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
-public class CommerceHomeFragment extends Fragment implements View.OnClickListener, ICommerceHomeView{
+public class CommerceHomeFragment extends Fragment implements View.OnClickListener, ICommerceHomeView, ISettingsView {
     private ImageView commerceImageView;
     private TextView userLoggedTextView, changeEmployeeTextView;
     private Button btnGenerateQr;
     private ProgressDialog mProgressDialog;
     private ICommerceHomePresenter mPresenter;
-
+    private ISettingsPresenter mSettingsPresenter;
 
     public CommerceHomeFragment() {
         // Required empty public constructor
@@ -62,11 +66,13 @@ public class CommerceHomeFragment extends Fragment implements View.OnClickListen
     private void initUI(View rootView) {
         setupProgressDialog();
         mPresenter = new CommerceHomePresenter(this);
+        mSettingsPresenter = new SettingsPresenter(this);
         commerceImageView = rootView.findViewById(R.id.commerce_home_imageView);
         userLoggedTextView = rootView.findViewById(R.id.commerce_home_user_logged_in);
         changeEmployeeTextView = rootView.findViewById(R.id.commerce_home_change_employee);
         btnGenerateQr = rootView.findViewById(R.id.commerce_home_generate_qr);
         btnGenerateQr.setOnClickListener(this);
+        changeEmployeeTextView.setOnClickListener(this);
         mPresenter.setupView();
     }
 
@@ -91,6 +97,10 @@ public class CommerceHomeFragment extends Fragment implements View.OnClickListen
         switch (v.getId()) {
             case R.id.commerce_home_generate_qr :
                 mPresenter.generateQrCode();
+                break;
+            case R.id.commerce_home_change_employee:
+                mSettingsPresenter.logOutAction();
+                break;
         }
     }
 
@@ -128,5 +138,13 @@ public class CommerceHomeFragment extends Fragment implements View.OnClickListen
         bundle.putParcelable(PaymentCommerceMainActivity.PAYMENT_KEY, payment);
         intent.putExtras(bundle);
         getActivity().startActivity(intent);
+    }
+
+    @Override
+    public void logOutAction() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        getActivity().startActivity(intent);
+        getActivity().finish();
     }
 }

@@ -4,6 +4,7 @@ package com.ezypayinc.ezypay.connection;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.ezypayinc.ezypay.model.LocalToken;
+import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonElement;
 
 import org.json.JSONException;
@@ -30,5 +31,17 @@ public class DeviceTokenServiceClient {
 
         JSONObject object = localToken.toJSON();
         connectionManager.sendCustomRequest(Request.Method.POST, BASIC_URL, object, headers, successHandler, failureHandler);
+    }
+
+    public void deleteDeviceToken(String deviceId, User user, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String oauthToken = "Bearer "+ user.getToken();
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        JSONObject parameters = new JSONObject();
+        parameters.put("deviceId", deviceId);
+
+        connectionManager.sendCustomRequest(Request.Method.DELETE, BASIC_URL, parameters, headers, successHandler, failureHandler);
     }
 }
