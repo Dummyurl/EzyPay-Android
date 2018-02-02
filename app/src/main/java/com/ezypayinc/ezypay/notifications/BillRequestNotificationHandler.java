@@ -1,36 +1,41 @@
 package com.ezypayinc.ezypay.notifications;
 
-import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
-import com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment;
-import com.ezypayinc.ezypay.controllers.Dialogs.DialogBuilder;
-import com.ezypayinc.ezypay.manager.PaymentManager;
-import com.ezypayinc.ezypay.model.CustomNotification;
-import com.google.firebase.messaging.RemoteMessage;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.UserSingleton;
+import com.ezypayinc.ezypay.controllers.Dialogs.DialogBuilder;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.navigation.MainCommerceActivity;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.payment.PaymentCommerceMainActivity;
+import com.ezypayinc.ezypay.controllers.commerceNavigation.payment.PaymentDetailFragment;
+import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
+import com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment;
+import com.ezypayinc.ezypay.manager.PaymentManager;
+import com.ezypayinc.ezypay.model.CustomNotification;
 import com.ezypayinc.ezypay.model.Payment;
 import com.ezypayinc.ezypay.model.User;
-import android.content.DialogInterface;
-import com.android.volley.VolleyError;
-import com.android.volley.Response;
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.JsonElement;
-import com.ezypayinc.ezypay.R;
-import android.util.Log;
 
 import java.util.HashMap;
 
-public class SendBillNotificationHandler implements INotificationHandler {
+public class BillRequestNotificationHandler implements INotificationHandler {
 
     private User mUser;
     private static final String ERROR_TAG = "ERROR GETTING PAYMENT";
     private static final String PAYMENT_KEY = "paymentId";
 
-    public SendBillNotificationHandler() {
+    public BillRequestNotificationHandler() {
         mUser = UserSingleton.getInstance().getUser();
     }
+
 
     @Override
     public void notificationAction(final CustomNotification notification, final AppCompatActivity currentActivity) {
@@ -55,7 +60,7 @@ public class SendBillNotificationHandler implements INotificationHandler {
             customNotification.setTitle(notification.getString("title"));
             customNotification.setCategory(category);
             HashMap<String, String> values = new HashMap<>();
-            values.put(PAYMENT_KEY, notification.getString("paymentId"));
+            values.put(PAYMENT_KEY, notification.getString(PAYMENT_KEY));
             customNotification.setData(values);
             return customNotification;
         }
@@ -68,7 +73,7 @@ public class SendBillNotificationHandler implements INotificationHandler {
             return null;
         }
         CustomNotification customNotification = new CustomNotification();
-        int paymentId = Integer.parseInt(notification.getData().get("paymentId"));
+        int paymentId = Integer.parseInt(notification.getData().get(PAYMENT_KEY));
         String title = notification.getNotification().getTitle();
         String message = notification.getNotification().getBody();
         customNotification.setBody(message);
@@ -81,10 +86,8 @@ public class SendBillNotificationHandler implements INotificationHandler {
 
     private void getPayment(final int paymentId, final CustomNotification notification, final AppCompatActivity currentActivity) {
         if (mUser != null) {
-            final ScannerFragment fragment = (ScannerFragment) currentActivity.getSupportFragmentManager().
-                    findFragmentByTag(MainUserActivity.SCANNER_FRAGMENT_TAG);
             final PaymentManager manager = new PaymentManager();
-            manager.getActivePaymentByUser(mUser, new Response.Listener<JsonElement>() {
+            manager.getPaymentById(paymentId,mUser.getToken(), new Response.Listener<JsonElement>() {
                 @Override
                 public void onResponse(JsonElement response) {
                     Payment payment = manager.parsePayment(response);
@@ -115,25 +118,14 @@ public class SendBillNotificationHandler implements INotificationHandler {
             }
         });
         builder.showAlertDialog();
-
     }
 
     private void goToFragment(Payment payment, AppCompatActivity currentActivity) {
-        if(currentActivity instanceof MainUserActivity) {
-            ScannerFragment fragment = (ScannerFragment) currentActivity.getSupportFragmentManager().
-                    findFragmentByTag(MainUserActivity.SCANNER_FRAGMENT_TAG);
-            if(fragment != null && fragment.isVisible()) {
-                fragment.showRestaurantDetail(payment);
-            } else {
-                ScannerFragment scannerFragment = ScannerFragment.newInstance();
-                ((MainUserActivity) currentActivity).setBarcodeScannedListener(scannerFragment);
-                currentActivity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_activity_main_user, scannerFragment, MainUserActivity.SCANNER_FRAGMENT_TAG)
-                        .commit();
-            }
-        } else {
-            Intent intent = new Intent(currentActivity, MainUserActivity.class);
+            Intent intent = new Intent(currentActivity, PaymentCommerceMainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(PaymentCommerceMainActivity.PAYMENT_KEY, payment);
+            bundle.putBoolean(PaymentCommerceMainActivity.PAYMENT_FROM_NOTIFICATION, true);
+            intent.putExtras(bundle);
             currentActivity.startActivity(intent);
-        }
     }
 }

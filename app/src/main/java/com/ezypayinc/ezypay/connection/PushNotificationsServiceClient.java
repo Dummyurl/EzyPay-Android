@@ -58,6 +58,24 @@ public class PushNotificationsServiceClient {
         connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
     }
 
+    public void sendBillNotification(int clientId, String currencyCode, float amount,
+                                     int paymentId, String token,
+                                     Response.Listener<JsonElement> successHandler,
+                                     Response.ErrorListener failureHandler) throws JSONException {
+        String url = BASIC_URL + "sendBill/";
+        JSONObject parameters = new JSONObject();
+        parameters.put("clientId", clientId);
+        parameters.put("currencyCode", currencyCode);
+        parameters.put("amount", amount);
+        parameters.put("paymentId", paymentId);
+        String oauthToken = "Bearer "+ token;
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
+    }
+
     public void sendPaymentNotifications(Payment payment, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         String url = BASIC_URL + "splitRequest";
         JSONObject finalObject = new JSONObject();

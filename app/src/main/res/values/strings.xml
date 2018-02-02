@@ -39,6 +39,7 @@
     <string name="action_quickPay_qr_type">Quickpay</string>
     <string name="action_send">Send</string>
     <string name="action_employees">Employees</string>
+    <string name="action_go_home_screen">Go back to home screen</string>
 
 
     <string name="title_activity_login" translatable="false">Log in</string>

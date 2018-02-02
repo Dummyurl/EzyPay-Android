@@ -36,9 +36,20 @@ public class Payment extends RealmObject implements Parcelable {
     private RealmList<Friend> friends;
 
     public Payment(){
-       /* friends = new RealmList<>();
-        commerce = new User();
+        friends = new RealmList<>();
+       /* commerce = new User();
         currency = new Currency();*/
+    }
+
+    public Payment(Payment payment) {
+        id = payment.getId();
+        cost = payment.getCost();
+        employeeId = payment.getEmployeeId();
+        isCanceled = payment.isCanceled();
+        paymentDate = payment.getPaymentDate();
+        tableNumber = payment.getTableNumber();
+        userCost = payment.getUserCost();
+        userId = payment.getUserId();
     }
 
     public int getId() {
@@ -122,7 +133,7 @@ public class Payment extends RealmObject implements Parcelable {
     }
 
     public RealmList<Friend> getFriends() {
-        return friends;
+        return friends == null ? new RealmList<Friend>() : friends;
     }
 
     public void setFriends(RealmList<Friend> friends) {

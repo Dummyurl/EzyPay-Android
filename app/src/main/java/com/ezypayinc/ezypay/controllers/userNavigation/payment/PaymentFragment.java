@@ -3,6 +3,7 @@ package com.ezypayinc.ezypay.controllers.userNavigation.payment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -81,7 +82,12 @@ public class PaymentFragment extends Fragment implements IPaymentListView, View.
 
     @Override
     public void goToResultView() {
-        Toast.makeText(getContext(), "Go to result view", Toast.LENGTH_LONG);
+        Fragment fragment = PaymentResultFragment.newInstance();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().
+                replace(R.id.payment_main_container, fragment).
+                addToBackStack(null).
+                commit();
     }
 
     @Override

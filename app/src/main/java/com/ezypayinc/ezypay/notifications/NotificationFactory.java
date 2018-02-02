@@ -6,7 +6,10 @@ public class NotificationFactory {
         INotificationHandler handler;
         switch (category) {
             case 1:
-                handler = new GeneralNotifiactionHandler();
+                handler = new GeneralNotificationHandler();
+                break;
+            case 2:
+                handler = new BillRequestNotificationHandler();
                 break;
             case 3:
                 handler = new SendBillNotificationHandler();
@@ -18,7 +21,7 @@ public class NotificationFactory {
                 handler = new ResponseSplitRequestNotificationHandler();
                 break;
             default:
-                handler = new GeneralNotifiactionHandler();
+                handler = new GeneralNotificationHandler();
                 break;
         }
         return  handler;

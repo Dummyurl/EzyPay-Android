@@ -1,62 +1,55 @@
 package com.ezypayinc.ezypay.model;
 
-/**
- * Created by gustavoquesada on 11/17/16.
- */
+import java.util.HashMap;
+import java.util.Map;
 
 public class Notification {
 
-    private int mNotificationId;
-    private String mRestaurantName;
-    private String mRestaurantImage;
-    private String mUserName;
-    private float mCost;
+    private int mCategory;
+    private String mTitle;
+    private String mMessage;
+    private Map<String, String> mValues;
 
-    public Notification(int notificationId, String restaurantName, String restaurantImage, String userName, float cost) {
-        mNotificationId = notificationId;
-        mRestaurantName = restaurantName;
-        mRestaurantImage = restaurantImage;
-        mUserName = userName;
-        mCost = cost;
+    public Notification() {
+        mValues = new HashMap<>();
     }
 
-    public int getNotificationId() {
-        return mNotificationId;
+    public Notification(int category, String title, String message, Map<String, String> values) {
+        mCategory = category;
+        mTitle = title;
+        mMessage = message;
+        mValues = values;
     }
 
-    public void setNotificationId(int notificationId) {
-        mNotificationId = notificationId;
+    public int getCategory() {
+        return mCategory;
     }
 
-    public String getRestaurantName() {
-        return mRestaurantName;
+    public void setCategory(int category) {
+        mCategory = category;
     }
 
-    public void setRestaurantName(String restaurantName) {
-        mRestaurantName = restaurantName;
+    public String getTitle() {
+        return mTitle;
     }
 
-    public String getRestaurantImage() {
-        return mRestaurantImage;
+    public void setTitle(String title) {
+        mTitle = title;
     }
 
-    public void setRestaurantImage(String restaurantImage) {
-        mRestaurantImage = restaurantImage;
+    public String getMessage() {
+        return mMessage;
     }
 
-    public String getUserName() {
-        return mUserName;
+    public void setMessage(String message) {
+        mMessage = message;
     }
 
-    public void setUserName(String userName) {
-        mUserName = userName;
+    public Map<String, String> getValues() {
+        return mValues;
     }
 
-    public float getCost() {
-        return mCost;
-    }
-
-    public void setCost(float cost) {
-        mCost = cost;
+    public void setValues(Map<String, String> values) {
+        mValues = values;
     }
 }

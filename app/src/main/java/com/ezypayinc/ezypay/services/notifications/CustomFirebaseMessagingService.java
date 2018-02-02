@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.ezypayinc.ezypay.controllers.Dialogs.DialogBuilder;
+import com.ezypayinc.ezypay.model.CustomNotification;
 import com.ezypayinc.ezypay.notifications.INotificationHandler;
 import com.ezypayinc.ezypay.notifications.NotificationFactory;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -26,6 +27,7 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
 
         EzyPayApplication app = (EzyPayApplication) getApplication();
         INotificationHandler handler = NotificationFactory.initNotificationHandler(category);
-        handler.notificationAction(remoteMessage, app.getCurrentActivity());
+        CustomNotification customNotification = handler.parseNotification(remoteMessage);
+        handler.notificationAction(customNotification, app.getCurrentActivity());
     }
 }

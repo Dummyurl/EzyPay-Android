@@ -37,6 +37,17 @@ public class PaymentManager {
         data.updatePayment(payment);
     }
 
+
+    public Payment getPayment() {
+        PaymentData data = new PaymentData();
+        return data.getPayment();
+    }
+
+    public Payment updatePaymentDate(Payment payment, String paymentDate) {
+        PaymentData data = new PaymentData();
+        return data.updatePaymentDate(payment, paymentDate);
+    }
+
     /**
      *
      * WEB Service Methods
@@ -86,5 +97,10 @@ public class PaymentManager {
     public void updateUserPayment(User user, int paymentId, int state, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
         PaymentServiceClient service = new PaymentServiceClient();
         service.updateUserPayment(user, paymentId, state, successHandler, failureHandler);
+    }
+
+    public void updatePaymentAmount(int paymentId, int currencyId, float amount, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        PaymentServiceClient service = new PaymentServiceClient();
+        service.updatePaymentAmount(paymentId, currencyId, amount, token, successHandler, failureHandler);
     }
 }

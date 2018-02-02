@@ -7,12 +7,16 @@ import android.view.View;
 import android.widget.Button;
 
 import com.ezypayinc.ezypay.R;
+import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.SplashScreen.SplashScreenActivity;
 import com.ezypayinc.ezypay.controllers.commerceNavigation.navigation.MainCommerceActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.navigation.MainUserActivity;
 import com.ezypayinc.ezypay.manager.UserManager;
+import com.ezypayinc.ezypay.model.CustomNotification;
 import com.ezypayinc.ezypay.model.User;
+import com.ezypayinc.ezypay.notifications.INotificationHandler;
+import com.ezypayinc.ezypay.notifications.NotificationFactory;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,11 +27,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         validateUserSession();
         setContentView(R.layout.activity_main);
-
-        btnSignIn = (Button) findViewById(R.id.activity_main_btn_signIn);
-        btnSignInRestaurant = (Button) findViewById(R.id.activity_main_btn_signInRestaurant);
+        btnSignIn = findViewById(R.id.activity_main_btn_signIn);
+        btnSignInRestaurant = findViewById(R.id.activity_main_btn_signInRestaurant);
         btnSignIn.setOnClickListener(this);
         btnSignInRestaurant.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override

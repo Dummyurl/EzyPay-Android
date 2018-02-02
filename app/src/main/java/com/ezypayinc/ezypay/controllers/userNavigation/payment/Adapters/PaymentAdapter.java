@@ -71,6 +71,14 @@ public class PaymentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     public void updateData(Payment payment) {
+        index = 0;
+        indexHeaders = 0;
+        indexFriends = 0;
+        int listSize = mFriendList.size() + 3;
+        mPayment = null;
+        mFriendList.clear();
+        notifyItemRangeRemoved(0,listSize);
+
         mPayment = payment;
         mFriendList = payment.getFriends();
         notifyDataSetChanged();

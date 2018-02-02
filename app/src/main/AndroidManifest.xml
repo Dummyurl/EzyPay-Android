@@ -28,6 +28,7 @@
 
         <activity
             android:name=".controllers.SplashScreen.SplashScreenActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,6 +38,7 @@
         </activity>
         <activity
             android:name=".controllers.login.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" />
         <activity
             android:name=".controllers.login.LoginActivity"
@@ -65,8 +67,12 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".controllers.userNavigation.settings.cards.CardsMainActivity" />
-        <activity android:name=".controllers.userNavigation.settings.SettingsMainActivity" />
+        <activity
+            android:name=".controllers.userNavigation.settings.cards.CardsMainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".controllers.userNavigation.settings.SettingsMainActivity"
+            android:screenOrientation="portrait" />
 
         <service android:name=".services.notifications.CustomFirebaseMessagingService">
             <intent-filter>
@@ -81,22 +87,34 @@
 
         <activity
             android:name=".controllers.commerceNavigation.navigation.MainCommerceActivity"
-            android:label="@string/title_activity_main_commerce" />
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_main_commerce">
+            <intent-filter>
+                <action android:name=".controllers.commerceNavigation.navigation.MainCommerceActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".controllers.commerceNavigation.payment.PaymentCommerceMainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_payment_commerce_main" />
         <activity
             android:name=".controllers.commerceNavigation.settings.MainCommerceSettingsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main_commerce_settings" />
         <activity
             android:name=".controllers.commerceNavigation.settings.employees.EmployeeMainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_employee_main" />
         <activity
             android:name=".controllers.commerceNavigation.settings.bankAccount.BankAccountMainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_bank_account_main" />
         <activity
             android:name=".controllers.login.commerce.SignInCommerceMainActivity"
-            android:label="@string/title_activity_sign_in_commerce_main"></activity>
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_sign_in_commerce_main"/>
     </application>
 
 </manifest>

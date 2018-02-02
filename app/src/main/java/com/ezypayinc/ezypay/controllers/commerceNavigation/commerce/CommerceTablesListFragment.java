@@ -92,18 +92,18 @@ public class CommerceTablesListFragment extends Fragment implements ICommerceTab
 
     @Override
     public void showProgressDialog() {
-        if (mProgressDialog == null) {
+      /*  if (mProgressDialog == null) {
             setupProgressDialog();
         }
         mProgressDialog.show();
-        mProgressDialog.setContentView(R.layout.custom_progress_dialog);
+        mProgressDialog.setContentView(R.layout.custom_progress_dialog); */
     }
 
     @Override
     public void dismissProgressDialog() {
-        if (mProgressDialog != null) {
+       /* if (mProgressDialog != null) {
             mProgressDialog.dismiss();
-        }
+        } */
     }
 
     @Override

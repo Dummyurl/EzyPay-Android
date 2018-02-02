@@ -28,11 +28,6 @@ public class CommerceHomePresenter implements ICommerceHomePresenter {
     }
 
     @Override
-    public void changeEmployee() {
-
-    }
-
-    @Override
     public void generateQrCode() {
         User currentUser = UserSingleton.getInstance().getUser();
         if(currentUser.getUserType() == 4 && currentUser.getEmployeeBoss().getUserType() == 2) {

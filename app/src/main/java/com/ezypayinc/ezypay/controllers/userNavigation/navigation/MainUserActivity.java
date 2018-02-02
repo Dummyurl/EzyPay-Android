@@ -9,9 +9,16 @@ import android.util.Log;
 import android.widget.Toast;
 import com.ezypayinc.ezypay.R;
 import com.ezypayinc.ezypay.base.EzyPayApplication;
+import com.ezypayinc.ezypay.base.UserSingleton;
+import com.ezypayinc.ezypay.controllers.login.MainActivity;
 import com.ezypayinc.ezypay.controllers.userNavigation.history.HistoryFragment;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.ScannerFragment;
 import com.ezypayinc.ezypay.controllers.userNavigation.settings.SettingsFragment;
+import com.ezypayinc.ezypay.manager.UserManager;
+import com.ezypayinc.ezypay.model.CustomNotification;
+import com.ezypayinc.ezypay.model.User;
+import com.ezypayinc.ezypay.notifications.INotificationHandler;
+import com.ezypayinc.ezypay.notifications.NotificationFactory;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.roughike.bottombar.BottomBar;
@@ -27,16 +34,36 @@ public class MainUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_user);
+        setUser();
         ((EzyPayApplication)getApplication()).setCurrentActivity(this);
-        setupNavigationBar();
+        User user = UserSingleton.getInstance().getUser();
+        setupNavigationBar(user);
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            Log.d("Bundle", bundle.toString());
+        if(bundle != null && bundle.get("category") != null && user != null) {
+            int category = Integer.parseInt(bundle.getString("category"));
+            INotificationHandler notificationHandler = NotificationFactory.initNotificationHandler(category);
+            CustomNotification customNotification = notificationHandler.parseNotification(bundle);
+            notificationHandler.notificationAction(customNotification, this);
+        } else if (user == null){
+            Intent intent = new Intent(MainUserActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
-    public void setupNavigationBar() {
-        bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+    private void setUser() {
+        User user = UserSingleton.getInstance().getUser();
+        if (user == null) {
+            UserManager manager = new UserManager();
+            user = manager.getUser();
+            if (user != null) {
+                UserSingleton.getInstance().setUser(user);
+            }
+        }
+    }
+
+    public void setupNavigationBar(final User user) {
+        bottomBar = findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
@@ -58,10 +85,11 @@ public class MainUserActivity extends AppCompatActivity {
                         break;
                 }
 
-
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container_activity_main_user, newFragment, tag)
-                        .commit();
+                if (user != null) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_activity_main_user, newFragment, tag)
+                            .commit();
+                }
             }
         });
     }

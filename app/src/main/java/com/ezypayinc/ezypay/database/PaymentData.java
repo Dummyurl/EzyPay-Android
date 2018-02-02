@@ -4,16 +4,13 @@ import com.ezypayinc.ezypay.model.Payment;
 
 import io.realm.Realm;
 
-/**
- * Created by gustavoquesada on 10/23/17.
- */
-
 public class PaymentData {
 
     public void addPayment(Payment payment) {
+        deletePayment();
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
-        Payment paymentRealm = realm.copyToRealm(payment);
+        realm.copyToRealm(payment);
         realm.commitTransaction();
     }
 
@@ -39,5 +36,21 @@ public class PaymentData {
         realm.beginTransaction();
         realm.copyToRealmOrUpdate(payment);
         realm.commitTransaction();
+    }
+
+    public Payment getPayment() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        Payment payment = realm.where(Payment.class).findFirst();
+        realm.commitTransaction();
+        return payment;
+    }
+
+    public Payment updatePaymentDate(Payment payment, String paymentDate) {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        payment.setPaymentDate(paymentDate);
+        realm.commitTransaction();
+        return payment;
     }
 }

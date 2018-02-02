@@ -22,11 +22,12 @@ import com.ezypayinc.ezypay.presenter.CommercePresenter.PaymentDetailPresenter;
 public class PaymentDetailFragment extends Fragment implements IPaymentDetailView, View.OnClickListener {
 
     private NumberPicker mCurrencyPicker;
-    private Button mSubmitButtton;
+    private Button mSubmitButton;
     private EditText mPaymentCostEditText;
     private IPaymentDetailPresenter mPresenter;
     private ProgressDialog mProgressDialog;
     private int mTableNumber;
+    private Payment mPayment;
 
 
     public PaymentDetailFragment() {
@@ -41,11 +42,20 @@ public class PaymentDetailFragment extends Fragment implements IPaymentDetailVie
         return fragment;
     }
 
+    public static PaymentDetailFragment newInstance(Payment payment) {
+        PaymentDetailFragment fragment = new PaymentDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(PaymentCommerceMainActivity.PAYMENT_KEY, payment);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments() != null) {
             mTableNumber = getArguments().getInt(PaymentCommerceMainActivity.TABLE_NUMBER_KEY, 0);
+            mPayment = getArguments().getParcelable(PaymentCommerceMainActivity.PAYMENT_KEY);
         }
     }
 
@@ -63,10 +73,10 @@ public class PaymentDetailFragment extends Fragment implements IPaymentDetailVie
         setupProgressDialog();
         mCurrencyPicker = rootView.findViewById(R.id.payment_detail_numberPicker);
         mPaymentCostEditText = rootView.findViewById(R.id.payment_detail_cost_editText);
-        mSubmitButtton = rootView.findViewById(R.id.payment_detail_send_button);
+        mSubmitButton = rootView.findViewById(R.id.payment_detail_send_button);
         mPresenter = new PaymentDetailPresenter(this);
         mPresenter.getCurrencies();
-        mSubmitButtton.setOnClickListener(this);
+        mSubmitButton.setOnClickListener(this);
         return  rootView;
     }
 
@@ -103,6 +113,11 @@ public class PaymentDetailFragment extends Fragment implements IPaymentDetailVie
     }
 
     @Override
+    public void navigateToPreviousView() {
+        getActivity().onBackPressed();
+    }
+
+    @Override
     public void onNetworkError(Object error) {
         ErrorHelper.handleError(error, getContext());
     }
@@ -111,6 +126,10 @@ public class PaymentDetailFragment extends Fragment implements IPaymentDetailVie
     public void onClick(View v) {
         float cost = Float.parseFloat(mPaymentCostEditText.getText().toString());
         int currencyIndex = mCurrencyPicker.getValue();
-        mPresenter.savePaymentCost(cost, mTableNumber, currencyIndex, false);
+        if(mPayment == null) {
+            mPresenter.savePaymentCost(cost, mTableNumber, currencyIndex);
+        } else {
+            mPresenter.sendBillNotification(cost, currencyIndex, mPayment);
+        }
     }
 }

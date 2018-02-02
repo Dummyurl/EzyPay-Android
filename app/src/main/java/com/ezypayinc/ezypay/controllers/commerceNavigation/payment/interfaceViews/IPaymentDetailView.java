@@ -9,5 +9,6 @@ public interface IPaymentDetailView {
     void dismissProgressDialog();
     void loadCurrencies(String []currencyName);
     void navigateToQRFragment(Payment payment);
+    void navigateToPreviousView();
     void onNetworkError(Object error);
 }

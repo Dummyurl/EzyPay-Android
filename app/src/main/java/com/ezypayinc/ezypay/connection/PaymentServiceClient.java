@@ -45,14 +45,14 @@ public class PaymentServiceClient {
             JsonObject jsonObject = response.getAsJsonObject();
             Payment payment = new Payment();
             payment.setId(jsonObject.get("id").isJsonNull() ? 0 : jsonObject.get("id").getAsInt());
-            payment.setUserId(UserSingleton.getInstance().getUser().getId());
+            payment.setUserId(jsonObject.has("userId")?(jsonObject.get("userId").isJsonNull() ? 0 : jsonObject.get("userId").getAsInt()) : 0);
             payment.setCost(jsonObject.get("cost").isJsonNull() ? 0 : jsonObject.get("cost").getAsFloat());
-            payment.setUserCost(jsonObject.get("userCost").isJsonNull() ? 0 : jsonObject.get("userCost").getAsFloat());
+            payment.setUserCost(jsonObject.has("userCost")? (jsonObject.get("userCost").isJsonNull() ? 0 : jsonObject.get("userCost").getAsFloat()) : 0);
             payment.setEmployeeId(jsonObject.get("employeeId").isJsonNull() ? 0 : jsonObject.get("employeeId").getAsInt());
             payment.setCanceled(!(jsonObject.get("isCanceled").isJsonNull() ? false : !jsonObject.get("isCanceled").getAsBoolean()));
             payment.setTableNumber(jsonObject.get("tableNumber") == null ? 0 : jsonObject.get("tableNumber").getAsInt());
-            payment.setCommerce(getCommerce(jsonObject.get("Commerce").getAsJsonObject()));
-            if(jsonObject.get("Currency") != null) { payment.setCurrency(jsonObject.get("Currency").isJsonNull() ? null : getCurrency(jsonObject.get("Currency").getAsJsonObject())); }
+            payment.setCommerce(jsonObject.has("Commerce") ? getCommerce(jsonObject.get("Commerce").getAsJsonObject()) : null);
+            if(jsonObject.has("Currency") && jsonObject.get("Currency") != null) { payment.setCurrency(jsonObject.get("Currency").isJsonNull() ? null : getCurrency(jsonObject.get("Currency").getAsJsonObject())); }
             List<Friend> friends = getFriends(!jsonObject.has("Friends") ? null :
                     (jsonObject.get("Friends").isJsonNull() ? null : jsonObject.get("Friends").getAsJsonArray()));
             if(friends != null) {
@@ -209,6 +209,20 @@ public class PaymentServiceClient {
 
         HashMap<String, String> headers = new HashMap<>();
         String oauthToken = "Bearer "+ user.getToken();
+        headers.put("Authorization", oauthToken);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        connectionManager.sendCustomRequest(Request.Method.PUT, url, parameters, headers, successHandler, failureHandler);
+    }
+
+    public void updatePaymentAmount(int paymentId, int currencyId, float amount, String token, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = BASIC_URL + String.valueOf(paymentId);
+        JSONObject parameters = new JSONObject();
+        parameters.put("currencyId", currencyId);
+        parameters.put("cost", amount);
+
+        HashMap<String, String> headers = new HashMap<>();
+        String oauthToken = "Bearer "+ token;
         headers.put("Authorization", oauthToken);
         headers.put("Content-Type", CONTENT_TYPE);
 

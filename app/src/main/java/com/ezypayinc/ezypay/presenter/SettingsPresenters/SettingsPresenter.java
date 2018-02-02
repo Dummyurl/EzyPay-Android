@@ -28,10 +28,12 @@ public class SettingsPresenter implements ISettingsPresenter {
     public void logOutAction() {
         DeviceTokenManager manager = new DeviceTokenManager();
         final UserManager userManager = new UserManager();
-        LocalToken token = manager.getLocalToken();
+        final LocalToken token = manager.getLocalToken();
         User currentUser = UserSingleton.getInstance().getUser();
         if(token == null) {
             userManager.deleteUser();
+            updateDeviceToken(token);
+            UserSingleton.getInstance().setUser(null);
             mView.logOutAction();
             return;
         }
@@ -40,17 +42,29 @@ public class SettingsPresenter implements ISettingsPresenter {
                 @Override
                 public void onResponse(JsonElement response) {
                     userManager.deleteUser();
+                    updateDeviceToken(token);
+                    UserSingleton.getInstance().setUser(null);
                     mView.logOutAction();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     userManager.deleteUser();
+                    updateDeviceToken(token);
+                    UserSingleton.getInstance().setUser(null);
                     mView.logOutAction();
                 }
             });
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateDeviceToken(LocalToken token) {
+        DeviceTokenManager manager = new DeviceTokenManager();
+        LocalToken localToken = new LocalToken(token);
+        localToken.setUserId(0);
+        localToken.setSaved(false);
+        manager.updateLocalToken(localToken);
     }
 }

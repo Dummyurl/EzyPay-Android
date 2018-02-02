@@ -32,6 +32,7 @@
     <string name="action_quickPay_qr_type">Pago Rápido</string>
     <string name="action_send">Enviar</string>
     <string name="action_employees">Empleados</string>
+    <string name="action_go_home_screen">Regresar a la vista inicial</string>
 
     <!--Prompt-->
     <string name="prompt_name">Nombre</string>

@@ -11,7 +11,9 @@ import com.ezypayinc.ezypay.base.UserSingleton;
 import com.ezypayinc.ezypay.controllers.userNavigation.payment.interfaceViews.IScannerView;
 import com.ezypayinc.ezypay.manager.PaymentManager;
 import com.ezypayinc.ezypay.manager.PushNotificationsManager;
+import com.ezypayinc.ezypay.model.Currency;
 import com.ezypayinc.ezypay.model.Payment;
+import com.ezypayinc.ezypay.model.User;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
@@ -67,6 +69,7 @@ public class ScannerPresenter implements IScannerPresenter {
         manager.deletePayment();
         manager.addPayment(payment);
         activePayment = payment;
+        activePayment.setUserId(UserSingleton.getInstance().getUser().getId());
         try {
             manager.createPayment(payment, UserSingleton.getInstance().getUser().getToken(), new Response.Listener<JsonElement>() {
                 @Override
@@ -162,16 +165,23 @@ public class ScannerPresenter implements IScannerPresenter {
 
     @Override
     public void splitPayment() {
+        PaymentManager manager = new PaymentManager();
+
         if(activePayment != null) {
+            User commerce = activePayment.getCommerce();
+            Currency currency = activePayment.getCurrency();
+            activePayment = manager.getPayment();
             view.showProgressDialog();
-            activePayment.setPaymentDate(EzyPayApplication.getInstance().getCurrentDate());
-            PaymentManager manager = new PaymentManager();
+            activePayment = manager.updatePaymentDate(activePayment, EzyPayApplication.getInstance().getCurrentDate());
+            final Payment payment = new Payment(activePayment);
+            payment.setCommerce(commerce);
+            payment.setCurrency(currency);
             try {
                 manager.updatePayment(activePayment, UserSingleton.getInstance().getUser(), new Response.Listener<JsonElement>() {
                     @Override
                     public void onResponse(JsonElement response) {
                         view.dismissProgressDialog();
-                        view.goToContactsList(activePayment);
+                        view.goToContactsList(payment);
                     }
                 }, new Response.ErrorListener() {
                     @Override
