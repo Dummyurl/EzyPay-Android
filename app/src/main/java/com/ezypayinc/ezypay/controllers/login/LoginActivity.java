@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
     private CallbackManager mCallbackManager;
     private LoginButton mBtnFacebookLogin;
     private TextView mCreateAccountLabel;
+    private TextView mForgotPassword;
 
     private int userType;
     public static final String USER_TYPE_KEY = "userType";
@@ -92,13 +93,17 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
             mLogInButton = findViewById(R.id.log_in_button);
             mBtnFacebookLogin = findViewById(R.id.btn_facebook_login);
             mCreateAccountLabel = findViewById(R.id.sign_in_textView);
+            mForgotPassword = findViewById(R.id.forgot_password_textView);
             mCreateAccountLabel.setOnClickListener(this);
+            mForgotPassword.setOnClickListener(this);
             setFacebookLoginButton();
         } else {
             mEmailView = findViewById(R.id.commerce_email);
             mPasswordView = findViewById(R.id.commerce_password);
             mLogInButton =  findViewById(R.id.log_in_commerce_button);
             mCommerceRegisterButton = findViewById(R.id.register_commerce_button);
+            mForgotPassword = findViewById(R.id.commerce_forgot_password_textView);
+            mForgotPassword.setOnClickListener(this);
             mCommerceRegisterButton.setOnClickListener(this);
         }
 
@@ -233,6 +238,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
         startActivity(intent);
     }
 
+    private void navigateToResetPassword() {
+        Intent intent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void onClick(View view) {
         if(view.equals(mLogInButton)) {
@@ -241,6 +251,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
             navigateToSignUser();
         } else if (view.equals(mCommerceRegisterButton)) {
             navigateToSignCommerce();
+        } else if(view.equals(mForgotPassword)) {
+            navigateToResetPassword();
         }
     }
 }

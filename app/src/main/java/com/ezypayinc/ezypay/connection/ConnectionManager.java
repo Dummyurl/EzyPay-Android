@@ -1,11 +1,13 @@
 package com.ezypayinc.ezypay.connection;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
+import com.ezypayinc.ezypay.BuildConfig;
 import com.ezypayinc.ezypay.base.EzyPayApplication;
 import com.google.gson.JsonElement;
 
@@ -17,8 +19,6 @@ import java.util.Map;
 
 class ConnectionManager {
 
-    private static final String BASIC_URL = "http://192.168.1.102:8080/";
-    //private static final String BASIC_URL = "https://ugwo-platform.appspot.com/";
     private Context mContext;
 
     ConnectionManager() {
@@ -27,7 +27,7 @@ class ConnectionManager {
 
     void sendCustomRequest(int httpMethod, String url, JSONObject parameters, final HashMap<String, String> headers,
                            Response.Listener<JsonElement> successHandler, Response.ErrorListener errorHandler) {
-        url = BASIC_URL + url;
+        url = BuildConfig.BASIC_URL+ url;
         CustomRequest request = new CustomRequest(httpMethod,url, parameters, headers,
                 successHandler, errorHandler);
         request.setRetryPolicy(
@@ -41,7 +41,7 @@ class ConnectionManager {
 
     void sendMultiPartRequest(int httpMethod, String url, final byte[] image, final HashMap<String, String> headers,
                               Response.Listener<NetworkResponse> successHandler, Response.ErrorListener errorHandler) {
-        url = BASIC_URL + url;
+        url = BuildConfig.BASIC_URL + url;
         MultipartRequest request = new MultipartRequest(httpMethod, url, headers, successHandler, errorHandler) {
 
             /*

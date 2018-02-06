@@ -60,6 +60,7 @@ public class CommerceHomeFragment extends Fragment implements View.OnClickListen
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_commerce_home, container, false);
         initUI(rootView);
+        setTitle();
         return rootView;
     }
 
@@ -74,6 +75,10 @@ public class CommerceHomeFragment extends Fragment implements View.OnClickListen
         btnGenerateQr.setOnClickListener(this);
         changeEmployeeTextView.setOnClickListener(this);
         mPresenter.setupView();
+    }
+
+    private void setTitle() {
+        getActivity().setTitle(R.string.title_commerce_detail_fragment);
     }
 
     private void setupProgressDialog(){

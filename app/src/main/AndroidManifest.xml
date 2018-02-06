@@ -38,8 +38,8 @@
         </activity>
         <activity
             android:name=".controllers.login.MainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".controllers.login.LoginActivity"
             android:label="@string/app_name"
@@ -87,8 +87,8 @@
 
         <activity
             android:name=".controllers.commerceNavigation.navigation.MainCommerceActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_main_commerce">
+            android:label="@string/title_activity_main_commerce"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name=".controllers.commerceNavigation.navigation.MainCommerceActivity" />
 
@@ -97,24 +97,28 @@
         </activity>
         <activity
             android:name=".controllers.commerceNavigation.payment.PaymentCommerceMainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_payment_commerce_main" />
+            android:label="@string/title_activity_payment_commerce_main"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".controllers.commerceNavigation.settings.MainCommerceSettingsActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_main_commerce_settings" />
+            android:label="@string/title_activity_main_commerce_settings"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".controllers.commerceNavigation.settings.employees.EmployeeMainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_employee_main" />
+            android:label="@string/title_activity_employee_main"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".controllers.commerceNavigation.settings.bankAccount.BankAccountMainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_bank_account_main" />
+            android:label="@string/title_activity_bank_account_main"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".controllers.login.commerce.SignInCommerceMainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_sign_in_commerce_main"/>
+            android:label="@string/title_activity_sign_in_commerce_main"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".controllers.login.ResetPasswordActivity"
+            android:label="@string/title_activity_reset_password"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@
     <string name="navigation_bar_history_item">Historial</string>
     <string name="navigation_bar_credit_card_item">Tarjetas</string>
     <string name="navigation_bar_settings_item">Configuración</string>
+    <string name="navigation_bar_commerce_home_item">Inicio</string>
 
     <!--BUTTONS-->
     <string name="log_in">Iniciar Sesión</string>
@@ -63,23 +64,6 @@
     <string name="label_total_cost">Costo Total</string>
     <string name="label_tables_warning_message">Sí no agregas mesas, el menu de mesas no apracerá</string>
 
-
-    <!--Spinners items-->
-    <string-array name="months">
-        <item>Enero</item>
-        <item>Febrero</item>
-        <item>Marzo</item>
-        <item>Abril</item>
-        <item>Mayo</item>
-        <item>Junio</item>
-        <item>Julio</item>
-        <item>Agosto</item>
-        <item>Setiembre</item>
-        <item>Octubre</item>
-        <item>Noviembre</item>
-        <item>Diciembre</item>
-    </string-array>
-
     <!-- TABS-->
     <string name="tab_notification_fragment_notification">Notificaciones</string>
     <string name="tab_notification_fragment_history">Historial</string>
@@ -109,6 +93,12 @@
     <string name="title_edit_employee_fragment">Editar Empleado</string>
     <string name="title_add_employee_fragment">Agregar Empleado</string>
     <string name="title_bank_account_fragment">Cuenta Bancaria</string>
+    <string name="title_cards_list_fragment">Tarjetas</string>
+    <string name="title_card_detail_fragment">Detalle</string>
+    <string name="title_add_card_fragment">Agregar Tarjeta</string>
+    <string name="title_edit_card_fragment">Editar Tarjeta</string>
+    <string name="title_tables_fragment">Mesas</string>
+    <string name="title_commerce_detail_fragment">Comercio</string>
 
     <!--HEADERS TITLES-->
     <string-array name="split_fragment_header_titles">
@@ -135,4 +125,5 @@
 
     <string name="facebook_login_cancel_message">Facebook Login fue cancelado</string>
     <string name="facebook_login_error_message">Facebook Login error</string>
+    <string name="action_reset_password">Recuperar Contraseña</string>
 </resources>

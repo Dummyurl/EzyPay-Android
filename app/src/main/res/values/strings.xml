@@ -48,6 +48,12 @@
     <string name="title_edit_employee_fragment">Edit Employee</string>
     <string name="title_add_employee_fragment">Add Employee</string>
     <string name="title_bank_account_fragment">Bank Account</string>
+    <string name="title_cards_list_fragment">Cards</string>
+    <string name="title_card_detail_fragment">Card Detail</string>
+    <string name="title_add_card_fragment">Add Card</string>
+    <string name="title_edit_card_fragment">Edit Card</string>
+    <string name="title_tables_fragment">Tables</string>
+    <string name="title_commerce_detail_fragment">Commerce</string>
 
     <!--Prompt-->
     <string name="prompt_name">Name</string>
@@ -80,22 +86,6 @@
     <string name="label_choose_qr_type">Choose QR Type</string>
     <string name="label_total_cost">Total cost</string>
     <string name="label_tables_warning_message">If you put 0, the table menu will not appear</string>
-
-    <!--Spinners items-->
-    <string-array name="months">
-        <item>January</item>
-        <item>February</item>
-        <item>March</item>
-        <item>April</item>
-        <item>May</item>
-        <item>June</item>
-        <item>July</item>
-        <item>August</item>
-        <item>September</item>
-        <item>October</item>
-        <item>November</item>
-        <item>December</item>
-    </string-array>
 
     <!--MENU ITEMS-->
     <string name="menu_item_cards_fragment_add_card_item">Add Card</string>
@@ -149,13 +139,15 @@
     <string name="facebook_login_error_message">Facebook Login error</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main_commerce">MainCommerceActivity</string>
-    <string name="title_activity_payment_commerce_main">PaymentCommerceMainActivity</string>
-    <string name="title_activity_main_commerce_settings">MainCommerceSettingsActivity</string>
-    <string name="title_activity_employee_main">EmployeeMainActivity</string>
-    <string name="title_activity_bank_account_main">BankAccountMainActivity</string>
-    <string name="title_activity_sign_in_commerce_main">SignInCommerceMainActivity</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="title_activity_main_commerce" translatable="false">MainCommerceActivity</string>
+    <string name="title_activity_payment_commerce_main" translatable="false">PaymentCommerceMainActivity</string>
+    <string name="title_activity_main_commerce_settings" translatable="false">MainCommerceSettingsActivity</string>
+    <string name="title_activity_employee_main" translatable="false">EmployeeMainActivity</string>
+    <string name="title_activity_bank_account_main" translatable="false">BankAccountMainActivity</string>
+    <string name="title_activity_sign_in_commerce_main" translatable="false">SignInCommerceMainActivity</string>
+    <string name="title_activity_reset_password" translatable="false">ResetPasswordActivity</string>
+    <string name="action_reset_password">Reset Password</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

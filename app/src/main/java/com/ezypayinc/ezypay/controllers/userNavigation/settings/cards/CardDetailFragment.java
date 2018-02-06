@@ -94,16 +94,20 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
         ((CardsMainActivity)getActivity()).setListener(this);
     }
 
+    private void setTitle(int title) {
+        getActivity().setTitle(title);
+    }
+
     private void setupProgressDialog(){
         mProgressDialog = new ProgressDialog(this.getActivity());
         mProgressDialog.setCancelable(false);
     }
 
     public void initComponents() {
-        edtCardNumber = (EditText) mRootView.findViewById(R.id.card_detail_card_number);
-        edtExpDate = (EditText) mRootView.findViewById(R.id.card_detail_exp_date);
-        edtCvv = (EditText) mRootView.findViewById(R.id.card_detail_cvv);
-        btnSubmit = (Button) mRootView.findViewById(R.id.card_detail_action);
+        edtCardNumber = mRootView.findViewById(R.id.card_detail_card_number);
+        edtExpDate = mRootView.findViewById(R.id.card_detail_exp_date);
+        edtCvv = mRootView.findViewById(R.id.card_detail_cvv);
+        btnSubmit = mRootView.findViewById(R.id.card_detail_action);
         btnSubmit.setOnClickListener(this);
         edtExpDate.addTextChangedListener(new ExpDateValidatorTextWatcher(edtExpDate));
     }
@@ -121,12 +125,14 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
     }
 
     public void setupViewCardView() {
+        setTitle(R.string.title_card_detail_fragment);
         edtCardNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         setHasOptionsMenu(true);
         setupComponents(false);
     }
 
     public void setupAddCardView() {
+        setTitle(R.string.title_add_card_fragment);
         setHasOptionsMenu(false);
         btnSubmit.setText(R.string.action_card_detail_add_card);
         setupComponents(true);
@@ -141,6 +147,7 @@ public class CardDetailFragment extends Fragment implements CardsMainActivity.On
     }
 
     public void setupEditCardView() {
+        setTitle(R.string.title_edit_card_fragment);
         edtCardNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         setHasOptionsMenu(false);
         btnSubmit.setText(R.string.action_card_detail_edit_card);

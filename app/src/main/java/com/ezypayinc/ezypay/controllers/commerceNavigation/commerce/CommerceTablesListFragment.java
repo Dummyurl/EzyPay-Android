@@ -71,6 +71,7 @@ public class CommerceTablesListFragment extends Fragment implements ICommerceTab
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+        setTitle();
         return rootView;
     }
 
@@ -83,6 +84,10 @@ public class CommerceTablesListFragment extends Fragment implements ICommerceTab
             mPresenter = new CommerceTableListPresenter(this);
         }
         mPresenter.getTables();
+    }
+
+    private void setTitle() {
+        getActivity().setTitle(R.string.title_tables_fragment);
     }
 
     private void setupProgressDialog(){

@@ -60,7 +60,12 @@ public class CardsFragment extends Fragment implements CardsListAdapter.OnItemCl
         setupProgressDialog();
         presenter = new CardListPresenter(this);
         setHasOptionsMenu(true);
+        setTitle();
         return rootView;
+    }
+
+    private void setTitle() {
+        getActivity().setTitle(R.string.title_cards_list_fragment);
     }
 
     @Override

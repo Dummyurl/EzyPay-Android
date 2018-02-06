@@ -62,6 +62,7 @@ public class EditCommerceFragment extends Fragment implements View.OnClickListen
         initUIComponents();
         setupProgressDialog();
         mPresenter = new EditCommercePresenter(this);
+        setTitle();
         return rootView;
     }
 
@@ -75,6 +76,10 @@ public class EditCommerceFragment extends Fragment implements View.OnClickListen
     public void onResume() {
         super.onResume();
         getUser();
+    }
+
+    private void setTitle() {
+        getActivity().setTitle(R.string.menu_item_settings_fragment_edit_item);
     }
 
     private void initUIComponents() {

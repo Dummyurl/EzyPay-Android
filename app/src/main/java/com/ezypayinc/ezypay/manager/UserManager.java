@@ -191,4 +191,9 @@ public class UserManager {
         UserServiceClient service = new UserServiceClient();
         service.validateCredentials(user, successHandler, failureHandler);
     }
+
+    public void forgotPassword(String email, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        UserServiceClient service = new UserServiceClient();
+        service.forgotPassword(email, successHandler, failureHandler);
+    }
 }

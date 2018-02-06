@@ -60,6 +60,7 @@ public class CommerceSettingsFragment extends Fragment implements View.OnClickLi
         mPresenter = new SettingsPresenter(this);
         setHasOptionsMenu(true);
         getUser();
+        setTitle();
         return rootView;
     }
 
@@ -75,6 +76,10 @@ public class CommerceSettingsFragment extends Fragment implements View.OnClickLi
 
     private void getImage(User user) {
         Picasso.with(getContext()).load(user.getAvatar()).transform(new CropCircleTransformation()).into(mProfileImage);
+    }
+
+    private void setTitle() {
+        getActivity().setTitle(R.string.settings_view_title);
     }
 
     @Override

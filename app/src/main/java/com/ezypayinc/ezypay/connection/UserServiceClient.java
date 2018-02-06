@@ -357,4 +357,17 @@ public class UserServiceClient {
         JSONObject parameters = serializeUser(user, 0);
         connectionManager.sendCustomRequest(Request.Method.POST, url, parameters, headers, successHandler, failureHandler);
     }
+
+    public void forgotPassword(String email, Response.Listener<JsonElement> successHandler, Response.ErrorListener failureHandler) throws JSONException {
+        String url = BASIC_URL + "forgotPassword";
+        final String basicAuth = "Basic " + Base64.encodeToString((CLIENT_ID + ":"+ SECRET_KEY).getBytes(), Base64.NO_WRAP);
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Authorization", basicAuth);
+        headers.put("Content-Type", CONTENT_TYPE);
+
+        JSONObject parameters = new JSONObject();
+        parameters.put("email", email);
+        int httpMethod = Request.Method.POST;
+        connectionManager.sendCustomRequest(httpMethod, url, parameters, headers, successHandler, failureHandler);
+    }
 }
