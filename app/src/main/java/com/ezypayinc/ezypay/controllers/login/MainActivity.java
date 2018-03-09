@@ -84,6 +84,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         extra.putInt(LoginActivity.USER_TYPE_KEY, userType);
         intent.putExtras(extra);
         startActivity(intent);
-        finish();
     }
 }

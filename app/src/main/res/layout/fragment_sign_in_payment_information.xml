@@ -15,7 +15,6 @@
             android:layout_weight="1.10"
             android:layout_height="72dp"
             android:layout_width="match_parent"
-            app:hintTextAppearance="@style/TextAppearance.App.TextInputLayout"
             tools:ignore="InefficientWeight">
 
             <EditText

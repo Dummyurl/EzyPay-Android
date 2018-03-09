@@ -1,10 +1,12 @@
 package com.ezypayinc.ezypay.controllers.login;
 
+import android.support.v7.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,14 +30,10 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -70,6 +68,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
         mCallbackManager = CallbackManager.Factory.create();
         initUIComponents();
         setupProgressDialog();
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
+
     }
 
     @Override
@@ -254,6 +259,16 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
         } else if(view.equals(mForgotPassword)) {
             navigateToResetPassword();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home :
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
 

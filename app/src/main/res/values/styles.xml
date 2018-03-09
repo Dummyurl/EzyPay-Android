@@ -9,26 +9,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="CustomTheme" parent="@style/Theme.AppCompat.Light">
+    <style name="CustomTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="android:actionBarStyle" tools:ignore="NewApi">@style/MyActionBarTheme</item>
         <item name="actionBarStyle">@style/MyActionBarTheme</item>
         <item name="android:statusBarColor">@color/greenEzypayColor</item>
         <item name="titleTextColor">@color/white</item>
         <item name="android:windowBackground">@color/white</item>
-        <item name="colorControlNormal">@color/white</item>
     </style>
 
     <style name="MyActionBarTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background" tools:ignore="NewApi">@color/greenEzypayColor</item>
         <item name="background">@color/greenEzypayColor</item>
         <item name="colorControlNormal">@color/white</item>
-    </style>
-
-    <style name="TextAppearance.App.TextInputLayout" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textColorHint">@color/white</item>
-        <item name="colorAccent">@color/white</item>
-        <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlActivated">@color/white</item>
     </style>
 </resources>

@@ -3,7 +3,9 @@ package com.ezypayinc.ezypay.controllers.login;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +34,12 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
         mPresenter = new ResetPasswordPresenter(this);
         setTitle(R.string.action_reset_password);
         setupProgressDialog();
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
     private void setupProgressDialog(){
@@ -64,5 +72,15 @@ public class ResetPasswordActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onNetworkError(Object error) {
         ErrorHelper.handleError(error, this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home :
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
